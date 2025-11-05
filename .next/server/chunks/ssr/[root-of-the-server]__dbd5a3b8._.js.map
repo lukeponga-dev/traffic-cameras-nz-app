@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 15, "column": 0}, "map": {"version":3,"sources":["file:///home/user/studio/src/app/map-provider.tsx"],"sourcesContent":["\"use client\";\n\nimport { APIProvider } from '@vis.gl/react-google-maps';\nimport type { ReactNode } from 'react';\n\nexport function MapProvider({ children }: { children: ReactNode }) {\n    const apiKey = \"AIzaSyDxXmCx9QPwZfbWmstxeXa3ta86zD-4lGI\";\n\n    return (\n        <APIProvider apiKey={apiKey} libraries={['marker']}>\n            {children}\n        </APIProvider>\n    );\n}\n"],"names":[],"mappings":";;;;AAEA;AAFA;;;AAKO,SAAS,YAAY,EAAE,QAAQ,EAA2B;IAC7D,MAAM,SAAS;IAEf,qBACI,8OAAC,kLAAA,CAAA,cAAW;QAAC,QAAQ;QAAQ,WAAW;YAAC;SAAS;kBAC7C;;;;;;AAGb","debugId":null}}]
+}
