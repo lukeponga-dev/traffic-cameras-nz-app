@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { Button } from './ui/button';
 import { ExternalLink } from 'lucide-react';
 import { Skeleton } from './ui/skeleton';
+import { darkMapStyle } from '@/lib/map-styles';
 
 const NZ_CENTER = { lat: -41.28664, lng: 174.77557 };
 
@@ -24,6 +25,7 @@ export default function MapDisplay({ cameras }: { cameras: Camera[] }) {
                 gestureHandling={'greedy'}
                 disableDefaultUI={true}
                 mapId="kiwi-traffic-map"
+                styles={darkMapStyle}
             >
                 {cameras.map((camera) => (
                     <AdvancedMarker
