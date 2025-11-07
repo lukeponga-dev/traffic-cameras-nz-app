@@ -5,12 +5,14 @@ import { useState, useMemo } from 'react';
 import type { Camera } from '@/lib/types';
 import { Input } from '@/components/ui/input';
 import { CameraCard } from '@/components/camera-card';
-import { Search } from 'lucide-react';
+import { Heart, Search } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useFavorites } from '@/hooks/use-favorites';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { SidebarContent, SidebarHeader } from './ui/sidebar';
 import { Skeleton } from './ui/skeleton';
+import Link from 'next/link';
+import { Button } from './ui/button';
 
 function CameraListSkeleton() {
     return (
@@ -33,11 +35,13 @@ function CameraListSkeleton() {
 export default function CameraList({ 
     cameras,
     onCameraSelect,
-    selectedCamera
+    selectedCamera,
+    isLoading,
 }: { 
     cameras: Camera[];
     onCameraSelect: (camera: Camera) => void;
     selectedCamera: Camera | null;
+    isLoading: boolean;
 }) {
     const [searchTerm, setSearchTerm] = useState('');
     const { favoriteIds, isLoaded: favoritesLoaded } = useFavorites();
@@ -79,8 +83,8 @@ export default function CameraList({
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                     <Input
                         type="search"
-                        placeholder="Search by name, region, highway..."
-                        className="pl-10 text-sm h-10 bg-muted border-0"
+                        placeholder="Search cameras..."
+                        className="pl-10 text-sm h-10 bg-muted border-0 focus-visible:ring-primary"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
@@ -96,7 +100,7 @@ export default function CameraList({
                         </TabsList>
                     </div>
                     <ScrollArea className="flex-1">
-                        {!cameras.length ? <CameraListSkeleton /> : (
+                        {isLoading ? <CameraListSkeleton /> : (
                             <>
                                 <TabsContent value="all" className="m-0">
                                     <div className="text-xs text-muted-foreground px-4 py-2 font-semibold">
@@ -105,14 +109,23 @@ export default function CameraList({
                                     {renderCameraList(filteredCameras)}
                                 </TabsContent>
                                 <TabsContent value="favorites" className="m-0">
-                                     {favoritesLoaded ? (
+                                     {!favoritesLoaded ? <CameraListSkeleton /> : (
                                         <>
-                                        <div className="text-xs text-muted-foreground px-4 py-2 font-semibold">
-                                            {favoriteCameras.length} FAVORITE CAMERAS
-                                        </div>
-                                        {renderCameraList(favoriteCameras)}
+                                            <div className="text-xs text-muted-foreground px-4 py-2 font-semibold">
+                                                {favoriteCameras.length} FAVORITE CAMERAS
+                                            </div>
+                                            {favoriteCameras.length > 0 ? renderCameraList(favoriteCameras) : (
+                                                 <div className="text-center py-10 text-muted-foreground px-4">
+                                                    <Heart className="mx-auto h-10 w-10 mb-2" />
+                                                    <h3 className="font-semibold text-foreground">No Favorites Yet</h3>
+                                                    <p className="text-sm">Click the star on a camera to add it here.</p>
+                                                    <Button variant="outline" size="sm" asChild className="mt-4">
+                                                        <Link href="/favorites">Manage Favorites</Link>
+                                                    </Button>
+                                                </div>
+                                            )}
                                         </>
-                                     ) : <CameraListSkeleton />}
+                                     )}
                                 </TabsContent>
                             </>
                         )}

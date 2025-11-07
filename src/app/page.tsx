@@ -17,11 +17,14 @@ export default function Home() {
     const [cameras, setCameras] = useState<Camera[]>([]);
     const [selectedDestination, setSelectedDestination] = useState<google.maps.places.PlaceResult | Camera | null>(null);
     const [selectedCamera, setSelectedCamera] = useState<Camera | null>(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchCameras = async () => {
+            setLoading(true);
             const cams = await getAllCameras();
             setCameras(cams);
+            setLoading(false);
         };
         fetchCameras();
     }, []);
@@ -52,10 +55,11 @@ export default function Home() {
             cameras={cameras} 
             onCameraSelect={handleCameraSelect}
             selectedCamera={selectedCamera}
+            isLoading={loading}
             />
         </Sidebar>
 
-        <div className="h-full w-full">
+        <main className="h-full w-full">
           <Suspense fallback={<Skeleton className="h-full w-full bg-muted" />}>
             <MapDisplay 
                 cameras={cameras} 
@@ -64,7 +68,7 @@ export default function Home() {
                 onCameraSelect={handleCameraSelect}
             />
           </Suspense>
-        </div>
+        </main>
         
       </div>
     </SidebarProvider>

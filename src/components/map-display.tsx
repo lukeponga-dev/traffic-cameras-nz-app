@@ -13,7 +13,6 @@ import { useToast } from '@/hooks/use-toast';
 import { darkMapStyle } from '@/lib/map-styles';
 import FavoriteButton from './favorite-button';
 import { useSidebar } from './ui/sidebar';
-import { cn } from '@/lib/utils';
 
 const NZ_CENTER = { lat: -41.28664, lng: 174.77557 };
 const INITIAL_ZOOM = 5;
@@ -24,8 +23,7 @@ function Directions({ destination }: { destination: google.maps.places.PlaceResu
     const map = useMap();
     const routesLibrary = useMapsLibrary('routes');
     const { toast } = useToast();
-    const [userLocation, setUserLocation] = useState<LatLng | null>(null);
-
+    
     const [directionsService, setDirectionsService] = useState<google.maps.DirectionsService | null>(null);
     const [directionsRenderer, setDirectionsRenderer] = useState<google.maps.DirectionsRenderer | null>(null);
     const [routes, setRoutes] = useState<google.maps.DirectionsRoute[]>([]);
@@ -34,7 +32,7 @@ function Directions({ destination }: { destination: google.maps.places.PlaceResu
     useEffect(() => {
         if (!routesLibrary || !map) return;
         setDirectionsService(new routesLibrary.DirectionsService());
-        setDirectionsRenderer(new routesLibrary.DirectionsRenderer({
+        const renderer = new routesLibrary.DirectionsRenderer({
             map,
             suppressMarkers: true,
             polylineOptions: {
@@ -42,34 +40,26 @@ function Directions({ destination }: { destination: google.maps.places.PlaceResu
                 strokeOpacity: 0.8,
                 strokeWeight: 6
             }
-        }));
+        });
+        setDirectionsRenderer(renderer);
 
         return () => {
-            directionsRenderer?.setMap(null);
+            renderer.setMap(null);
         }
     }, [routesLibrary, map]);
     
     // Render routes
     useEffect(() => {
         if (!directionsRenderer) return;
-        directionsRenderer.setDirections({ routes: routes });
+        directionsRenderer.setDirections({ routes });
     }, [routes, directionsRenderer]);
 
 
-    const calculateRoute = useCallback((dest: google.maps.LatLng | LatLng) => {
-        if (!userLocation) {
-             toast({
-                variant: 'destructive',
-                title: 'Location not available',
-                description: 'Please enable location services to calculate a route.',
-            });
-            return;
-        }
-
+    const calculateRoute = useCallback((origin: LatLng, dest: google.maps.LatLng | LatLng) => {
         if (directionsService && directionsRenderer) {
             directionsRenderer.setMap(map);
             const request: google.maps.DirectionsRequest = {
-                origin: userLocation,
+                origin: origin,
                 destination: dest,
                 travelMode: google.maps.TravelMode.DRIVING,
             };
@@ -86,7 +76,7 @@ function Directions({ destination }: { destination: google.maps.places.PlaceResu
                 }
             });
         }
-    }, [userLocation, directionsService, directionsRenderer, toast, map]);
+    }, [directionsService, directionsRenderer, toast, map]);
 
     useEffect(() => {
         if (!destination) {
@@ -122,8 +112,7 @@ function Directions({ destination }: { destination: google.maps.places.PlaceResu
                     lat: position.coords.latitude,
                     lng: position.coords.longitude,
                 };
-                setUserLocation(newPos);
-                calculateRoute(destLocation);
+                calculateRoute(newPos, destLocation);
             },
             () => {
                  toast({
@@ -142,11 +131,7 @@ function Directions({ destination }: { destination: google.maps.places.PlaceResu
 
     }, [destination, calculateRoute, toast, directionsRenderer]);
 
-    return userLocation ? (
-         <AdvancedMarker position={userLocation} zIndex={1000}>
-            <div className="w-4 h-4 bg-blue-500 rounded-full border-2 border-white shadow-md" title="Your Location"/>
-        </AdvancedMarker>
-    ) : null;
+    return null;
 }
 
 export default function MapDisplay({ 
@@ -178,9 +163,10 @@ export default function MapDisplay({
     }, [selectedCamera, map]);
     
     const mapPadding = useMemo(() => {
-        if (isMobile) return { top: 70, right: 20, bottom: 20, left: 20 };
-        if (sidebarOpen) return { top: 70, right: 20, bottom: 20, left: 400 };
-        return { top: 70, right: 20, bottom: 20, left: 20 };
+        const basePadding = { top: 80, right: 20, bottom: 20, left: 20 };
+        if (isMobile) return basePadding;
+        if (sidebarOpen) return { ...basePadding, left: 420 };
+        return basePadding;
     }, [isMobile, sidebarOpen])
 
 
@@ -195,7 +181,6 @@ export default function MapDisplay({
                 styles={darkMapStyle}
                 onDragstart={handleCloseInfoWindow}
                 padding={mapPadding}
-                className={cn('transition-all duration-300', sidebarOpen ? "md:pl-[384px]" : "")}
             >
                 {cameras.map((camera) => (
                     <AdvancedMarker

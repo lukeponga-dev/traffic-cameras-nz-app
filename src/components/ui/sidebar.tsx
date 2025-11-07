@@ -116,12 +116,10 @@ const Sidebar = React.forwardRef<
 
     if (isMobile) {
       return (
-        <Sheet open={open} onOpenChange={setOpen} {...props}>
+        <Sheet open={open} onOpenChange={setOpen}>
           <SheetContent
-            data-sidebar="sidebar"
-            data-mobile="true"
-            className="w-full max-w-md bg-background/80 backdrop-blur-sm p-0 text-foreground border-border/60"
             side={side}
+            className="w-full max-w-md bg-background/80 backdrop-blur-sm p-0 text-foreground border-border/60"
           >
             <SheetHeader className="sr-only">
               <SheetTitle>Camera List</SheetTitle>
@@ -137,23 +135,21 @@ const Sidebar = React.forwardRef<
       <aside
         ref={ref}
         className={cn(
-          "group peer z-20 hidden md:block text-foreground absolute top-0 h-full transition-transform duration-300 ease-in-out",
-          "w-96",
+          "group peer z-20 hidden md:flex absolute top-0 h-full transition-transform duration-300 ease-in-out",
+          "w-[400px] flex-col",
           side === "left" ? "left-0" : "right-0",
-          open ? 'translate-x-0' : (side === 'left' ? '-translate-x-full' : 'translate-x-full'),
+          open ? 'translate-x-0' : (side === 'left' ? '-translate-x-[400px]' : 'translate-x-[400px]'),
           className
         )}
         data-state={open ? 'open' : 'closed'}
         data-side={side}
         {...props}
       >
-        <div className="h-full p-4 pl-0">
-          <div
-            data-sidebar="sidebar"
-            className="flex h-full w-full flex-col bg-background/80 backdrop-blur-sm border-r border-t border-b rounded-r-lg shadow-lg border-border/60"
-          >
-            {children}
-          </div>
+        <div
+          data-sidebar="sidebar"
+          className="flex h-full w-full flex-col bg-transparent"
+        >
+          {children}
         </div>
       </aside>
     )
