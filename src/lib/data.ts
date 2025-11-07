@@ -2,24 +2,47 @@ import type { Camera } from './types';
 import fallbackData from '../../cameras.json';
 
 // This is a type guard to check if a camera is valid.
-function isCamera(camera: any): camera is any {
+function isArcgisCamera(feature: any): boolean {
+  const attrs = feature?.attributes;
+  const geom = feature?.geometry;
   return (
-    camera &&
-    camera.id &&
-    camera.name &&
-    camera.latitude &&
-    camera.longitude &&
-    camera.imageUrl &&
-    !camera.offline
+    attrs &&
+    attrs.Id &&
+    attrs.Name &&
+    attrs.ImageUrl &&
+    geom &&
+    typeof geom.y === 'number' &&
+    typeof geom.x === 'number'
   );
 }
 
 // Keep a cache of the cameras to avoid fetching them on every request.
 let cameraCache: Camera[] | null = null;
+const NZTA_ARCGIS_URL = 'https://services.arcgis.com/CXc99WJCRc3rPDRG/arcgis/rest/services/LiveCamerasNZTA_Public_View/FeatureServer/0/query?f=json&where=1=1&outFields=*';
 const API_BASE_URL = 'https://trafficnz.info';
 
-function processCameraData(data: any[]): Camera[] {
-    const activeCameras = data.filter(isCamera);
+function processArcgisCameraData(features: any[]): Camera[] {
+    const activeCameras = features.filter(isArcgisCamera);
+    return activeCameras.map((feature: any) => {
+        const attrs = feature.attributes;
+        const geom = feature.geometry;
+        return {
+            id: attrs.Id,
+            name: attrs.Name,
+            region: attrs.Region,
+            latitude: geom.y,
+            longitude: geom.x,
+            status: attrs.Availability === 'Available' ? 'Active' : 'Under Maintenance',
+            direction: attrs.Direction,
+            imageUrl: attrs.ImageUrl,
+            description: attrs.Description,
+            group: attrs.RouteName,
+        };
+    });
+}
+
+function processFallbackCameraData(data: any[]): Camera[] {
+    const activeCameras = data.filter((cam: any) => cam && cam.id && !cam.offline);
     return activeCameras.map((cam: any) => ({
         id: String(cam.id),
         name: cam.name,
@@ -40,7 +63,7 @@ export async function getAllCameras(): Promise<Camera[]> {
   }
 
   try {
-    const response = await fetch(`${API_BASE_URL}/service/traffic/rest/4/cameras/all`, {
+    const response = await fetch(NZTA_ARCGIS_URL, {
       headers: {
         'Accept': 'application/json'
       },
@@ -53,20 +76,20 @@ export async function getAllCameras(): Promise<Camera[]> {
 
     const data = await response.json();
     
-    if (data && data.response && Array.isArray(data.response.camera)) {
-        cameraCache = processCameraData(data.response.camera);
+    if (data && Array.isArray(data.features)) {
+        cameraCache = processArcgisCameraData(data.features);
         return cameraCache;
     }
 
-    console.error("Invalid data structure from API. Received:", JSON.stringify(data, null, 2));
-    throw new Error("Invalid data structure from API.");
+    console.error("Invalid data structure from ArcGIS API. Received:", JSON.stringify(data, null, 2));
+    throw new Error("Invalid data structure from ArcGIS API.");
 
   } catch (error) {
-    console.warn("Error fetching live camera data, using fallback:", error);
+    console.warn("Error fetching live ArcGIS camera data, using fallback:", error);
     // @ts-ignore
     if (fallbackData?.response?.camera) {
         // @ts-ignore
-        cameraCache = processCameraData(fallbackData.response.camera);
+        cameraCache = processFallbackCameraData(fallbackData.response.camera);
         return cameraCache;
     }
     console.error("Fallback data is also invalid.");
