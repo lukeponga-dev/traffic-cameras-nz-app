@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import FavoriteButton from "@/components/favorite-button";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Zap, CheckCircle2, Info, MapPin } from "lucide-react";
+import { ArrowLeft, Zap, CheckCircle2, Waypoints, MapPin } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import CameraMap from "@/components/camera-map";
 
@@ -30,6 +30,8 @@ export default async function CameraPage({ params }: Props) {
     if (!camera) {
         notFound();
     }
+    
+    const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${camera.latitude},${camera.longitude}`;
 
     return (
         <div className="container mx-auto max-w-5xl py-8 px-4">
@@ -63,6 +65,12 @@ export default async function CameraPage({ params }: Props) {
                                 <MapPin className="h-4 w-4" />
                                 <span className="font-semibold">{camera.group}</span>
                             </div>
+                            <Button asChild>
+                                <Link href={directionsUrl} target="_blank" rel="noopener noreferrer">
+                                    <Waypoints className="mr-2 h-4 w-4" />
+                                    Get Directions
+                                </Link>
+                            </Button>
                         </CardContent>
                     </Card>
 
@@ -75,6 +83,7 @@ export default async function CameraPage({ params }: Props) {
                             className="object-cover transition-opacity duration-500"
                             sizes="(max-width: 1024px) 100vw, 50vw"
                             priority
+                            unoptimized
                         />
                     </div>
                 </div>
