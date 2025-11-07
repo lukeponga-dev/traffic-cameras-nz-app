@@ -8,6 +8,7 @@ import { Search } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useFavorites } from '@/hooks/use-favorites';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { SidebarContent } from './ui/sidebar';
 
 export default function CameraList({ cameras }: { cameras: Camera[] }) {
     const [searchTerm, setSearchTerm] = useState('');
@@ -54,22 +55,24 @@ export default function CameraList({ cameras }: { cameras: Camera[] }) {
                     />
                 </div>
             </div>
-            <Tabs defaultValue="all" className="flex flex-col flex-1">
-                <div className="p-2">
-                    <TabsList className="grid w-full grid-cols-2">
-                        <TabsTrigger value="all">All</TabsTrigger>
-                        <TabsTrigger value="favorites">Favorites</TabsTrigger>
-                    </TabsList>
-                </div>
-                <ScrollArea className="flex-1">
-                    <TabsContent value="all" className="m-0">
-                        {renderCameraList(filteredCameras)}
-                    </TabsContent>
-                    <TabsContent value="favorites" className="m-0">
-                        {favoritesLoaded ? renderCameraList(favoriteCameras) : <p>Loading favorites...</p>}
-                    </TabsContent>
-                </ScrollArea>
-            </Tabs>
+            <SidebarContent>
+                <Tabs defaultValue="all" className="flex flex-col flex-1">
+                    <div className="p-2">
+                        <TabsList className="grid w-full grid-cols-2">
+                            <TabsTrigger value="all">All</TabsTrigger>
+                            <TabsTrigger value="favorites">Favorites</TabsTrigger>
+                        </TabsList>
+                    </div>
+                    <ScrollArea className="flex-1">
+                        <TabsContent value="all" className="m-0">
+                            {renderCameraList(filteredCameras)}
+                        </TabsContent>
+                        <TabsContent value="favorites" className="m-0">
+                            {favoritesLoaded ? renderCameraList(favoriteCameras) : <p>Loading favorites...</p>}
+                        </TabsContent>
+                    </ScrollArea>
+                </Tabs>
+            </SidebarContent>
         </div>
     );
 }
