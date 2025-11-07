@@ -1,4 +1,5 @@
 import type { Camera } from './types';
+import fallbackData from '../../cameras.json';
 
 // This is a type guard to check if a camera is valid.
 function isCamera(camera: any): camera is any {
@@ -17,6 +18,22 @@ function isCamera(camera: any): camera is any {
 let cameraCache: Camera[] | null = null;
 const API_BASE_URL = 'https://trafficnz.info';
 
+function processCameraData(data: any[]): Camera[] {
+    const activeCameras = data.filter(isCamera);
+    return activeCameras.map((cam: any) => ({
+        id: String(cam.id),
+        name: cam.name,
+        region: cam.region.name,
+        latitude: cam.latitude,
+        longitude: cam.longitude,
+        status: cam.underMaintenance ? 'Under Maintenance' : 'Active',
+        direction: cam.direction,
+        imageUrl: `${API_BASE_URL}${cam.imageUrl}`,
+        description: cam.description,
+        group: cam.group,
+    }));
+}
+
 export async function getAllCameras(): Promise<Camera[]> {
   if (cameraCache) {
     return cameraCache;
@@ -29,34 +46,30 @@ export async function getAllCameras(): Promise<Camera[]> {
       },
       next: { revalidate: 300 } // Revalidate every 5 minutes
     });
+
     if (!response.ok) {
-      console.error('Failed to fetch camera data:', response.statusText);
-      return [];
+        throw new Error(`Failed to fetch camera data: ${response.statusText}`);
     }
+
     const data = await response.json();
     
     if (data && data.response && Array.isArray(data.response.camera)) {
-        const activeCameras = data.response.camera.filter(isCamera);
-        cameraCache = activeCameras.map((cam: any) => ({
-            id: String(cam.id),
-            name: cam.name,
-            region: cam.region.name,
-            latitude: cam.latitude,
-            longitude: cam.longitude,
-            status: cam.underMaintenance ? 'Under Maintenance' : 'Active',
-            direction: cam.direction,
-            imageUrl: `${API_BASE_URL}${cam.imageUrl}`,
-            description: cam.description,
-            group: cam.group,
-        }));
+        cameraCache = processCameraData(data.response.camera);
         return cameraCache;
     }
 
     console.error("Invalid data structure from API. Received:", JSON.stringify(data, null, 2));
-    return [];
+    throw new Error("Invalid data structure from API.");
+
   } catch (error) {
-    console.error("Error fetching or processing camera data:", error);
-    // In case of an error, return an empty array to prevent the app from crashing.
+    console.warn("Error fetching live camera data, using fallback:", error);
+    // @ts-ignore
+    if (fallbackData?.response?.camera) {
+        // @ts-ignore
+        cameraCache = processCameraData(fallbackData.response.camera);
+        return cameraCache;
+    }
+    console.error("Fallback data is also invalid.");
     return [];
   }
 }
