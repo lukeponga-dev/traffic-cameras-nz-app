@@ -7,22 +7,16 @@ import { Skeleton } from '@/components/ui/skeleton';
 import {
   Sidebar,
   SidebarProvider,
-  SidebarTrigger,
 } from '@/components/ui/sidebar';
 import CameraList from '@/components/camera-list';
 import type { Camera } from '@/lib/types';
 import { getAllCameras } from '@/lib/data';
 import { Header } from '@/components/header';
-import { Crosshair, PanelLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { useMap } from '@vis.gl/react-google-maps';
-import { useToast } from '@/hooks/use-toast';
 
 export default function Home() {
     const [cameras, setCameras] = useState<Camera[]>([]);
     const [selectedDestination, setSelectedDestination] = useState<google.maps.places.PlaceResult | Camera | null>(null);
-    const map = useMap();
-    const { toast } = useToast();
+    const [selectedCamera, setSelectedCamera] = useState<Camera | null>(null);
 
     useEffect(() => {
         const fetchCameras = async () => {
@@ -32,69 +26,33 @@ export default function Home() {
         fetchCameras();
     }, []);
 
-    const handleCameraSelect = useCallback((camera: Camera) => {
-        setSelectedDestination(camera);
-        if (map) {
-            map.moveCamera({ center: { lat: camera.latitude, lng: camera.longitude }, zoom: 15 });
+    const handleCameraSelect = useCallback((camera: Camera | null) => {
+        setSelectedCamera(camera);
+        if (camera) {
+            setSelectedDestination(camera);
         }
-    }, [map]);
+    }, []);
 
     const handlePlaceSelect = useCallback((place: google.maps.places.PlaceResult | null) => {
         setSelectedDestination(place);
+        setSelectedCamera(null); // Clear camera selection when a place is selected
     }, []);
-
-    const handleGeolocate = () => {
-        if (!navigator.geolocation) {
-            toast({
-                variant: 'destructive',
-                title: 'Geolocation not supported',
-                description: "Your browser doesn't support geolocation.",
-            });
-            return;
-        }
-
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const newPos = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude,
-                };
-                map?.moveCamera({ center: newPos, zoom: 14 });
-                toast({
-                    title: 'Location found',
-                    description: 'Your location has been updated.',
-                });
-            },
-            () => {
-                toast({
-                    variant: 'destructive',
-                    title: 'Geolocation failed',
-                    description: 'Could not get your location. Please ensure you have granted permission.',
-                });
-            }
-        );
-    };
 
   return (
     <SidebarProvider>
       <div className="relative h-screen w-screen overflow-hidden">
         
-        <Header onPlaceSelect={handlePlaceSelect} />
-
-        <div className="absolute top-[72px] right-4 z-10 flex flex-col gap-2">
-            <Button size="icon" variant="ghost" className="bg-background/80 backdrop-blur-sm rounded-lg border shadow-lg h-12 w-12" onClick={handleGeolocate} aria-label="Geolocate">
-                <Crosshair className="h-6 w-6"/>
-            </Button>
-            <SidebarTrigger asChild>
-                <Button size="icon" variant="ghost" className="bg-background/80 backdrop-blur-sm rounded-lg border shadow-lg h-12 w-12" aria-label="Toggle Camera List">
-                    <PanelLeft className="h-6 w-6"/>
-                </Button>
-            </SidebarTrigger>
-        </div>
-
+        <Header 
+            onPlaceSelect={handlePlaceSelect} 
+            cameraCount={cameras.length}
+        />
 
         <Sidebar side="left">
-          <CameraList cameras={cameras} onCameraSelect={handleCameraSelect}/>
+          <CameraList 
+            cameras={cameras} 
+            onCameraSelect={handleCameraSelect}
+            selectedCamera={selectedCamera}
+            />
         </Sidebar>
 
         <div className="h-full w-full">
@@ -102,6 +60,8 @@ export default function Home() {
             <MapDisplay 
                 cameras={cameras} 
                 destination={selectedDestination}
+                selectedCamera={selectedCamera}
+                onCameraSelect={handleCameraSelect}
             />
           </Suspense>
         </div>

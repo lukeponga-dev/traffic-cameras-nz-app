@@ -1,35 +1,27 @@
 
 "use client";
 
-import { useState, useMemo, Suspense } from 'react';
+import { useState, useMemo } from 'react';
 import type { Camera } from '@/lib/types';
 import { Input } from '@/components/ui/input';
 import { CameraCard } from '@/components/camera-card';
-import { Search, Star } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useFavorites } from '@/hooks/use-favorites';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { SidebarContent, SidebarHeader } from './ui/sidebar';
-import { Button } from './ui/button';
-import Link from 'next/link';
-import { Separator } from './ui/separator';
 import { Skeleton } from './ui/skeleton';
 
 function CameraListSkeleton() {
     return (
-        <div className="p-4 grid gap-3">
-            {[...Array(5)].map((_, i) => (
-                <div key={i} className="cursor-pointer">
-                    <div className="overflow-hidden transition-all duration-300 border-border/60 rounded-lg">
-                        <Skeleton className="aspect-video w-full bg-muted" />
-                        <div className="p-3">
-                            <Skeleton className="h-4 w-3/4 mb-2" />
-                            <Skeleton className="h-3 w-1/2" />
-                        </div>
-                         <div className="p-3 pt-0 flex items-center justify-between">
-                            <Skeleton className="h-4 w-1/4" />
-                            <Skeleton className="h-6 w-20 rounded-full" />
-                        </div>
+        <div className="p-2 space-y-2">
+            {[...Array(8)].map((_, i) => (
+                 <div key={i} className="flex items-center p-3">
+                    <Skeleton className="w-28 h-20 rounded-md mr-4 shrink-0" />
+                    <div className="flex-1 space-y-2">
+                        <Skeleton className="h-4 w-3/4" />
+                        <Skeleton className="h-3 w-1/2" />
+                        <Skeleton className="h-3 w-1/4" />
                     </div>
                 </div>
             ))}
@@ -40,34 +32,36 @@ function CameraListSkeleton() {
 
 export default function CameraList({ 
     cameras,
-    onCameraSelect
+    onCameraSelect,
+    selectedCamera
 }: { 
     cameras: Camera[];
     onCameraSelect: (camera: Camera) => void;
+    selectedCamera: Camera | null;
 }) {
     const [searchTerm, setSearchTerm] = useState('');
     const { favoriteIds, isLoaded: favoritesLoaded } = useFavorites();
 
     const filteredCameras = useMemo(() => {
         if (!cameras.length) return [];
-        if (!searchTerm) return cameras;
+        const lowerCaseSearch = searchTerm.toLowerCase();
         return cameras.filter(camera =>
-            camera.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            camera.region.toLowerCase().includes(searchTerm.toLowerCase())
+            camera.name.toLowerCase().includes(lowerCaseSearch) ||
+            camera.region.toLowerCase().includes(lowerCaseSearch) ||
+            camera.highway?.toLowerCase().includes(lowerCaseSearch)
         );
     }, [cameras, searchTerm]);
 
     const favoriteCameras = useMemo(() => {
         if (!favoritesLoaded) return [];
-        const favs = filteredCameras.filter(c => favoriteIds.includes(c.id));
-        return favs;
+        return filteredCameras.filter(c => favoriteIds.includes(c.id));
     }, [filteredCameras, favoriteIds, favoritesLoaded]);
 
     const renderCameraList = (cameraList: Camera[]) => (
-        <div className="p-4 grid gap-3">
+        <div className="p-2 space-y-1">
             {cameraList.map(camera => (
                 <div key={camera.id} onClick={() => onCameraSelect(camera)} className="cursor-pointer">
-                    <CameraCard camera={camera} />
+                    <CameraCard camera={camera} isSelected={selectedCamera?.id === camera.id}/>
                 </div>
             ))}
             {cameras.length > 0 && cameraList.length === 0 && (
@@ -81,41 +75,44 @@ export default function CameraList({
     return (
         <div className="flex flex-col h-full">
             <SidebarHeader>
-                <h2 className="text-xl font-bold">Cameras</h2>
                 <div className="relative">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                     <Input
                         type="search"
-                        placeholder="Search cameras..."
-                        className="pl-10 text-sm h-9"
+                        placeholder="Search by name, region, highway..."
+                        className="pl-10 text-sm h-10 bg-muted border-0"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
                 </div>
-                 <Button asChild variant="outline">
-                    <Link href="/favorites">
-                        <Star className="mr-2 h-4 w-4" />
-                        View Favorites
-                    </Link>
-                </Button>
             </SidebarHeader>
-            <Separator />
-            <SidebarContent>
+            
+            <SidebarContent className="pt-0">
                 <Tabs defaultValue="all" className="flex flex-col flex-1">
-                    <div className="p-2">
-                        <TabsList className="grid w-full grid-cols-2">
-                            <TabsTrigger value="all">All ({filteredCameras.length})</TabsTrigger>
-                            <TabsTrigger value="favorites">Favorites ({favoriteCameras.length})</TabsTrigger>
+                    <div className="px-4 pb-2">
+                        <TabsList className="grid w-full grid-cols-2 h-10">
+                            <TabsTrigger value="all">All</TabsTrigger>
+                            <TabsTrigger value="favorites">Favorites</TabsTrigger>
                         </TabsList>
                     </div>
                     <ScrollArea className="flex-1">
-                        {cameras.length === 0 ? <CameraListSkeleton /> : (
+                        {!cameras.length ? <CameraListSkeleton /> : (
                             <>
                                 <TabsContent value="all" className="m-0">
+                                    <div className="text-xs text-muted-foreground px-4 py-2 font-semibold">
+                                        {filteredCameras.length} CAMERAS FOUND
+                                    </div>
                                     {renderCameraList(filteredCameras)}
                                 </TabsContent>
                                 <TabsContent value="favorites" className="m-0">
-                                    {favoritesLoaded ? renderCameraList(favoriteCameras) : <p className="p-4 text-muted-foreground">Loading favorites...</p>}
+                                     {favoritesLoaded ? (
+                                        <>
+                                        <div className="text-xs text-muted-foreground px-4 py-2 font-semibold">
+                                            {favoriteCameras.length} FAVORITE CAMERAS
+                                        </div>
+                                        {renderCameraList(favoriteCameras)}
+                                        </>
+                                     ) : <CameraListSkeleton />}
                                 </TabsContent>
                             </>
                         )}

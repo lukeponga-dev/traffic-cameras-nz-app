@@ -37,7 +37,7 @@ const SidebarProvider = React.forwardRef<
 >(
   (
     {
-      defaultOpen = false,
+      defaultOpen = true,
       open: openProp,
       onOpenChange: setOpenProp,
       className,
@@ -48,7 +48,10 @@ const SidebarProvider = React.forwardRef<
   ) => {
     const isMobile = useIsMobile()
     const [_open, _setOpen] = React.useState(defaultOpen)
-    const open = openProp ?? _open
+    
+    // On mobile, default to closed
+    const open = openProp ?? (isMobile ? _open && defaultOpen : _open);
+    
     const setOpen = React.useCallback(
       (value: boolean) => {
         if (setOpenProp) {
@@ -59,6 +62,16 @@ const SidebarProvider = React.forwardRef<
       },
       [setOpenProp]
     )
+
+    // Close sidebar on mobile when resizing from desktop
+    React.useEffect(() => {
+        if (!isMobile) {
+            setOpen(true);
+        } else {
+            setOpen(false);
+        }
+    }, [isMobile, setOpen])
+
 
     const contextValue = React.useMemo<SidebarContext>(
       () => ({
@@ -107,7 +120,7 @@ const Sidebar = React.forwardRef<
           <SheetContent
             data-sidebar="sidebar"
             data-mobile="true"
-            className="w-[24rem] bg-background/80 backdrop-blur-sm p-0 text-foreground border-border/60"
+            className="w-full max-w-md bg-background/80 backdrop-blur-sm p-0 text-foreground border-border/60"
             side={side}
           >
             <div className="flex h-full w-full flex-col">{children}</div>
@@ -117,11 +130,11 @@ const Sidebar = React.forwardRef<
     }
 
     return (
-      <div
+      <aside
         ref={ref}
         className={cn(
           "group peer z-20 hidden md:block text-foreground absolute top-0 h-full transition-transform duration-300 ease-in-out",
-          "w-96", // Default width
+          "w-96",
           side === "left" ? "left-0" : "right-0",
           open ? 'translate-x-0' : (side === 'left' ? '-translate-x-full' : 'translate-x-full'),
           className
@@ -130,15 +143,15 @@ const Sidebar = React.forwardRef<
         data-side={side}
         {...props}
       >
-        <div className="h-full p-4 pr-0">
+        <div className="h-full p-4 pl-0">
           <div
             data-sidebar="sidebar"
-            className="flex h-full w-full flex-col bg-background/80 backdrop-blur-sm border rounded-lg shadow-lg border-border/60"
+            className="flex h-full w-full flex-col bg-background/80 backdrop-blur-sm border-r border-t border-b rounded-r-lg shadow-lg border-border/60"
           >
             {children}
           </div>
         </div>
-      </div>
+      </aside>
     )
   }
 )
