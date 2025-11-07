@@ -1550,9 +1550,8 @@ var _s = __turbopack_context__.k.signature();
 function CameraCard({ camera, isSelected }) {
     _s();
     const [isLoading, setIsLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(true);
-    const statusVariant = camera.status === 'Active' ? "border-green-600 text-green-400 bg-green-900/20" : "border-yellow-600 text-yellow-400 bg-yellow-900/20";
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
-        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("overflow-hidden transition-all duration-300 border-2", isSelected ? "border-primary shadow-lg" : "border-transparent hover:bg-muted/80"),
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("overflow-hidden transition-all duration-300 border-2", isSelected ? "border-primary shadow-lg bg-muted/80" : "border-transparent hover:bg-muted/80"),
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "flex items-center p-3",
             children: [
@@ -1563,7 +1562,7 @@ function CameraCard({ camera, isSelected }) {
                             className: "absolute inset-0"
                         }, void 0, false, {
                             fileName: "[project]/src/components/camera-card.tsx",
-                            lineNumber: 29,
+                            lineNumber: 24,
                             columnNumber: 35
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -1576,32 +1575,32 @@ function CameraCard({ camera, isSelected }) {
                             unoptimized: true
                         }, void 0, false, {
                             fileName: "[project]/src/components/camera-card.tsx",
-                            lineNumber: 30,
+                            lineNumber: 25,
                             columnNumber: 22
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/camera-card.tsx",
-                    lineNumber: 28,
+                    lineNumber: 23,
                     columnNumber: 17
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "flex-1 min-w-0",
                     children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardTitle"], {
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                             className: "text-sm font-semibold leading-tight truncate",
                             children: camera.name
                         }, void 0, false, {
                             fileName: "[project]/src/components/camera-card.tsx",
-                            lineNumber: 41,
-                            columnNumber: 21
+                            lineNumber: 36,
+                            columnNumber: 22
                         }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardDescription"], {
-                            className: "text-xs truncate",
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                            className: "text-xs text-muted-foreground truncate",
                             children: camera.region
                         }, void 0, false, {
                             fileName: "[project]/src/components/camera-card.tsx",
-                            lineNumber: 44,
+                            lineNumber: 39,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1614,7 +1613,7 @@ function CameraCard({ camera, isSelected }) {
                                             className: "h-3 w-3"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/camera-card.tsx",
-                                            lineNumber: 49,
+                                            lineNumber: 44,
                                             columnNumber: 30
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1622,13 +1621,13 @@ function CameraCard({ camera, isSelected }) {
                                             children: camera.direction
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/camera-card.tsx",
-                                            lineNumber: 50,
+                                            lineNumber: 45,
                                             columnNumber: 30
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/camera-card.tsx",
-                                    lineNumber: 48,
+                                    lineNumber: 43,
                                     columnNumber: 26
                                 }, this),
                                 camera.highway && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1638,32 +1637,32 @@ function CameraCard({ camera, isSelected }) {
                                             className: "h-3 w-3"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/camera-card.tsx",
-                                            lineNumber: 54,
+                                            lineNumber: 49,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                             children: camera.highway
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/camera-card.tsx",
-                                            lineNumber: 55,
+                                            lineNumber: 50,
                                             columnNumber: 33
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/camera-card.tsx",
-                                    lineNumber: 53,
+                                    lineNumber: 48,
                                     columnNumber: 29
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/camera-card.tsx",
-                            lineNumber: 47,
+                            lineNumber: 42,
                             columnNumber: 22
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/camera-card.tsx",
-                    lineNumber: 40,
+                    lineNumber: 35,
                     columnNumber: 17
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1673,7 +1672,7 @@ function CameraCard({ camera, isSelected }) {
                             id: camera.id
                         }, void 0, false, {
                             fileName: "[project]/src/components/camera-card.tsx",
-                            lineNumber: 61,
+                            lineNumber: 56,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -1683,29 +1682,29 @@ function CameraCard({ camera, isSelected }) {
                                 className: "h-5 w-5 text-muted-foreground hover:text-foreground"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/camera-card.tsx",
-                                lineNumber: 63,
+                                lineNumber: 58,
                                 columnNumber: 25
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/camera-card.tsx",
-                            lineNumber: 62,
+                            lineNumber: 57,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/camera-card.tsx",
-                    lineNumber: 60,
+                    lineNumber: 55,
                     columnNumber: 17
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/components/camera-card.tsx",
-            lineNumber: 27,
+            lineNumber: 22,
             columnNumber: 13
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/camera-card.tsx",
-        lineNumber: 23,
+        lineNumber: 18,
         columnNumber: 9
     }, this);
 }

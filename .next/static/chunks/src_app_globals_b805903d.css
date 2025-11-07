@@ -1268,6 +1268,10 @@ body {
   background-color: #713f1233;
 }
 
+.bg-muted\/80 {
+  background-color: hsl(var(--muted) / .8);
+}
+
 .fill-current {
   fill: currentColor;
 }

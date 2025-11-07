@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import FavoriteButton from "@/components/favorite-button";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Zap, CheckCircle2, Waypoints, MapPin, Milestone } from "lucide-react";
+import { ArrowLeft, Zap, CheckCircle2, Waypoints, Milestone } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import CameraMap from "@/components/camera-map";
 
