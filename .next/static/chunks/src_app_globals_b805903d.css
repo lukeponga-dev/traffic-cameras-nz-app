@@ -505,6 +505,18 @@ body {
   top: 50%;
 }
 
+.left-4 {
+  left: 1rem;
+}
+
+.top-1 {
+  top: .25rem;
+}
+
+.top-16 {
+  top: 4rem;
+}
+
 .z-10 {
   z-index: 10;
 }
@@ -1023,6 +1035,10 @@ body {
   align-items: stretch;
 }
 
+.justify-start {
+  justify-content: flex-start;
+}
+
 .justify-center {
   justify-content: center;
 }
@@ -1053,6 +1069,10 @@ body {
 
 .gap-8 {
   gap: 2rem;
+}
+
+.gap-3 {
+  gap: .75rem;
 }
 
 .space-x-1 > :not([hidden]) ~ :not([hidden]) {
@@ -1312,6 +1332,10 @@ body {
   background-color: rgb(254 252 232 / var(--tw-bg-opacity, 1));
 }
 
+.bg-background\/90 {
+  background-color: hsl(var(--background) / .9);
+}
+
 .fill-current {
   fill: currentColor;
 }
@@ -1464,6 +1488,14 @@ body {
 
 .pt-4 {
   padding-top: 1rem;
+}
+
+.pl-0 {
+  padding-left: 0;
+}
+
+.pl-12 {
+  padding-left: 3rem;
 }
 
 .text-left {

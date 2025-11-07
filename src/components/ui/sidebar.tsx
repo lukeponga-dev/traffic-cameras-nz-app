@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -21,8 +22,8 @@ import {
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
-const SIDEBAR_WIDTH = "22rem"
-const SIDEBAR_WIDTH_MOBILE = "18rem"
+const SIDEBAR_WIDTH = "26rem"
+const SIDEBAR_WIDTH_MOBILE = "20rem"
 const SIDEBAR_WIDTH_ICON = "3rem"
 const SIDEBAR_KEYBOARD_SHORTCUT = "b"
 
@@ -198,7 +199,7 @@ const Sidebar = React.forwardRef<
           <SheetContent
             data-sidebar="sidebar"
             data-mobile="true"
-            className="w-[--sidebar-width] bg-background/80 backdrop-blur-sm p-0 text-foreground [&>button]:hidden"
+            className="w-[--sidebar-width] bg-background/90 backdrop-blur-sm p-0 text-foreground [&>button]:hidden"
             style={
               {
                 "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
@@ -206,7 +207,7 @@ const Sidebar = React.forwardRef<
             }
             side={side}
           >
-            <SheetHeader className="p-2 border-b">
+            <SheetHeader className="p-4 border-b">
               <SheetTitle>Camera List</SheetTitle>
               <SheetDescription className="sr-only">A list of available traffic cameras.</SheetDescription>
             </SheetHeader>
@@ -241,7 +242,7 @@ const Sidebar = React.forwardRef<
             side === "left"
               ? "left-0 group-data-[state=collapsed]:-left-[--sidebar-width]"
               : "right-0 group-data-[state=collapsed]:-right-[--sidebar-width]",
-            "p-4" 
+            "p-4 pl-0" 
           )}
           
         >
@@ -353,7 +354,7 @@ const SidebarHeader = React.forwardRef<
     <div
       ref={ref}
       data-sidebar="header"
-      className={cn("flex flex-col gap-2 p-2", className)}
+      className={cn("flex flex-col gap-2 p-4", className)}
       {...props}
     />
   )

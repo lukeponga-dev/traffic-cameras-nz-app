@@ -1,14 +1,18 @@
+
 "use client";
 
 import { useState, useMemo } from 'react';
 import type { Camera } from '@/lib/types';
 import { Input } from '@/components/ui/input';
 import { CameraCard } from '@/components/camera-card';
-import { Search } from 'lucide-react';
+import { Search, Star } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useFavorites } from '@/hooks/use-favorites';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { SidebarContent } from './ui/sidebar';
+import { SidebarContent, SidebarHeader } from './ui/sidebar';
+import { Button } from './ui/button';
+import Link from 'next/link';
+import { Separator } from './ui/separator';
 
 export default function CameraList({ 
     cameras,
@@ -35,7 +39,7 @@ export default function CameraList({
     }, [filteredCameras, favoriteIds, favoritesLoaded]);
 
     const renderCameraList = (cameraList: Camera[]) => (
-        <div className="p-2 grid gap-2">
+        <div className="p-4 grid gap-3">
             {cameraList.map(camera => (
                 <div key={camera.id} onClick={() => onCameraSelect(camera)} className="cursor-pointer">
                     <CameraCard camera={camera} />
@@ -51,24 +55,32 @@ export default function CameraList({
 
     return (
         <div className="flex flex-col h-full">
-            <div className="p-2 border-b border-border sticky top-0 bg-background/95 z-10">
+            <SidebarHeader>
+                <h2 className="text-xl font-bold">Cameras</h2>
                 <div className="relative">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                     <Input
                         type="search"
                         placeholder="Search cameras..."
-                        className="pl-10 text-sm"
+                        className="pl-10 text-sm h-9"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
                 </div>
-            </div>
+                 <Button asChild variant="outline">
+                    <Link href="/favorites">
+                        <Star className="mr-2 h-4 w-4" />
+                        View Favorites
+                    </Link>
+                </Button>
+            </SidebarHeader>
+            <Separator />
             <SidebarContent>
                 <Tabs defaultValue="all" className="flex flex-col flex-1">
                     <div className="p-2">
                         <TabsList className="grid w-full grid-cols-2">
-                            <TabsTrigger value="all">All</TabsTrigger>
-                            <TabsTrigger value="favorites">Favorites</TabsTrigger>
+                            <TabsTrigger value="all">All ({filteredCameras.length})</TabsTrigger>
+                            <TabsTrigger value="favorites">Favorites ({favoriteCameras.length})</TabsTrigger>
                         </TabsList>
                     </div>
                     <ScrollArea className="flex-1">
@@ -76,7 +88,7 @@ export default function CameraList({
                             {renderCameraList(filteredCameras)}
                         </TabsContent>
                         <TabsContent value="favorites" className="m-0">
-                            {favoritesLoaded ? renderCameraList(favoriteCameras) : <p>Loading favorites...</p>}
+                            {favoritesLoaded ? renderCameraList(favoriteCameras) : <p className="p-4 text-muted-foreground">Loading favorites...</p>}
                         </TabsContent>
                     </ScrollArea>
                 </Tabs>

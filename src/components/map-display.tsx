@@ -12,6 +12,7 @@ import { Skeleton } from './ui/skeleton';
 import { useToast } from '@/hooks/use-toast';
 import { darkMapStyle } from '@/lib/map-styles';
 import { useMap } from '@vis.gl/react-google-maps';
+import FavoriteButton from './favorite-button';
 
 const NZ_CENTER = { lat: -41.28664, lng: 174.77557 };
 const INITIAL_ZOOM = 5;
@@ -26,6 +27,7 @@ function Directions({ destination }: { destination: google.maps.places.PlaceResu
 
     const [directionsService, setDirectionsService] = useState<google.maps.DirectionsService | null>(null);
     const [directionsRenderer, setDirectionsRenderer] = useState<google.maps.DirectionsRenderer | null>(null);
+    const [routes, setRoutes] = useState<google.maps.DirectionsRoute[]>([]);
 
     useEffect(() => {
         if (!routesLibrary || !map) return;
@@ -35,11 +37,16 @@ function Directions({ destination }: { destination: google.maps.places.PlaceResu
             suppressMarkers: true,
             polylineOptions: {
                 strokeColor: 'hsl(var(--primary))',
-                strokeOpacity: 0.8,
+                strokeOpacity: 0.9,
                 strokeWeight: 6
             }
         }));
     }, [routesLibrary, map]);
+
+     useEffect(() => {
+        if (!directionsRenderer) return;
+        directionsRenderer.setDirections({ routes: routes });
+    }, [routes, directionsRenderer]);
 
     const calculateRoute = useCallback((dest: google.maps.LatLng | LatLng) => {
         if (!userLocation) {
@@ -57,9 +64,10 @@ function Directions({ destination }: { destination: google.maps.places.PlaceResu
                 destination: dest,
                 travelMode: google.maps.TravelMode.DRIVING,
             }, (result, status) => {
-                if (status === google.maps.DirectionsStatus.OK) {
-                    directionsRenderer.setDirections(result);
+                if (status === google.maps.DirectionsStatus.OK && result) {
+                    setRoutes(result.routes);
                 } else {
+                    setRoutes([]);
                     toast({
                         variant: 'destructive',
                         title: 'Could not find a route',
@@ -72,7 +80,7 @@ function Directions({ destination }: { destination: google.maps.places.PlaceResu
 
     useEffect(() => {
         if (!destination) {
-            directionsRenderer?.setDirections({routes: []});
+            setRoutes([]);
             return;
         };
 
@@ -115,11 +123,11 @@ function Directions({ destination }: { destination: google.maps.places.PlaceResu
             }
         );
 
-    }, [destination, calculateRoute, directionsRenderer, toast]);
+    }, [destination, calculateRoute, toast]);
 
     return userLocation ? (
          <AdvancedMarker position={userLocation}>
-            <div className="w-4 h-4 rounded-full bg-blue-500 border-2 border-white shadow-md" />
+            <div className="w-4 h-4 bg-blue-500 rounded-full border-2 border-white shadow-md" title="Your Location"/>
         </AdvancedMarker>
     ) : null;
 }
@@ -132,9 +140,18 @@ export default function MapDisplay({
     destination: google.maps.places.PlaceResult | Camera | null;
 }) {
     const [selectedCameraId, setSelectedCameraId] = useState<string | null>(null);
+    const map = useMap();
     
     const selectedCamera = cameras.find(c => c.id === selectedCameraId);
     
+    const handleMarkerClick = useCallback((cameraId: string) => {
+        setSelectedCameraId(cameraId);
+        const cam = cameras.find(c => c.id === cameraId);
+        if (cam && map) {
+            map.panTo({ lat: cam.latitude, lng: cam.longitude });
+        }
+    }, [cameras, map]);
+
     return (
         <div className="w-full h-full bg-muted relative">
             <Map
@@ -152,7 +169,7 @@ export default function MapDisplay({
                     <AdvancedMarker
                         key={camera.id}
                         position={{ lat: camera.latitude, lng: camera.longitude }}
-                        onClick={() => setSelectedCameraId(camera.id)}
+                        onClick={() => handleMarkerClick(camera.id)}
                     >
                          <Pin 
                             borderColor={'hsl(var(--primary))'}
@@ -168,11 +185,10 @@ export default function MapDisplay({
                     <InfoWindow
                         position={{ lat: selectedCamera.latitude, lng: selectedCamera.longitude }}
                         onCloseClick={() => setSelectedCameraId(null)}
-                        minWidth={250}
+                        minWidth={280}
                         headerDisabled
                     >
-                        <div className="p-1 max-w-xs bg-background text-foreground rounded-lg">
-                            <h3 className="font-bold text-md mb-2">{selectedCamera.name}</h3>
+                        <div className="p-1 max-w-xs bg-background text-foreground rounded-lg font-body">
                              <div className="aspect-video relative mb-2 rounded-md overflow-hidden bg-muted">
                                 <Skeleton className="absolute inset-0" />
                                 <Image
@@ -180,11 +196,15 @@ export default function MapDisplay({
                                     alt={`Live feed from ${selectedCamera.name}`}
                                     fill
                                     className="object-cover"
-                                    sizes="250px"
+                                    sizes="280px"
                                     unoptimized
                                 />
+                                <div className="absolute top-1 right-1 z-10">
+                                    <FavoriteButton id={selectedCamera.id} />
+                                </div>
                             </div>
-                             <p className="text-sm text-muted-foreground mb-3">{selectedCamera.region}</p>
+                             <h3 className="font-bold text-md mb-1 px-1">{selectedCamera.name}</h3>
+                             <p className="text-sm text-muted-foreground mb-3 px-1">{selectedCamera.region}</p>
                             <Button asChild size="sm" className="w-full">
                                 <Link href={`/cameras/${selectedCamera.id}`}>
                                     View Details
