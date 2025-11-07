@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { MapProvider } from './map-provider';
-import { SidebarProvider } from '@/components/ui/sidebar';
 
 export const metadata: Metadata = {
   title: 'Kiwi Traffic Watch',
@@ -15,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
@@ -23,10 +22,8 @@ export default function RootLayout({
       </head>
       <body className="font-body antialiased bg-background text-foreground">
         <MapProvider>
-          <SidebarProvider>
             {children}
             <Toaster />
-          </SidebarProvider>
         </MapProvider>
       </body>
     </html>

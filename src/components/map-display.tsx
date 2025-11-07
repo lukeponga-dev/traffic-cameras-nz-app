@@ -10,6 +10,7 @@ import { ExternalLink, Crosshair, MapPin, Search } from 'lucide-react';
 import { Skeleton } from './ui/skeleton';
 import { useToast } from '@/hooks/use-toast';
 import { Input } from './ui/input';
+import { darkMapStyle } from '@/lib/map-styles';
 
 const NZ_CENTER = { lat: -41.28664, lng: 174.77557 };
 const INITIAL_ZOOM = 5;
@@ -153,7 +154,8 @@ export default function MapDisplay({ cameras }: { cameras: Camera[] }) {
                 zoom={zoom}
                 gestureHandling={'greedy'}
                 disableDefaultUI={true}
-                mapId="kiwi-traffic-map"
+                mapId="kiwi-traffic-map-dark"
+                styles={darkMapStyle}
                 onDragstart={() => {
                     if(selectedCameraId) setSelectedCameraId(null);
                 }}
@@ -164,7 +166,11 @@ export default function MapDisplay({ cameras }: { cameras: Camera[] }) {
                         position={{ lat: camera.latitude, lng: camera.longitude }}
                         onClick={() => setSelectedCameraId(camera.id)}
                     >
-                         <Pin />
+                         <Pin 
+                            borderColor={'hsl(var(--primary))'}
+                            background={'hsl(var(--primary))'}
+                            glyphColor={'hsl(var(--primary-foreground))'}
+                         />
                     </AdvancedMarker>
                 ))}
 
@@ -179,8 +185,9 @@ export default function MapDisplay({ cameras }: { cameras: Camera[] }) {
                         position={{ lat: selectedCamera.latitude, lng: selectedCamera.longitude }}
                         onCloseClick={() => setSelectedCameraId(null)}
                         minWidth={250}
+                        headerDisabled
                     >
-                        <div className="p-1 max-w-xs">
+                        <div className="p-1 max-w-xs bg-background text-foreground rounded-lg">
                             <h3 className="font-bold text-md mb-2">{selectedCamera.name}</h3>
                              <div className="aspect-video relative mb-2 rounded-md overflow-hidden bg-muted">
                                 <Skeleton className="absolute inset-0" />
