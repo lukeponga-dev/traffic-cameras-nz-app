@@ -8,17 +8,19 @@ import { SidebarTrigger } from "./ui/sidebar";
 export function Header() {
   return (
     <header className="w-full border-b border-border bg-background flex-shrink-0">
-      <div className="container flex h-16 items-center px-4">
-         <SidebarTrigger asChild>
-          <Button
-            size="icon"
-            variant="ghost"
-            className="rounded-full lg:hidden"
-          >
-            <PanelLeft />
-          </Button>
-        </SidebarTrigger>
-        <Link href="/" className="mr-6 flex items-center space-x-2">
+      <div className="container flex h-16 items-center gap-4 px-4">
+        <div className="lg:hidden">
+          <SidebarTrigger asChild>
+            <Button
+              size="icon"
+              variant="ghost"
+              className="rounded-full"
+            >
+              <PanelLeft />
+            </Button>
+          </SidebarTrigger>
+        </div>
+        <Link href="/" className="flex items-center gap-2">
           <Camera className="h-6 w-6 text-primary" />
           <span className="font-bold sm:inline-block">Kiwi Traffic Watch</span>
         </Link>
