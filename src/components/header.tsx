@@ -1,12 +1,10 @@
 
 "use client";
 
-import Link from "next/link";
-import { Camera, Star, Search } from "lucide-react";
-import { Button } from "./ui/button";
 import { useRef, useEffect, useState } from "react";
 import { useMapsLibrary } from "@vis.gl/react-google-maps";
 import { Input } from "./ui/input";
+import { Search } from "lucide-react";
 
 function AutocompleteInput({ onPlaceChange }: { onPlaceChange: (place: google.maps.places.PlaceResult | null) => void }) {
     const inputRef = useRef<HTMLInputElement>(null);
@@ -22,9 +20,15 @@ function AutocompleteInput({ onPlaceChange }: { onPlaceChange: (place: google.ma
         });
         setAutocomplete(ac);
 
-        ac.addListener('place_changed', () => {
+        const listener = ac.addListener('place_changed', () => {
             onPlaceChange(ac.getPlace());
         });
+
+        return () => {
+            if (listener) {
+              listener.remove();
+            }
+        };
 
     }, [places, onPlaceChange]);
 

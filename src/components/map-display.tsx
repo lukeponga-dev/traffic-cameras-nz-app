@@ -3,7 +3,7 @@
 
 import { useState, useCallback, useEffect, useRef } from 'react';
 import type { Camera } from '@/lib/types';
-import { Map, AdvancedMarker, InfoWindow, Pin, useMapsLibrary } from '@vis.gl/react-google-maps';
+import { Map, AdvancedMarker, InfoWindow, Pin, useMapsLibrary, useMap } from '@vis.gl/react-google-maps';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from './ui/button';
@@ -11,7 +11,6 @@ import { ExternalLink } from 'lucide-react';
 import { Skeleton } from './ui/skeleton';
 import { useToast } from '@/hooks/use-toast';
 import { darkMapStyle } from '@/lib/map-styles';
-import { useMap } from '@vis.gl/react-google-maps';
 import FavoriteButton from './favorite-button';
 
 const NZ_CENTER = { lat: -41.28664, lng: 174.77557 };
@@ -28,7 +27,8 @@ function Directions({ destination }: { destination: google.maps.places.PlaceResu
     const [directionsService, setDirectionsService] = useState<google.maps.DirectionsService | null>(null);
     const [directionsRenderer, setDirectionsRenderer] = useState<google.maps.DirectionsRenderer | null>(null);
     const [routes, setRoutes] = useState<google.maps.DirectionsRoute[]>([]);
-
+    
+    // Init directions service and renderer
     useEffect(() => {
         if (!routesLibrary || !map) return;
         setDirectionsService(new routesLibrary.DirectionsService());
@@ -42,15 +42,17 @@ function Directions({ destination }: { destination: google.maps.places.PlaceResu
             }
         }));
     }, [routesLibrary, map]);
-
-     useEffect(() => {
+    
+    // Render routes
+    useEffect(() => {
         if (!directionsRenderer) return;
         directionsRenderer.setDirections({ routes: routes });
     }, [routes, directionsRenderer]);
 
+
     const calculateRoute = useCallback((dest: google.maps.LatLng | LatLng) => {
         if (!userLocation) {
-            toast({
+             toast({
                 variant: 'destructive',
                 title: 'Location not available',
                 description: 'Please enable location services to calculate a route.',
@@ -59,11 +61,12 @@ function Directions({ destination }: { destination: google.maps.places.PlaceResu
         }
 
         if (directionsService && directionsRenderer) {
-            directionsService.route({
+            const request: google.maps.DirectionsRequest = {
                 origin: userLocation,
                 destination: dest,
                 travelMode: google.maps.TravelMode.DRIVING,
-            }, (result, status) => {
+            };
+            directionsService.route(request, (result, status) => {
                 if (status === google.maps.DirectionsStatus.OK && result) {
                     setRoutes(result.routes);
                 } else {
@@ -86,14 +89,12 @@ function Directions({ destination }: { destination: google.maps.places.PlaceResu
 
         let destLocation: google.maps.LatLng | LatLng;
 
-        if ('geometry' in destination && destination.geometry) { // It's a PlaceResult
-            if(destination.geometry?.location){
-                destLocation = destination.geometry.location;
-            } else {
-                return;
-            }
-        } else { // It's a Camera
-            destLocation = { lat: (destination as Camera).latitude, lng: (destination as Camera).longitude };
+        if ('geometry' in destination && destination.geometry?.location) { // It's a PlaceResult
+            destLocation = destination.geometry.location;
+        } else if ('latitude' in destination) { // It's a Camera
+            destLocation = { lat: destination.latitude, lng: destination.longitude };
+        } else {
+            return;
         }
         
         if (!navigator.geolocation) {
@@ -152,6 +153,10 @@ export default function MapDisplay({
         }
     }, [cameras, map]);
 
+    const handleCloseInfoWindow = useCallback(() => {
+        setSelectedCameraId(null);
+    }, []);
+
     return (
         <div className="w-full h-full bg-muted relative">
             <Map
@@ -161,9 +166,7 @@ export default function MapDisplay({
                 disableDefaultUI={true}
                 mapId="kiwi-traffic-map-dark"
                 styles={darkMapStyle}
-                onDragstart={() => {
-                    if(selectedCameraId) setSelectedCameraId(null);
-                }}
+                onDragstart={handleCloseInfoWindow}
             >
                 {cameras.map((camera) => (
                     <AdvancedMarker
@@ -184,7 +187,7 @@ export default function MapDisplay({
                 {selectedCamera && (
                     <InfoWindow
                         position={{ lat: selectedCamera.latitude, lng: selectedCamera.longitude }}
-                        onCloseClick={() => setSelectedCameraId(null)}
+                        onCloseClick={handleCloseInfoWindow}
                         minWidth={280}
                         headerDisabled
                     >

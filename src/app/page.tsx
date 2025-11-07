@@ -77,16 +77,16 @@ export default function Home() {
 
   return (
     <SidebarProvider>
-      <div className="relative h-screen w-screen">
+      <div className="relative h-screen w-screen overflow-hidden">
         
         <Header onPlaceSelect={handlePlaceSelect} />
 
-        <div className="absolute top-16 right-4 z-10 flex flex-col gap-2">
-            <Button size="icon" variant="ghost" className="bg-background/80 backdrop-blur-sm rounded-lg border shadow-lg h-12 w-12" onClick={handleGeolocate}>
+        <div className="absolute top-[72px] right-4 z-10 flex flex-col gap-2">
+            <Button size="icon" variant="ghost" className="bg-background/80 backdrop-blur-sm rounded-lg border shadow-lg h-12 w-12" onClick={handleGeolocate} aria-label="Geolocate">
                 <Crosshair className="h-6 w-6"/>
             </Button>
             <SidebarTrigger asChild>
-                <Button size="icon" variant="ghost" className="bg-background/80 backdrop-blur-sm rounded-lg border shadow-lg h-12 w-12">
+                <Button size="icon" variant="ghost" className="bg-background/80 backdrop-blur-sm rounded-lg border shadow-lg h-12 w-12" aria-label="Toggle Camera List">
                     <PanelLeft className="h-6 w-6"/>
                 </Button>
             </SidebarTrigger>

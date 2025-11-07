@@ -9,17 +9,17 @@ import { Badge } from './ui/badge';
 import { Skeleton } from './ui/skeleton';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
-import { Zap, CircleDot, Waypoints } from 'lucide-react';
+import { Zap, CircleDot } from 'lucide-react';
 
 export function CameraCard({ camera }: { camera: Camera }) {
     const [isLoading, setIsLoading] = useState(true);
 
     const statusVariant = camera.status === 'Active' 
-        ? "border-green-600 text-green-600 bg-green-50"
-        : "border-yellow-600 text-yellow-600 bg-yellow-50";
+        ? "border-green-600 text-green-400 bg-green-900/20"
+        : "border-yellow-600 text-yellow-400 bg-yellow-900/20";
 
     return (
-        <Card className="overflow-hidden transition-all duration-300 hover:shadow-md border-border/60">
+        <Card className="overflow-hidden transition-all duration-300 hover:shadow-md hover:border-primary/50 border-border/60 bg-muted/30">
             <div className="group">
                 <div className="aspect-video relative bg-muted overflow-hidden">
                     {isLoading && <Skeleton className="absolute inset-0" />}
@@ -36,18 +36,15 @@ export function CameraCard({ camera }: { camera: Camera }) {
                         <FavoriteButton id={camera.id} />
                     </div>
                 </div>
-                <CardHeader className="flex flex-row items-start justify-between gap-4 p-3">
-                    <div className="space-y-1 flex-1">
-                        <Link href={`/cameras/${camera.id}`} className="block group">
-                            <CardTitle className="text-sm font-semibold leading-tight group-hover:text-primary">
-                                {camera.name}
-                            </CardTitle>
-                        </Link>
-                        <CardDescription className="text-xs">
-                            {camera.region}
-                        </CardDescription>
-                    </div>
-                    
+                <CardHeader className="p-3">
+                    <Link href={`/cameras/${camera.id}`} className="block group">
+                        <CardTitle className="text-sm font-semibold leading-tight group-hover:text-primary">
+                            {camera.name}
+                        </CardTitle>
+                    </Link>
+                    <CardDescription className="text-xs">
+                        {camera.region}
+                    </CardDescription>
                 </CardHeader>
                 <CardContent className="p-3 pt-0 flex items-center justify-between text-xs text-muted-foreground">
                     <div className="flex items-center gap-2">

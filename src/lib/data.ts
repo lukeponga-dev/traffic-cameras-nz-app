@@ -1,12 +1,11 @@
 import type { Camera } from './types';
 import fallbackData from '../../cameras.json';
 
-// Keep a cache of the cameras to avoid fetching them on every request.
 let cameraCache: Camera[] | null = null;
 const API_BASE_URL = 'https://trafficnz.info';
 
-function processApiCameraData(cameras: any[]): Camera[] {
-    const activeCameras = cameras.filter((cam: any) => cam && cam.id && !cam.offline);
+function processApiCameraData(apiCameras: any[]): Camera[] {
+    const activeCameras = apiCameras.filter((cam: any) => cam && cam.id && !cam.offline);
     return activeCameras.map((cam: any) => ({
         id: String(cam.id),
         name: cam.name,
@@ -18,6 +17,7 @@ function processApiCameraData(cameras: any[]): Camera[] {
         imageUrl: `${API_BASE_URL}${cam.imageUrl}`,
         description: cam.description,
         group: cam.group,
+        highway: cam.highway
     }));
 }
 

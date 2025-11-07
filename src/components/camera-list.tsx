@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, Suspense } from 'react';
 import type { Camera } from '@/lib/types';
 import { Input } from '@/components/ui/input';
 import { CameraCard } from '@/components/camera-card';
@@ -13,6 +13,30 @@ import { SidebarContent, SidebarHeader } from './ui/sidebar';
 import { Button } from './ui/button';
 import Link from 'next/link';
 import { Separator } from './ui/separator';
+import { Skeleton } from './ui/skeleton';
+
+function CameraListSkeleton() {
+    return (
+        <div className="p-4 grid gap-3">
+            {[...Array(5)].map((_, i) => (
+                <div key={i} className="cursor-pointer">
+                    <div className="overflow-hidden transition-all duration-300 border-border/60 rounded-lg">
+                        <Skeleton className="aspect-video w-full bg-muted" />
+                        <div className="p-3">
+                            <Skeleton className="h-4 w-3/4 mb-2" />
+                            <Skeleton className="h-3 w-1/2" />
+                        </div>
+                         <div className="p-3 pt-0 flex items-center justify-between">
+                            <Skeleton className="h-4 w-1/4" />
+                            <Skeleton className="h-6 w-20 rounded-full" />
+                        </div>
+                    </div>
+                </div>
+            ))}
+        </div>
+    );
+}
+
 
 export default function CameraList({ 
     cameras,
@@ -25,6 +49,7 @@ export default function CameraList({
     const { favoriteIds, isLoaded: favoritesLoaded } = useFavorites();
 
     const filteredCameras = useMemo(() => {
+        if (!cameras.length) return [];
         if (!searchTerm) return cameras;
         return cameras.filter(camera =>
             camera.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -45,7 +70,7 @@ export default function CameraList({
                     <CameraCard camera={camera} />
                 </div>
             ))}
-            {cameraList.length === 0 && (
+            {cameras.length > 0 && cameraList.length === 0 && (
                 <div className="text-center py-10 text-muted-foreground">
                     <p>No cameras found.</p>
                 </div>
@@ -84,12 +109,16 @@ export default function CameraList({
                         </TabsList>
                     </div>
                     <ScrollArea className="flex-1">
-                        <TabsContent value="all" className="m-0">
-                            {renderCameraList(filteredCameras)}
-                        </TabsContent>
-                        <TabsContent value="favorites" className="m-0">
-                            {favoritesLoaded ? renderCameraList(favoriteCameras) : <p className="p-4 text-muted-foreground">Loading favorites...</p>}
-                        </TabsContent>
+                        {cameras.length === 0 ? <CameraListSkeleton /> : (
+                            <>
+                                <TabsContent value="all" className="m-0">
+                                    {renderCameraList(filteredCameras)}
+                                </TabsContent>
+                                <TabsContent value="favorites" className="m-0">
+                                    {favoritesLoaded ? renderCameraList(favoriteCameras) : <p className="p-4 text-muted-foreground">Loading favorites...</p>}
+                                </TabsContent>
+                            </>
+                        )}
                     </ScrollArea>
                 </Tabs>
             </SidebarContent>

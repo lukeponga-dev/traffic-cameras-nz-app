@@ -5,8 +5,9 @@ export type Camera = {
   latitude: number;
   longitude: number;
   direction: string;
-  status: 'Active' | 'Under Maintenance' | 'Proposed' | 'Inactive';
+  status: 'Active' | 'Under Maintenance';
   imageUrl: string;
   description?: string;
   group?: string;
+  highway?: string;
 };

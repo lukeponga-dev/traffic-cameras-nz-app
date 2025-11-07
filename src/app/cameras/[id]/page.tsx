@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import FavoriteButton from "@/components/favorite-button";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Zap, CheckCircle2, Waypoints, MapPin } from "lucide-react";
+import { ArrowLeft, Zap, CheckCircle2, Waypoints, MapPin, Milestone } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import CameraMap from "@/components/camera-map";
 
@@ -43,37 +43,6 @@ export default async function CameraPage({ params }: Props) {
             </Button>
             <div className="grid md:grid-cols-2 gap-8">
                 <div className="space-y-6">
-                    <Card>
-                        <CardHeader className="flex-row items-start justify-between">
-                             <div className="space-y-2">
-                                <CardTitle className="text-2xl">{camera.name}</CardTitle>
-                                <CardDescription>{camera.region}</CardDescription>
-                            </div>
-                            <FavoriteButton id={camera.id} />
-                        </CardHeader>
-                        <CardContent className="grid grid-cols-1 gap-4 text-sm">
-                            {camera.description && <p className="text-muted-foreground">{camera.description}</p>}
-                            <div className="flex items-center gap-2 p-3 bg-green-100 dark:bg-green-900/30 rounded-lg">
-                                <CheckCircle2 className="h-4 w-4 text-green-500" />
-                                <span className="font-semibold">{camera.status}</span>
-                            </div>
-                             <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
-                                <Zap className="h-4 w-4" />
-                                <span className="font-semibold">{camera.direction} Direction</span>
-                            </div>
-                             <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
-                                <MapPin className="h-4 w-4" />
-                                <span className="font-semibold">{camera.group}</span>
-                            </div>
-                            <Button asChild>
-                                <Link href={directionsUrl} target="_blank" rel="noopener noreferrer">
-                                    <Waypoints className="mr-2 h-4 w-4" />
-                                    Get Directions
-                                </Link>
-                            </Button>
-                        </CardContent>
-                    </Card>
-
                     <div className="aspect-video w-full relative overflow-hidden rounded-lg shadow-lg">
                          <Skeleton className="absolute inset-0" />
                         <Image 
@@ -86,6 +55,36 @@ export default async function CameraPage({ params }: Props) {
                             unoptimized
                         />
                     </div>
+                    <Card>
+                        <CardHeader className="flex-row items-start justify-between">
+                             <div className="space-y-2">
+                                <CardTitle className="text-2xl">{camera.name}</CardTitle>
+                                <CardDescription>{camera.region}</CardDescription>
+                            </div>
+                            <FavoriteButton id={camera.id} />
+                        </CardHeader>
+                        <CardContent className="grid grid-cols-1 gap-4 text-sm">
+                            {camera.description && <p className="text-muted-foreground">{camera.description}</p>}
+                            <div className="flex items-center gap-2 p-3 bg-green-100/10 text-green-400 border border-green-500/20 rounded-lg">
+                                <CheckCircle2 className="h-4 w-4" />
+                                <span className="font-semibold">{camera.status}</span>
+                            </div>
+                             <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
+                                <Zap className="h-4 w-4" />
+                                <span className="font-semibold">{camera.direction} Direction</span>
+                            </div>
+                             {camera.highway && <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
+                                <Milestone className="h-4 w-4" />
+                                <span className="font-semibold">{camera.highway}</span>
+                            </div>}
+                            <Button asChild>
+                                <Link href={directionsUrl} target="_blank" rel="noopener noreferrer">
+                                    <Waypoints className="mr-2 h-4 w-4" />
+                                    Get Directions
+                                </Link>
+                            </Button>
+                        </CardContent>
+                    </Card>
                 </div>
 
                 <div className="min-h-[300px] md:min-h-full">
