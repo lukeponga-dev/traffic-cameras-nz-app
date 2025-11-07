@@ -978,8 +978,7 @@ function Directions({ destination }) {
         }
     }["Directions.useEffect"], [
         routesLibrary,
-        map,
-        directionsRenderer
+        map
     ]);
     // Render routes
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
@@ -1037,7 +1036,9 @@ function Directions({ destination }) {
         "Directions.useEffect": ()=>{
             if (!destination) {
                 setRoutes([]);
-                directionsRenderer?.setMap(null);
+                if (directionsRenderer) {
+                    directionsRenderer.setMap(null);
+                }
                 return;
             }
             ;
@@ -1080,7 +1081,9 @@ function Directions({ destination }) {
             }["Directions.useEffect"]);
             return ({
                 "Directions.useEffect": ()=>{
-                    directionsRenderer?.setMap(null);
+                    if (directionsRenderer) {
+                        directionsRenderer.setMap(null);
+                    }
                 }
             })["Directions.useEffect"];
         }
@@ -1098,12 +1101,12 @@ function Directions({ destination }) {
             title: "Your Location"
         }, void 0, false, {
             fileName: "[project]/src/components/map-display.tsx",
-            lineNumber: 143,
+            lineNumber: 147,
             columnNumber: 13
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/map-display.tsx",
-        lineNumber: 142,
+        lineNumber: 146,
         columnNumber: 10
     }, this) : null;
 }
@@ -1196,19 +1199,19 @@ function MapDisplay({ cameras, destination, selectedCamera, onCameraSelect }) {
                             glyphColor: selectedCamera?.id === camera.id ? 'hsl(var(--primary-foreground))' : 'hsl(var(--foreground))'
                         }, void 0, false, {
                             fileName: "[project]/src/components/map-display.tsx",
-                            lineNumber: 202,
+                            lineNumber: 206,
                             columnNumber: 26
                         }, this)
                     }, camera.id, false, {
                         fileName: "[project]/src/components/map-display.tsx",
-                        lineNumber: 197,
+                        lineNumber: 201,
                         columnNumber: 21
                     }, this)),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Directions, {
                     destination: destination
                 }, void 0, false, {
                     fileName: "[project]/src/components/map-display.tsx",
-                    lineNumber: 210,
+                    lineNumber: 214,
                     columnNumber: 17
                 }, this),
                 selectedCamera && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$vis$2e$gl$2f$react$2d$google$2d$maps$2f$dist$2f$index$2e$modern$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["InfoWindow"], {
@@ -1233,7 +1236,7 @@ function MapDisplay({ cameras, destination, selectedCamera, onCameraSelect }) {
                                         className: "absolute inset-0"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/map-display.tsx",
-                                        lineNumber: 222,
+                                        lineNumber: 226,
                                         columnNumber: 33
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -1245,7 +1248,7 @@ function MapDisplay({ cameras, destination, selectedCamera, onCameraSelect }) {
                                         unoptimized: true
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/map-display.tsx",
-                                        lineNumber: 223,
+                                        lineNumber: 227,
                                         columnNumber: 33
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1254,18 +1257,18 @@ function MapDisplay({ cameras, destination, selectedCamera, onCameraSelect }) {
                                             id: selectedCamera.id
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/map-display.tsx",
-                                            lineNumber: 232,
+                                            lineNumber: 236,
                                             columnNumber: 37
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/map-display.tsx",
-                                        lineNumber: 231,
+                                        lineNumber: 235,
                                         columnNumber: 33
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/map-display.tsx",
-                                lineNumber: 221,
+                                lineNumber: 225,
                                 columnNumber: 30
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -1273,7 +1276,7 @@ function MapDisplay({ cameras, destination, selectedCamera, onCameraSelect }) {
                                 children: selectedCamera.name
                             }, void 0, false, {
                                 fileName: "[project]/src/components/map-display.tsx",
-                                lineNumber: 235,
+                                lineNumber: 239,
                                 columnNumber: 30
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1286,20 +1289,20 @@ function MapDisplay({ cameras, destination, selectedCamera, onCameraSelect }) {
                                                 className: "h-3.5 w-3.5"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/map-display.tsx",
-                                                lineNumber: 238,
+                                                lineNumber: 242,
                                                 columnNumber: 37
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 children: selectedCamera.direction
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/map-display.tsx",
-                                                lineNumber: 239,
+                                                lineNumber: 243,
                                                 columnNumber: 37
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/map-display.tsx",
-                                        lineNumber: 237,
+                                        lineNumber: 241,
                                         columnNumber: 33
                                     }, this),
                                     selectedCamera.highway && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1309,26 +1312,26 @@ function MapDisplay({ cameras, destination, selectedCamera, onCameraSelect }) {
                                                 className: "h-3.5 w-3.5"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/map-display.tsx",
-                                                lineNumber: 243,
+                                                lineNumber: 247,
                                                 columnNumber: 37
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 children: selectedCamera.highway
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/map-display.tsx",
-                                                lineNumber: 244,
+                                                lineNumber: 248,
                                                 columnNumber: 37
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/map-display.tsx",
-                                        lineNumber: 242,
+                                        lineNumber: 246,
                                         columnNumber: 33
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/map-display.tsx",
-                                lineNumber: 236,
+                                lineNumber: 240,
                                 columnNumber: 30
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1343,40 +1346,40 @@ function MapDisplay({ cameras, destination, selectedCamera, onCameraSelect }) {
                                             className: "ml-2 h-4 w-4"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/map-display.tsx",
-                                            lineNumber: 251,
+                                            lineNumber: 255,
                                             columnNumber: 37
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/map-display.tsx",
-                                    lineNumber: 249,
+                                    lineNumber: 253,
                                     columnNumber: 33
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/map-display.tsx",
-                                lineNumber: 248,
+                                lineNumber: 252,
                                 columnNumber: 29
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/map-display.tsx",
-                        lineNumber: 220,
+                        lineNumber: 224,
                         columnNumber: 25
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/src/components/map-display.tsx",
-                    lineNumber: 213,
+                    lineNumber: 217,
                     columnNumber: 21
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/components/map-display.tsx",
-            lineNumber: 185,
+            lineNumber: 189,
             columnNumber: 13
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/map-display.tsx",
-        lineNumber: 184,
+        lineNumber: 188,
         columnNumber: 9
     }, this);
 }

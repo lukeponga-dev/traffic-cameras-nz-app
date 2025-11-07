@@ -47,7 +47,7 @@ function Directions({ destination }: { destination: google.maps.places.PlaceResu
         return () => {
             directionsRenderer?.setMap(null);
         }
-    }, [routesLibrary, map, directionsRenderer]);
+    }, [routesLibrary, map]);
     
     // Render routes
     useEffect(() => {
@@ -91,7 +91,9 @@ function Directions({ destination }: { destination: google.maps.places.PlaceResu
     useEffect(() => {
         if (!destination) {
             setRoutes([]);
-            directionsRenderer?.setMap(null);
+            if (directionsRenderer) {
+                directionsRenderer.setMap(null);
+            }
             return;
         };
 
@@ -133,7 +135,9 @@ function Directions({ destination }: { destination: google.maps.places.PlaceResu
         );
         
         return () => {
-            directionsRenderer?.setMap(null);
+            if (directionsRenderer) {
+                directionsRenderer.setMap(null);
+            }
         }
 
     }, [destination, calculateRoute, toast, directionsRenderer]);
