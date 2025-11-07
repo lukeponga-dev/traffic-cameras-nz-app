@@ -28,6 +28,7 @@ function AutocompleteInput({ onPlaceChange }: { onPlaceChange: (place: google.ma
 
         const ac = new places.Autocomplete(inputRef.current, {
             fields: ['geometry', 'name'],
+            componentRestrictions: { country: 'nz' }
         });
         setAutocomplete(ac);
 
@@ -42,14 +43,22 @@ function AutocompleteInput({ onPlaceChange }: { onPlaceChange: (place: google.ma
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
                 ref={inputRef}
-                placeholder="Enter a destination..."
+                placeholder="Search for a destination..."
                 className="pl-10 shadow-lg bg-background"
             />
         </div>
     )
 }
 
-export default function MapDisplay({ cameras }: { cameras: Camera[] }) {
+export default function MapDisplay({ 
+    cameras, 
+    onPlaceSelect, 
+    destination 
+}: { 
+    cameras: Camera[]; 
+    onPlaceSelect: (place: google.maps.places.PlaceResult | null) => void;
+    destination: google.maps.places.PlaceResult | Camera | null;
+}) {
     const [selectedCameraId, setSelectedCameraId] = useState<string | null>(null);
     const [center, setCenter] = useState<LatLng>(NZ_CENTER);
     const [zoom, setZoom] = useState(INITIAL_ZOOM);
@@ -74,6 +83,56 @@ export default function MapDisplay({ cameras }: { cameras: Camera[] }) {
         }));
     }, [map]);
 
+    const calculateRoute = useCallback((dest: google.maps.LatLng | LatLng) => {
+        if (!userLocation) {
+            toast({
+                variant: 'destructive',
+                title: 'Location not available',
+                description: 'Please enable location services to calculate a route.',
+            });
+            return;
+        }
+
+        if (directionsService && directionsRenderer) {
+            directionsService.route({
+                origin: userLocation,
+                destination: dest,
+                travelMode: google.maps.TravelMode.DRIVING,
+            }, (result, status) => {
+                if (status === google.maps.DirectionsStatus.OK) {
+                    directionsRenderer.setDirections(result);
+                } else {
+                    toast({
+                        variant: 'destructive',
+                        title: 'Could not find a route',
+                        description: 'Please check your destination and try again.',
+                    });
+                }
+            });
+        }
+    }, [userLocation, directionsService, directionsRenderer, toast]);
+
+    useEffect(() => {
+        if (!destination) {
+            directionsRenderer?.setDirections({routes: []});
+            return;
+        };
+
+        let destLocation: google.maps.LatLng | LatLng;
+
+        if ('geometry' in destination) { // It's a PlaceResult
+            if(destination.geometry?.location){
+                destLocation = destination.geometry.location;
+            } else {
+                return;
+            }
+        } else { // It's a Camera
+            destLocation = { lat: destination.latitude, lng: destination.longitude };
+        }
+        
+        calculateRoute(destLocation);
+
+    }, [destination, calculateRoute, directionsRenderer]);
 
     const selectedCamera = cameras.find(c => c.id === selectedCameraId);
 
@@ -111,43 +170,10 @@ export default function MapDisplay({ cameras }: { cameras: Camera[] }) {
         );
     }, [toast]);
     
-    const handlePlaceChange = useCallback((place: google.maps.places.PlaceResult | null) => {
-        if (!place?.geometry?.location) {
-            return;
-        }
-        if (!userLocation) {
-            toast({
-                variant: 'destructive',
-                title: 'Location not available',
-                description: 'Please enable location services to calculate a route.',
-            });
-            return;
-        }
-
-        if (directionsService && directionsRenderer) {
-            directionsService.route({
-                origin: userLocation,
-                destination: place.geometry.location,
-                travelMode: google.maps.TravelMode.DRIVING,
-            }, (result, status) => {
-                if (status === google.maps.DirectionsStatus.OK) {
-                    directionsRenderer.setDirections(result);
-                } else {
-                    toast({
-                        variant: 'destructive',
-                        title: 'Could not find a route',
-                        description: 'Please check your destination and try again.',
-                    });
-                }
-            });
-        }
-
-    }, [userLocation, directionsService, directionsRenderer, toast]);
-    
     return (
         <div className="w-full h-full bg-muted relative">
-            <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10 w-full max-w-sm px-4">
-                <AutocompleteInput onPlaceChange={handlePlaceChange} />
+             <div className="absolute top-20 left-1/2 -translate-x-1/2 z-10 w-full max-w-sm px-4">
+                <AutocompleteInput onPlaceChange={onPlaceSelect} />
             </div>
             <Map
                 center={center}
@@ -211,7 +237,7 @@ export default function MapDisplay({ cameras }: { cameras: Camera[] }) {
                     </InfoWindow>
                 )}
             </Map>
-            <div className="absolute top-4 right-4 z-10">
+            <div className="absolute top-20 right-4 z-10">
                  <Button size="icon" variant="outline" className="rounded-full shadow-lg bg-background" onClick={handleGeolocate}>
                     <Crosshair />
                 </Button>

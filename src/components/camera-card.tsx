@@ -9,7 +9,7 @@ import { Badge } from './ui/badge';
 import { Skeleton } from './ui/skeleton';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
-import { Zap, CircleDot } from 'lucide-react';
+import { Zap, CircleDot, Waypoints } from 'lucide-react';
 
 export function CameraCard({ camera }: { camera: Camera }) {
     const [isLoading, setIsLoading] = useState(true);
@@ -20,10 +20,10 @@ export function CameraCard({ camera }: { camera: Camera }) {
 
     return (
         <Card className="overflow-hidden transition-all duration-300 hover:shadow-md border-border/60">
-            <Link href={`/cameras/${camera.id}`} className="block group">
+            <div className="group">
                 <div className="aspect-video relative bg-muted overflow-hidden">
                     {isLoading && <Skeleton className="absolute inset-0" />}
-                    <Image
+                     <Image
                         src={camera.imageUrl}
                         alt={`Live feed from ${camera.name}`}
                         fill
@@ -32,17 +32,22 @@ export function CameraCard({ camera }: { camera: Camera }) {
                         onLoad={() => setIsLoading(false)}
                         unoptimized
                     />
+                    <div className="absolute top-2 right-2 z-10">
+                        <FavoriteButton id={camera.id} />
+                    </div>
                 </div>
                 <CardHeader className="flex flex-row items-start justify-between gap-4 p-3">
                     <div className="space-y-1 flex-1">
-                        <CardTitle className="text-sm font-semibold leading-tight group-hover:text-primary">
-                            {camera.name}
-                        </CardTitle>
+                        <Link href={`/cameras/${camera.id}`} className="block group">
+                            <CardTitle className="text-sm font-semibold leading-tight group-hover:text-primary">
+                                {camera.name}
+                            </CardTitle>
+                        </Link>
                         <CardDescription className="text-xs">
                             {camera.region}
                         </CardDescription>
                     </div>
-                    <FavoriteButton id={camera.id} />
+                    
                 </CardHeader>
                 <CardContent className="p-3 pt-0 flex items-center justify-between text-xs text-muted-foreground">
                     <div className="flex items-center gap-2">
@@ -55,7 +60,7 @@ export function CameraCard({ camera }: { camera: Camera }) {
                        {camera.status}
                     </Badge>
                 </CardContent>
-            </Link>
+            </div>
         </Card>
     );
 }

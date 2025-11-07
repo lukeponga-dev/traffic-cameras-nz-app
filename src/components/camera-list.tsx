@@ -10,7 +10,13 @@ import { useFavorites } from '@/hooks/use-favorites';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { SidebarContent } from './ui/sidebar';
 
-export default function CameraList({ cameras }: { cameras: Camera[] }) {
+export default function CameraList({ 
+    cameras,
+    onCameraSelect
+}: { 
+    cameras: Camera[];
+    onCameraSelect: (camera: Camera) => void;
+}) {
     const [searchTerm, setSearchTerm] = useState('');
     const { favoriteIds, isLoaded: favoritesLoaded } = useFavorites();
 
@@ -31,7 +37,9 @@ export default function CameraList({ cameras }: { cameras: Camera[] }) {
     const renderCameraList = (cameraList: Camera[]) => (
         <div className="p-2 grid gap-2">
             {cameraList.map(camera => (
-                <CameraCard key={camera.id} camera={camera} />
+                <div key={camera.id} onClick={() => onCameraSelect(camera)} className="cursor-pointer">
+                    <CameraCard camera={camera} />
+                </div>
             ))}
             {cameraList.length === 0 && (
                 <div className="text-center py-10 text-muted-foreground">
