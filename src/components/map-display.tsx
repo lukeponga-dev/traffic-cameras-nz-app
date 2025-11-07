@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import type { Camera } from '@/lib/types';
-import { Map, AdvancedMarker, InfoWindow, Pin } from '@vis.gl/react-google-maps';
+import { Map, AdvancedMarker, InfoWindow, Pin, useMap, useMapsLibrary } from '@vis.gl/react-google-maps';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from './ui/button';
@@ -18,6 +18,37 @@ const LOCATE_ZOOM = 14;
 
 type LatLng = { lat: number; lng: number; };
 
+function AutocompleteInput({ onPlaceChange }: { onPlaceChange: (place: google.maps.places.PlaceResult | null) => void }) {
+    const inputRef = useRef<HTMLInputElement>(null);
+    const places = useMapsLibrary('places');
+    const [autocomplete, setAutocomplete] = useState<google.maps.places.Autocomplete | null>(null);
+
+    useEffect(() => {
+        if (!places || !inputRef.current) return;
+
+        const ac = new places.Autocomplete(inputRef.current, {
+            fields: ['geometry', 'name'],
+        });
+        setAutocomplete(ac);
+
+        ac.addListener('place_changed', () => {
+            onPlaceChange(ac.getPlace());
+        });
+
+    }, [places, onPlaceChange]);
+
+    return (
+        <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+                ref={inputRef}
+                placeholder="Enter a destination..."
+                className="pl-10 shadow-lg"
+            />
+        </div>
+    )
+}
+
 export default function MapDisplay({ cameras }: { cameras: Camera[] }) {
     const [selectedCameraId, setSelectedCameraId] = useState<string | null>(null);
     const [center, setCenter] = useState<LatLng>(NZ_CENTER);
@@ -25,24 +56,22 @@ export default function MapDisplay({ cameras }: { cameras: Camera[] }) {
     const [userLocation, setUserLocation] = useState<LatLng | null>(null);
     const { toast } = useToast();
 
+    const map = useMap();
     const [directionsService, setDirectionsService] = useState<google.maps.DirectionsService | null>(null);
     const [directionsRenderer, setDirectionsRenderer] = useState<google.maps.DirectionsRenderer | null>(null);
-    const [map, setMap] = useState<google.maps.Map | null>(null);
-    const [destination, setDestination] = useState('');
 
     useEffect(() => {
-        if (map) {
-            setDirectionsService(new google.maps.DirectionsService());
-            setDirectionsRenderer(new google.maps.DirectionsRenderer({
-                map,
-                suppressMarkers: true,
-                polylineOptions: {
-                    strokeColor: 'hsl(var(--primary))',
-                    strokeOpacity: 0.8,
-                    strokeWeight: 6
-                }
-            }));
-        }
+        if (!map) return;
+        setDirectionsService(new google.maps.DirectionsService());
+        setDirectionsRenderer(new google.maps.DirectionsRenderer({
+            map,
+            suppressMarkers: true,
+            polylineOptions: {
+                strokeColor: 'hsl(var(--primary))',
+                strokeOpacity: 0.8,
+                strokeWeight: 6
+            }
+        }));
     }, [map]);
 
 
@@ -82,14 +111,8 @@ export default function MapDisplay({ cameras }: { cameras: Camera[] }) {
         );
     }, [toast]);
     
-    const handleRouteSearch = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        if (!destination) {
-            toast({
-                variant: 'destructive',
-                title: 'No destination entered',
-                description: 'Please enter a destination to search for a route.',
-            });
+    const handlePlaceChange = useCallback((place: google.maps.places.PlaceResult | null) => {
+        if (!place?.geometry?.location) {
             return;
         }
         if (!userLocation) {
@@ -100,10 +123,11 @@ export default function MapDisplay({ cameras }: { cameras: Camera[] }) {
             });
             return;
         }
+
         if (directionsService && directionsRenderer) {
             directionsService.route({
                 origin: userLocation,
-                destination: destination,
+                destination: place.geometry.location,
                 travelMode: google.maps.TravelMode.DRIVING,
             }, (result, status) => {
                 if (status === google.maps.DirectionsStatus.OK) {
@@ -117,25 +141,15 @@ export default function MapDisplay({ cameras }: { cameras: Camera[] }) {
                 }
             });
         }
-    };
+
+    }, [userLocation, directionsService, directionsRenderer, toast]);
     
     return (
         <div className="w-full h-full bg-muted relative">
             <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10 w-full max-w-sm px-4">
-                <form onSubmit={handleRouteSearch}>
-                    <div className="relative">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                        <Input 
-                            placeholder="Enter a destination..." 
-                            className="pl-10 shadow-lg"
-                            value={destination}
-                            onChange={(e) => setDestination(e.target.value)}
-                        />
-                    </div>
-                </form>
+                <AutocompleteInput onPlaceChange={handlePlaceChange} />
             </div>
             <Map
-                ref={(ref) => setMap(ref?.map || null)}
                 center={center}
                 zoom={zoom}
                 gestureHandling={'greedy'}
