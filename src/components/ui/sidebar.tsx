@@ -123,6 +123,10 @@ const Sidebar = React.forwardRef<
             className="w-full max-w-md bg-background/80 backdrop-blur-sm p-0 text-foreground border-border/60"
             side={side}
           >
+            <SheetHeader className="sr-only">
+              <SheetTitle>Camera List</SheetTitle>
+              <SheetDescription>A list of available traffic cameras. You can search, filter, and select a camera to view its details on the map.</SheetDescription>
+            </SheetHeader>
             <div className="flex h-full w-full flex-col">{children}</div>
           </SheetContent>
         </Sheet>
