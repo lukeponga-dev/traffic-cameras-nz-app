@@ -1,86 +1,47 @@
-# 🚦 Speed Cameras NZ – Location-Aware Safety App
+# 🚦 Kiwi Traffic Watch: NZ Speed & Traffic Cameras
 
-**Speed Cameras NZ** is a progressive web app (PWA) that helps New Zealand drivers stay informed about nearby speed cameras. It uses geolocation, push notifications, and open data to promote safer driving and local awareness.
+A modern, responsive web application for monitoring live traffic and speed cameras across New Zealand.
 
----
+## ✨ Features
 
-## 📍 Features
-
-- 🗺️ Interactive map of NZ speed camera locations  
-- 🚨 Proximity alerts when approaching a camera  
-- 🔔 Push notifications for new or updated cameras  
-- 📡 Offline-ready via PWA caching  
-- 📱 Optional native wrapper for Android APK  
-
----
+- **🗺️ Interactive Map:** A full-screen map displaying all camera locations across New Zealand.
+- **📷 Live Camera Feeds:** View real-time images from traffic cameras in an interactive list and on the map.
+- **📍 Geolocation:** Find your current location on the map to see nearby cameras.
+- **🔍 Destination Search:** Search for any destination and get driving directions routed on the map.
+- **❤️ Favorites:** Save your most-viewed cameras for quick and easy access.
+- **📱 Responsive Design:** A clean, user-friendly interface that works beautifully on desktop and mobile devices.
 
 ## 🛠️ Tech Stack
 
-| Layer           | Tools & Libraries                          |
-|----------------|---------------------------------------------|
-| Frontend        | React, Leaflet, Tailwind CSS               |
-| Backend         | Node.js + Express (optional), Firebase     |
-| Data            | JSON/CSV from NZTA, OSM, community sources |
-| Hosting         | Firebase Hosting, Render, or Vercel        |
-| Notifications   | Firebase Cloud Messaging or OneSignal      |
-| Native Wrapper  | Capacitor or Trusted Web Activity (TWA)    |
+| Category      | Technology                                         |
+|---------------|----------------------------------------------------|
+| **Framework** | [Next.js](https://nextjs.org/) (App Router)        |
+| **Language**  | [TypeScript](https://www.typescriptlang.org/)      |
+| **Styling**   | [Tailwind CSS](https://tailwindcss.com/)             |
+| **UI**        | [shadcn/ui](https://ui.shadcn.com/)                  |
+| **Mapping**   | [Google Maps Platform](https://maps.google.com/)     |
+| **Data**      | Live feed from [trafficnz.info](https://trafficnz.info/) |
 
----
+## 📦 Camera Data Schema
 
-## 📦 Data Format
+The application uses a unified schema for camera data, processed from the live feed:
 
 ```json
 {
-  "lat": -36.8485,
-  "lng": 174.7633,
-  "type": "fixed|mobile|redlight|average",
-  "direction": "northbound",
-  "speed_limit": 50,
-  "source": "NZTA",
-  "last_updated": "2025-10-01"
+  "id": "string",
+  "name": "string",
+  "region": "string",
+  "latitude": "number",
+  "longitude": "number",
+  "direction": "string",
+  "status": "'Active' | 'Under Maintenance'",
+  "imageUrl": "string",
+  "description": "string"
 }
-
 ```
-🧭 Roadmap
 
-✅ Phase 1: Data Acquisition & Validation
-- 🔍 Collect camera data from:
-  - NZTA (Waka Kotahi) CSVs or APIs
-  - OpenStreetMap (highway=speed_camera tags)
-  - Community GitHub datasets
-  - Police PDF releases (OCR parsing if needed)
-- 🧪 Normalize into unified JSON format
+## 🧭 Project Roadmap
 
-🚧 Phase 2: MVP Web App (React + Leaflet)
-- 🗺️ Display camera markers on Leaflet map  
-- 🧭 Center map on user location (Geolocation API)  
-- 🔍 Filter by camera type and speed limit  
-- 📋 Show camera details on marker click  
-- 💾 Load data from local cameras.json or live API  
-
-🚧 Phase 3: Proximity Alerts
-- 📍 Track user location in real time  
-- 🚨 Trigger alerts when within X meters of a camera  
-- 🧭 Optional: direction-aware alerts  
-- 🔕 Allow user to mute or snooze alerts  
-
-🚧 Phase 4: Push Notifications
-- 🔔 Use Firebase Cloud Messaging or OneSignal  
-- 📬 Notify users of:
-  - Nearby cameras  
-  - New or updated camera entries  
-  - Speed limit changes  
-- ✅ Opt-in flow with permission handling  
-
-🚧 Phase 5: Native Wrapper (Android)
-- 📱 Wrap PWA using Capacitor or Trusted Web Activity (TWA)  
-- 📡 Enable background location tracking  
-- 🔋 Optimize for battery and data usage  
-- 🛠️ Publish to Play Store with branded assets  
-
-🌐 Phase 6: Hosting & Deployment
-- 🚀 Deploy to Firebase Hosting, Render, or Vercel  
-- 🧪 Add CI/CD for auto-deploy on commit  
-- 📈 Track usage with analytics (optional)  
-
----
+- **Phase 1 (Complete):** Core application with map view, camera list, live data integration, and favorites.
+- **Phase 2 (Next):** Implement proximity alerts and push notifications for nearby cameras.
+- **Phase 3 (Future):** Explore native mobile features and advanced filtering options.
