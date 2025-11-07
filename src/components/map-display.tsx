@@ -1,31 +1,73 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import type { Camera } from '@/lib/types';
 import { Map, AdvancedMarker, InfoWindow, Pin } from '@vis.gl/react-google-maps';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from './ui/button';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Crosshair, MapPin } from 'lucide-react';
 import { Skeleton } from './ui/skeleton';
 import { darkMapStyle } from '@/lib/map-styles';
+import { useToast } from '@/hooks/use-toast';
 
 const NZ_CENTER = { lat: -41.28664, lng: 174.77557 };
+const INITIAL_ZOOM = 5;
+const LOCATE_ZOOM = 14;
+
+type LatLng = { lat: number; lng: number; };
 
 export default function MapDisplay({ cameras }: { cameras: Camera[] }) {
     const [selectedCameraId, setSelectedCameraId] = useState<string | null>(null);
+    const [center, setCenter] = useState<LatLng>(NZ_CENTER);
+    const [zoom, setZoom] = useState(INITIAL_ZOOM);
+    const [userLocation, setUserLocation] = useState<LatLng | null>(null);
+    const { toast } = useToast();
 
     const selectedCamera = cameras.find(c => c.id === selectedCameraId);
 
+    const handleGeolocate = useCallback(() => {
+        if (!navigator.geolocation) {
+            toast({
+                variant: 'destructive',
+                title: 'Geolocation not supported',
+                description: "Your browser doesn't support geolocation.",
+            });
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const newPos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                };
+                setCenter(newPos);
+                setUserLocation(newPos);
+                setZoom(LOCATE_ZOOM);
+            },
+            () => {
+                toast({
+                    variant: 'destructive',
+                    title: 'Geolocation failed',
+                    description: 'Could not get your location. Please ensure you have granted permission.',
+                });
+            }
+        );
+    }, [toast]);
+    
     return (
-        <div className="w-full h-full bg-muted">
+        <div className="w-full h-full bg-muted relative">
             <Map
-                defaultCenter={NZ_CENTER}
-                defaultZoom={5}
+                center={center}
+                zoom={zoom}
                 gestureHandling={'greedy'}
                 disableDefaultUI={true}
                 mapId="kiwi-traffic-map"
                 styles={darkMapStyle}
+                onDragstart={() => {
+                    if(selectedCameraId) setSelectedCameraId(null);
+                }}
             >
                 {cameras.map((camera) => (
                     <AdvancedMarker
@@ -36,6 +78,12 @@ export default function MapDisplay({ cameras }: { cameras: Camera[] }) {
                          <Pin background={'hsl(var(--primary))'} borderColor={'hsl(var(--primary))'} glyphColor={'hsl(var(--primary-foreground))'} />
                     </AdvancedMarker>
                 ))}
+
+                {userLocation && (
+                    <AdvancedMarker position={userLocation}>
+                        <div className="w-4 h-4 rounded-full bg-blue-500 border-2 border-white" />
+                    </AdvancedMarker>
+                )}
 
                 {selectedCamera && (
                     <InfoWindow
@@ -67,6 +115,11 @@ export default function MapDisplay({ cameras }: { cameras: Camera[] }) {
                     </InfoWindow>
                 )}
             </Map>
+            <div className="absolute top-4 right-4 z-10">
+                 <Button size="icon" variant="outline" className="rounded-full shadow-lg" onClick={handleGeolocate}>
+                    <Crosshair />
+                </Button>
+            </div>
         </div>
     );
 }
