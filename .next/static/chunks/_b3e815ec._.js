@@ -328,8 +328,9 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$hooks$2f$use$2d$toast
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/ui/input.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$map$2d$styles$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/lib/map-styles.ts [app-client] (ecmascript)");
 ;
-var _s = __turbopack_context__.k.signature(), _s1 = __turbopack_context__.k.signature();
+var _s = __turbopack_context__.k.signature(), _s1 = __turbopack_context__.k.signature(), _s2 = __turbopack_context__.k.signature();
 "use client";
+;
 ;
 ;
 ;
@@ -381,7 +382,7 @@ function AutocompleteInput({ onPlaceChange }) {
                 className: "absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground"
             }, void 0, false, {
                 fileName: "[project]/src/components/map-display.tsx",
-                lineNumber: 43,
+                lineNumber: 44,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -390,13 +391,13 @@ function AutocompleteInput({ onPlaceChange }) {
                 className: "pl-10 h-10 w-full"
             }, void 0, false, {
                 fileName: "[project]/src/components/map-display.tsx",
-                lineNumber: 44,
+                lineNumber: 45,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/map-display.tsx",
-        lineNumber: 42,
+        lineNumber: 43,
         columnNumber: 9
     }, this);
 }
@@ -406,20 +407,20 @@ _s(AutocompleteInput, "0VIGb6tSlPMoPrmu7YySW0lMUqc=", false, function() {
     ];
 });
 _c = AutocompleteInput;
-function MapDisplay({ cameras, onPlaceSelect, destination }) {
+function Directions({ destination }) {
     _s1();
-    const [selectedCameraId, setSelectedCameraId] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
-    const [center, setCenter] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(NZ_CENTER);
-    const [zoom, setZoom] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(INITIAL_ZOOM);
-    const [userLocation, setUserLocation] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const map = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$vis$2e$gl$2f$react$2d$google$2d$maps$2f$dist$2f$index$2e$modern$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMap"])();
+    const routesLibrary = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$vis$2e$gl$2f$react$2d$google$2d$maps$2f$dist$2f$index$2e$modern$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMapsLibrary"])('routes');
     const { toast } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$hooks$2f$use$2d$toast$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useToast"])();
+    const [userLocation, setUserLocation] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
     const [directionsService, setDirectionsService] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
     const [directionsRenderer, setDirectionsRenderer] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
-        "MapDisplay.useEffect": ()=>{
-            if (!window.google) return;
-            setDirectionsService(new window.google.maps.DirectionsService());
-            setDirectionsRenderer(new window.google.maps.DirectionsRenderer({
+        "Directions.useEffect": ()=>{
+            if (!routesLibrary || !map) return;
+            setDirectionsService(new routesLibrary.DirectionsService());
+            setDirectionsRenderer(new routesLibrary.DirectionsRenderer({
+                map,
                 suppressMarkers: true,
                 polylineOptions: {
                     strokeColor: 'hsl(var(--primary))',
@@ -428,18 +429,12 @@ function MapDisplay({ cameras, onPlaceSelect, destination }) {
                 }
             }));
         }
-    }["MapDisplay.useEffect"], []);
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
-        "MapDisplay.useEffect": ()=>{
-            if (directionsRenderer && window.google) {
-                directionsRenderer.setMap(window.google.maps.Map);
-            }
-        }
-    }["MapDisplay.useEffect"], [
-        directionsRenderer
+    }["Directions.useEffect"], [
+        routesLibrary,
+        map
     ]);
     const calculateRoute = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
-        "MapDisplay.useCallback[calculateRoute]": (dest)=>{
+        "Directions.useCallback[calculateRoute]": (dest)=>{
             if (!userLocation) {
                 toast({
                     variant: 'destructive',
@@ -454,7 +449,7 @@ function MapDisplay({ cameras, onPlaceSelect, destination }) {
                     destination: dest,
                     travelMode: google.maps.TravelMode.DRIVING
                 }, {
-                    "MapDisplay.useCallback[calculateRoute]": (result, status)=>{
+                    "Directions.useCallback[calculateRoute]": (result, status)=>{
                         if (status === google.maps.DirectionsStatus.OK) {
                             directionsRenderer.setDirections(result);
                         } else {
@@ -465,17 +460,17 @@ function MapDisplay({ cameras, onPlaceSelect, destination }) {
                             });
                         }
                     }
-                }["MapDisplay.useCallback[calculateRoute]"]);
+                }["Directions.useCallback[calculateRoute]"]);
             }
         }
-    }["MapDisplay.useCallback[calculateRoute]"], [
+    }["Directions.useCallback[calculateRoute]"], [
         userLocation,
         directionsService,
         directionsRenderer,
         toast
     ]);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
-        "MapDisplay.useEffect": ()=>{
+        "Directions.useEffect": ()=>{
             if (!destination) {
                 directionsRenderer?.setDirections({
                     routes: []
@@ -496,13 +491,69 @@ function MapDisplay({ cameras, onPlaceSelect, destination }) {
                     lng: destination.longitude
                 };
             }
-            calculateRoute(destLocation);
+            // Attempt to get user location before calculating route
+            if (!navigator.geolocation) {
+                toast({
+                    variant: 'destructive',
+                    title: 'Geolocation not supported',
+                    description: "Your browser doesn't support geolocation."
+                });
+                return;
+            }
+            navigator.geolocation.getCurrentPosition({
+                "Directions.useEffect": (position)=>{
+                    const newPos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    setUserLocation(newPos);
+                    calculateRoute(destLocation);
+                }
+            }["Directions.useEffect"], {
+                "Directions.useEffect": ()=>{
+                    toast({
+                        variant: 'destructive',
+                        title: 'Geolocation failed',
+                        description: 'Could not get your location. Please ensure you have granted permission.'
+                    });
+                }
+            }["Directions.useEffect"]);
         }
-    }["MapDisplay.useEffect"], [
+    }["Directions.useEffect"], [
         destination,
         calculateRoute,
-        directionsRenderer
+        directionsRenderer,
+        toast
     ]);
+    return userLocation ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$vis$2e$gl$2f$react$2d$google$2d$maps$2f$dist$2f$index$2e$modern$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AdvancedMarker"], {
+        position: userLocation,
+        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: "w-4 h-4 rounded-full bg-blue-500 border-2 border-white shadow-md"
+        }, void 0, false, {
+            fileName: "[project]/src/components/map-display.tsx",
+            lineNumber: 156,
+            columnNumber: 13
+        }, this)
+    }, void 0, false, {
+        fileName: "[project]/src/components/map-display.tsx",
+        lineNumber: 155,
+        columnNumber: 10
+    }, this) : null;
+}
+_s1(Directions, "SQdEJmsFjFKb5N+xq7DkfCoV44Y=", false, function() {
+    return [
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$vis$2e$gl$2f$react$2d$google$2d$maps$2f$dist$2f$index$2e$modern$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMap"],
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$vis$2e$gl$2f$react$2d$google$2d$maps$2f$dist$2f$index$2e$modern$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMapsLibrary"],
+        __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$hooks$2f$use$2d$toast$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useToast"]
+    ];
+});
+_c1 = Directions;
+function MapDisplay({ cameras, onPlaceSelect, destination }) {
+    _s2();
+    const [selectedCameraId, setSelectedCameraId] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [center, setCenter] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(NZ_CENTER);
+    const [zoom, setZoom] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(INITIAL_ZOOM);
+    const { toast } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$hooks$2f$use$2d$toast$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useToast"])();
     const selectedCamera = cameras.find((c)=>c.id === selectedCameraId);
     const handleGeolocate = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
         "MapDisplay.useCallback[handleGeolocate]": ()=>{
@@ -521,7 +572,6 @@ function MapDisplay({ cameras, onPlaceSelect, destination }) {
                         lng: position.coords.longitude
                     };
                     setCenter(newPos);
-                    setUserLocation(newPos);
                     setZoom(LOCATE_ZOOM);
                     toast({
                         title: 'Location found',
@@ -551,7 +601,7 @@ function MapDisplay({ cameras, onPlaceSelect, destination }) {
                         onPlaceChange: onPlaceSelect
                     }, void 0, false, {
                         fileName: "[project]/src/components/map-display.tsx",
-                        lineNumber: 181,
+                        lineNumber: 213,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -561,18 +611,18 @@ function MapDisplay({ cameras, onPlaceSelect, destination }) {
                         onClick: handleGeolocate,
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$crosshair$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Crosshair$3e$__["Crosshair"], {}, void 0, false, {
                             fileName: "[project]/src/components/map-display.tsx",
-                            lineNumber: 183,
+                            lineNumber: 215,
                             columnNumber: 21
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/map-display.tsx",
-                        lineNumber: 182,
+                        lineNumber: 214,
                         columnNumber: 18
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/map-display.tsx",
-                lineNumber: 180,
+                lineNumber: 212,
                 columnNumber: 14
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$vis$2e$gl$2f$react$2d$google$2d$maps$2f$dist$2f$index$2e$modern$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Map"], {
@@ -598,27 +648,20 @@ function MapDisplay({ cameras, onPlaceSelect, destination }) {
                                 glyphColor: 'hsl(var(--primary-foreground))'
                             }, void 0, false, {
                                 fileName: "[project]/src/components/map-display.tsx",
-                                lineNumber: 203,
+                                lineNumber: 235,
                                 columnNumber: 26
                             }, this)
                         }, camera.id, false, {
                             fileName: "[project]/src/components/map-display.tsx",
-                            lineNumber: 198,
+                            lineNumber: 230,
                             columnNumber: 21
                         }, this)),
-                    userLocation && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$vis$2e$gl$2f$react$2d$google$2d$maps$2f$dist$2f$index$2e$modern$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AdvancedMarker"], {
-                        position: userLocation,
-                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "w-4 h-4 rounded-full bg-blue-500 border-2 border-white shadow-md"
-                        }, void 0, false, {
-                            fileName: "[project]/src/components/map-display.tsx",
-                            lineNumber: 213,
-                            columnNumber: 25
-                        }, this)
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Directions, {
+                        destination: destination
                     }, void 0, false, {
                         fileName: "[project]/src/components/map-display.tsx",
-                        lineNumber: 212,
-                        columnNumber: 21
+                        lineNumber: 243,
+                        columnNumber: 17
                     }, this),
                     selectedCamera && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$vis$2e$gl$2f$react$2d$google$2d$maps$2f$dist$2f$index$2e$modern$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["InfoWindow"], {
                         position: {
@@ -636,7 +679,7 @@ function MapDisplay({ cameras, onPlaceSelect, destination }) {
                                     children: selectedCamera.name
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/map-display.tsx",
-                                    lineNumber: 225,
+                                    lineNumber: 253,
                                     columnNumber: 29
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -646,7 +689,7 @@ function MapDisplay({ cameras, onPlaceSelect, destination }) {
                                             className: "absolute inset-0"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/map-display.tsx",
-                                            lineNumber: 227,
+                                            lineNumber: 255,
                                             columnNumber: 33
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -658,13 +701,13 @@ function MapDisplay({ cameras, onPlaceSelect, destination }) {
                                             unoptimized: true
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/map-display.tsx",
-                                            lineNumber: 228,
+                                            lineNumber: 256,
                                             columnNumber: 33
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/map-display.tsx",
-                                    lineNumber: 226,
+                                    lineNumber: 254,
                                     columnNumber: 30
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -672,7 +715,7 @@ function MapDisplay({ cameras, onPlaceSelect, destination }) {
                                     children: selectedCamera.region
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/map-display.tsx",
-                                    lineNumber: 237,
+                                    lineNumber: 265,
                                     columnNumber: 30
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -687,53 +730,54 @@ function MapDisplay({ cameras, onPlaceSelect, destination }) {
                                                 className: "ml-2 h-4 w-4"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/map-display.tsx",
-                                                lineNumber: 241,
+                                                lineNumber: 269,
                                                 columnNumber: 37
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/map-display.tsx",
-                                        lineNumber: 239,
+                                        lineNumber: 267,
                                         columnNumber: 33
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/map-display.tsx",
-                                    lineNumber: 238,
+                                    lineNumber: 266,
                                     columnNumber: 29
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/map-display.tsx",
-                            lineNumber: 224,
+                            lineNumber: 252,
                             columnNumber: 25
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/map-display.tsx",
-                        lineNumber: 218,
+                        lineNumber: 246,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/map-display.tsx",
-                lineNumber: 186,
+                lineNumber: 218,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/map-display.tsx",
-        lineNumber: 179,
+        lineNumber: 211,
         columnNumber: 9
     }, this);
 }
-_s1(MapDisplay, "nFP0/eQUCUOAnyl9HZXQRDO8N/w=", false, function() {
+_s2(MapDisplay, "xvVFsjpaBsyNvXrYZfIlWhOpsZM=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$hooks$2f$use$2d$toast$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useToast"]
     ];
 });
-_c1 = MapDisplay;
-var _c, _c1;
+_c2 = MapDisplay;
+var _c, _c1, _c2;
 __turbopack_context__.k.register(_c, "AutocompleteInput");
-__turbopack_context__.k.register(_c1, "MapDisplay");
+__turbopack_context__.k.register(_c1, "Directions");
+__turbopack_context__.k.register(_c2, "MapDisplay");
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_context__.k.registerExports(module, globalThis.$RefreshHelpers$);
 }

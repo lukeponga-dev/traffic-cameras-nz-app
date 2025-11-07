@@ -11,6 +11,7 @@ import { Skeleton } from './ui/skeleton';
 import { useToast } from '@/hooks/use-toast';
 import { Input } from './ui/input';
 import { darkMapStyle } from '@/lib/map-styles';
+import { useMap } from '@vis.gl/react-google-maps';
 
 const NZ_CENTER = { lat: -41.28664, lng: 174.77557 };
 const INITIAL_ZOOM = 5;
@@ -50,28 +51,20 @@ function AutocompleteInput({ onPlaceChange }: { onPlaceChange: (place: google.ma
     )
 }
 
-export default function MapDisplay({ 
-    cameras, 
-    onPlaceSelect, 
-    destination 
-}: { 
-    cameras: Camera[]; 
-    onPlaceSelect: (place: google.maps.places.PlaceResult | null) => void;
-    destination: google.maps.places.PlaceResult | Camera | null;
-}) {
-    const [selectedCameraId, setSelectedCameraId] = useState<string | null>(null);
-    const [center, setCenter] = useState<LatLng>(NZ_CENTER);
-    const [zoom, setZoom] = useState(INITIAL_ZOOM);
-    const [userLocation, setUserLocation] = useState<LatLng | null>(null);
+function Directions({ destination }: { destination: google.maps.places.PlaceResult | Camera | null }) {
+    const map = useMap();
+    const routesLibrary = useMapsLibrary('routes');
     const { toast } = useToast();
+    const [userLocation, setUserLocation] = useState<LatLng | null>(null);
 
     const [directionsService, setDirectionsService] = useState<google.maps.DirectionsService | null>(null);
     const [directionsRenderer, setDirectionsRenderer] = useState<google.maps.DirectionsRenderer | null>(null);
 
     useEffect(() => {
-        if(!window.google) return;
-        setDirectionsService(new window.google.maps.DirectionsService());
-        setDirectionsRenderer(new window.google.maps.DirectionsRenderer({
+        if (!routesLibrary || !map) return;
+        setDirectionsService(new routesLibrary.DirectionsService());
+        setDirectionsRenderer(new routesLibrary.DirectionsRenderer({
+            map,
             suppressMarkers: true,
             polylineOptions: {
                 strokeColor: 'hsl(var(--primary))',
@@ -79,14 +72,7 @@ export default function MapDisplay({
                 strokeWeight: 6
             }
         }));
-    }, []);
-
-    useEffect(() => {
-        if(directionsRenderer && window.google) {
-            directionsRenderer.setMap(window.google.maps.Map as any);
-        }
-    }, [directionsRenderer]);
-
+    }, [routesLibrary, map]);
 
     const calculateRoute = useCallback((dest: google.maps.LatLng | LatLng) => {
         if (!userLocation) {
@@ -135,9 +121,56 @@ export default function MapDisplay({
             destLocation = { lat: destination.latitude, lng: destination.longitude };
         }
         
-        calculateRoute(destLocation);
+        // Attempt to get user location before calculating route
+        if (!navigator.geolocation) {
+             toast({
+                variant: 'destructive',
+                title: 'Geolocation not supported',
+                description: "Your browser doesn't support geolocation.",
+            });
+            return;
+        }
 
-    }, [destination, calculateRoute, directionsRenderer]);
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const newPos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                };
+                setUserLocation(newPos);
+                calculateRoute(destLocation);
+            },
+            () => {
+                 toast({
+                    variant: 'destructive',
+                    title: 'Geolocation failed',
+                    description: 'Could not get your location. Please ensure you have granted permission.',
+                });
+            }
+        );
+
+    }, [destination, calculateRoute, directionsRenderer, toast]);
+
+    return userLocation ? (
+         <AdvancedMarker position={userLocation}>
+            <div className="w-4 h-4 rounded-full bg-blue-500 border-2 border-white shadow-md" />
+        </AdvancedMarker>
+    ) : null;
+}
+
+export default function MapDisplay({ 
+    cameras, 
+    onPlaceSelect, 
+    destination 
+}: { 
+    cameras: Camera[]; 
+    onPlaceSelect: (place: google.maps.places.PlaceResult | null) => void;
+    destination: google.maps.places.PlaceResult | Camera | null;
+}) {
+    const [selectedCameraId, setSelectedCameraId] = useState<string | null>(null);
+    const [center, setCenter] = useState<LatLng>(NZ_CENTER);
+    const [zoom, setZoom] = useState(INITIAL_ZOOM);
+    const { toast } = useToast();
 
     const selectedCamera = cameras.find(c => c.id === selectedCameraId);
 
@@ -158,7 +191,6 @@ export default function MapDisplay({
                     lng: position.coords.longitude,
                 };
                 setCenter(newPos);
-                setUserLocation(newPos);
                 setZoom(LOCATE_ZOOM);
                 toast({
                     title: 'Location found',
@@ -208,11 +240,7 @@ export default function MapDisplay({
                     </AdvancedMarker>
                 ))}
 
-                {userLocation && (
-                    <AdvancedMarker position={userLocation}>
-                        <div className="w-4 h-4 rounded-full bg-blue-500 border-2 border-white shadow-md" />
-                    </AdvancedMarker>
-                )}
+                <Directions destination={destination} />
 
                 {selectedCamera && (
                     <InfoWindow
@@ -248,3 +276,5 @@ export default function MapDisplay({
         </div>
     );
 }
+
+    
