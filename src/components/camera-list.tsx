@@ -13,6 +13,7 @@ import { SidebarContent, SidebarHeader } from './ui/sidebar';
 import { Skeleton } from './ui/skeleton';
 import Link from 'next/link';
 import { Button } from './ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 function CameraListSkeleton() {
     return (
@@ -44,17 +45,28 @@ export default function CameraList({
     isLoading: boolean;
 }) {
     const [searchTerm, setSearchTerm] = useState('');
+    const [selectedRegion, setSelectedRegion] = useState('all');
     const { favoriteIds, isLoaded: favoritesLoaded } = useFavorites();
+
+    const regions = useMemo(() => {
+        if (!cameras.length) return [];
+        const uniqueRegions = [...new Set(cameras.map(c => c.region))];
+        return uniqueRegions.sort();
+    }, [cameras]);
 
     const filteredCameras = useMemo(() => {
         if (!cameras.length) return [];
         const lowerCaseSearch = searchTerm.toLowerCase();
+        
         return cameras.filter(camera =>
-            camera.name.toLowerCase().includes(lowerCaseSearch) ||
-            camera.region.toLowerCase().includes(lowerCaseSearch) ||
-            camera.highway?.toLowerCase().includes(lowerCaseSearch)
+            (selectedRegion === 'all' || camera.region === selectedRegion) &&
+            (
+                camera.name.toLowerCase().includes(lowerCaseSearch) ||
+                camera.region.toLowerCase().includes(lowerCaseSearch) ||
+                camera.highway?.toLowerCase().includes(lowerCaseSearch)
+            )
         );
-    }, [cameras, searchTerm]);
+    }, [cameras, searchTerm, selectedRegion]);
 
     const favoriteCameras = useMemo(() => {
         if (!favoritesLoaded) return [];
@@ -89,6 +101,17 @@ export default function CameraList({
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
                 </div>
+                 <Select value={selectedRegion} onValueChange={setSelectedRegion}>
+                    <SelectTrigger className="w-full bg-muted border-0 focus:ring-primary h-10">
+                        <SelectValue placeholder="Filter by region..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="all">All Regions</SelectItem>
+                        {regions.map(region => (
+                            <SelectItem key={region} value={region}>{region}</SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
             </SidebarHeader>
             
             <SidebarContent className="pt-0">

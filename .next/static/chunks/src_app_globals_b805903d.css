@@ -1900,6 +1900,10 @@ body {
   --tw-ring-color: hsl(var(--ring));
 }
 
+.focus\:ring-primary:focus {
+  --tw-ring-color: hsl(var(--primary));
+}
+
 .focus\:ring-offset-2:focus {
   --tw-ring-offset-width: 2px;
 }
