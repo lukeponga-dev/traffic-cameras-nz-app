@@ -884,6 +884,10 @@ body {
   max-width: 20rem;
 }
 
+.max-w-sm {
+  max-width: 24rem;
+}
+
 .flex-1 {
   flex: 1;
 }
@@ -1310,6 +1314,10 @@ body {
 .bg-yellow-50 {
   --tw-bg-opacity: 1;
   background-color: rgb(254 252 232 / var(--tw-bg-opacity, 1));
+}
+
+.bg-background\/50 {
+  background-color: hsl(var(--background) / .5);
 }
 
 .fill-current {

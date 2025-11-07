@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useCallback, useEffect, useRef } from 'react';
@@ -6,50 +7,16 @@ import { Map, AdvancedMarker, InfoWindow, Pin, useMapsLibrary } from '@vis.gl/re
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from './ui/button';
-import { ExternalLink, Crosshair, Search } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import { Skeleton } from './ui/skeleton';
 import { useToast } from '@/hooks/use-toast';
-import { Input } from './ui/input';
 import { darkMapStyle } from '@/lib/map-styles';
 import { useMap } from '@vis.gl/react-google-maps';
 
 const NZ_CENTER = { lat: -41.28664, lng: 174.77557 };
 const INITIAL_ZOOM = 5;
-const LOCATE_ZOOM = 14;
 
 type LatLng = { lat: number; lng: number; };
-
-function AutocompleteInput({ onPlaceChange }: { onPlaceChange: (place: google.maps.places.PlaceResult | null) => void }) {
-    const inputRef = useRef<HTMLInputElement>(null);
-    const places = useMapsLibrary('places');
-    const [autocomplete, setAutocomplete] = useState<google.maps.places.Autocomplete | null>(null);
-
-    useEffect(() => {
-        if (!places || !inputRef.current) return;
-
-        const ac = new places.Autocomplete(inputRef.current, {
-            fields: ['geometry', 'name'],
-            componentRestrictions: { country: 'nz' }
-        });
-        setAutocomplete(ac);
-
-        ac.addListener('place_changed', () => {
-            onPlaceChange(ac.getPlace());
-        });
-
-    }, [places, onPlaceChange]);
-
-    return (
-        <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-                ref={inputRef}
-                placeholder="Search for a destination..."
-                className="pl-10 h-10 w-full"
-            />
-        </div>
-    )
-}
 
 function Directions({ destination }: { destination: google.maps.places.PlaceResult | Camera | null }) {
     const map = useMap();
@@ -111,17 +78,16 @@ function Directions({ destination }: { destination: google.maps.places.PlaceResu
 
         let destLocation: google.maps.LatLng | LatLng;
 
-        if ('geometry' in destination) { // It's a PlaceResult
+        if ('geometry' in destination && destination.geometry) { // It's a PlaceResult
             if(destination.geometry?.location){
                 destLocation = destination.geometry.location;
             } else {
                 return;
             }
         } else { // It's a Camera
-            destLocation = { lat: destination.latitude, lng: destination.longitude };
+            destLocation = { lat: (destination as Camera).latitude, lng: (destination as Camera).longitude };
         }
         
-        // Attempt to get user location before calculating route
         if (!navigator.geolocation) {
              toast({
                 variant: 'destructive',
@@ -160,64 +126,20 @@ function Directions({ destination }: { destination: google.maps.places.PlaceResu
 
 export default function MapDisplay({ 
     cameras, 
-    onPlaceSelect, 
     destination 
 }: { 
     cameras: Camera[]; 
-    onPlaceSelect: (place: google.maps.places.PlaceResult | null) => void;
     destination: google.maps.places.PlaceResult | Camera | null;
 }) {
     const [selectedCameraId, setSelectedCameraId] = useState<string | null>(null);
-    const [center, setCenter] = useState<LatLng>(NZ_CENTER);
-    const [zoom, setZoom] = useState(INITIAL_ZOOM);
-    const { toast } = useToast();
-
+    
     const selectedCamera = cameras.find(c => c.id === selectedCameraId);
-
-    const handleGeolocate = useCallback(() => {
-        if (!navigator.geolocation) {
-            toast({
-                variant: 'destructive',
-                title: 'Geolocation not supported',
-                description: "Your browser doesn't support geolocation.",
-            });
-            return;
-        }
-
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const newPos = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude,
-                };
-                setCenter(newPos);
-                setZoom(LOCATE_ZOOM);
-                toast({
-                    title: 'Location found',
-                    description: 'Your location has been updated.',
-                });
-            },
-            () => {
-                toast({
-                    variant: 'destructive',
-                    title: 'Geolocation failed',
-                    description: 'Could not get your location. Please ensure you have granted permission.',
-                });
-            }
-        );
-    }, [toast]);
     
     return (
         <div className="w-full h-full bg-muted relative">
-             <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10 w-full max-w-md px-4 flex items-center gap-2">
-                <AutocompleteInput onPlaceChange={onPlaceSelect} />
-                 <Button size="icon" variant="outline" className="rounded-full shadow-lg bg-background flex-shrink-0" onClick={handleGeolocate}>
-                    <Crosshair />
-                </Button>
-            </div>
             <Map
-                center={center}
-                zoom={zoom}
+                defaultCenter={NZ_CENTER}
+                defaultZoom={INITIAL_ZOOM}
                 gestureHandling={'greedy'}
                 disableDefaultUI={true}
                 mapId="kiwi-traffic-map-dark"
@@ -276,5 +198,3 @@ export default function MapDisplay({
         </div>
     );
 }
-
-    
