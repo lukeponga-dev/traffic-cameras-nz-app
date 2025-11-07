@@ -8,7 +8,6 @@ import Link from 'next/link';
 import { Button } from './ui/button';
 import { ExternalLink, Crosshair, MapPin, Search } from 'lucide-react';
 import { Skeleton } from './ui/skeleton';
-import { darkMapStyle } from '@/lib/map-styles';
 import { useToast } from '@/hooks/use-toast';
 import { Input } from './ui/input';
 
@@ -43,7 +42,7 @@ function AutocompleteInput({ onPlaceChange }: { onPlaceChange: (place: google.ma
             <Input
                 ref={inputRef}
                 placeholder="Enter a destination..."
-                className="pl-10 shadow-lg"
+                className="pl-10 shadow-lg bg-background"
             />
         </div>
     )
@@ -155,7 +154,6 @@ export default function MapDisplay({ cameras }: { cameras: Camera[] }) {
                 gestureHandling={'greedy'}
                 disableDefaultUI={true}
                 mapId="kiwi-traffic-map"
-                styles={darkMapStyle}
                 onDragstart={() => {
                     if(selectedCameraId) setSelectedCameraId(null);
                 }}
@@ -166,7 +164,7 @@ export default function MapDisplay({ cameras }: { cameras: Camera[] }) {
                         position={{ lat: camera.latitude, lng: camera.longitude }}
                         onClick={() => setSelectedCameraId(camera.id)}
                     >
-                         <Pin background={'hsl(var(--primary))'} borderColor={'hsl(var(--primary))'} glyphColor={'hsl(var(--primary-foreground))'} />
+                         <Pin />
                     </AdvancedMarker>
                 ))}
 
@@ -207,7 +205,7 @@ export default function MapDisplay({ cameras }: { cameras: Camera[] }) {
                 )}
             </Map>
             <div className="absolute top-4 right-4 z-10">
-                 <Button size="icon" variant="outline" className="rounded-full shadow-lg" onClick={handleGeolocate}>
+                 <Button size="icon" variant="outline" className="rounded-full shadow-lg bg-background" onClick={handleGeolocate}>
                     <Crosshair />
                 </Button>
             </div>

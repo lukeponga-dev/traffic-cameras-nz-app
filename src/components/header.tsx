@@ -7,8 +7,8 @@ import { SidebarTrigger } from "./ui/sidebar";
 
 export function Header() {
   return (
-    <header className="w-full border-b border-border bg-background flex-shrink-0">
-      <div className="container flex h-16 items-center gap-4 px-4">
+    <header className="w-full border-b border-border bg-background/95 backdrop-blur-sm sticky top-0 z-20">
+      <div className="container flex h-14 items-center gap-4 px-4">
         <div className="lg:hidden">
           <SidebarTrigger asChild>
             <Button
@@ -20,9 +20,9 @@ export function Header() {
             </Button>
           </SidebarTrigger>
         </div>
-        <Link href="/" className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2 mr-6">
           <Camera className="h-6 w-6 text-primary" />
-          <span className="font-bold sm:inline-block">Kiwi Traffic Watch</span>
+          <span className="font-bold hidden sm:inline-block">Kiwi Traffic Watch</span>
         </Link>
       </div>
     </header>
