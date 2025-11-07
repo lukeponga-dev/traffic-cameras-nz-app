@@ -1,15 +1,16 @@
 "use client";
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import type { Camera } from '@/lib/types';
 import { Map, AdvancedMarker, InfoWindow, Pin } from '@vis.gl/react-google-maps';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from './ui/button';
-import { ExternalLink, Crosshair, MapPin } from 'lucide-react';
+import { ExternalLink, Crosshair, MapPin, Search } from 'lucide-react';
 import { Skeleton } from './ui/skeleton';
 import { darkMapStyle } from '@/lib/map-styles';
 import { useToast } from '@/hooks/use-toast';
+import { Input } from './ui/input';
 
 const NZ_CENTER = { lat: -41.28664, lng: 174.77557 };
 const INITIAL_ZOOM = 5;
@@ -23,6 +24,27 @@ export default function MapDisplay({ cameras }: { cameras: Camera[] }) {
     const [zoom, setZoom] = useState(INITIAL_ZOOM);
     const [userLocation, setUserLocation] = useState<LatLng | null>(null);
     const { toast } = useToast();
+
+    const [directionsService, setDirectionsService] = useState<google.maps.DirectionsService | null>(null);
+    const [directionsRenderer, setDirectionsRenderer] = useState<google.maps.DirectionsRenderer | null>(null);
+    const [map, setMap] = useState<google.maps.Map | null>(null);
+    const [destination, setDestination] = useState('');
+
+    useEffect(() => {
+        if (map) {
+            setDirectionsService(new google.maps.DirectionsService());
+            setDirectionsRenderer(new google.maps.DirectionsRenderer({
+                map,
+                suppressMarkers: true,
+                polylineOptions: {
+                    strokeColor: 'hsl(var(--primary))',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 6
+                }
+            }));
+        }
+    }, [map]);
+
 
     const selectedCamera = cameras.find(c => c.id === selectedCameraId);
 
@@ -45,6 +67,10 @@ export default function MapDisplay({ cameras }: { cameras: Camera[] }) {
                 setCenter(newPos);
                 setUserLocation(newPos);
                 setZoom(LOCATE_ZOOM);
+                toast({
+                    title: 'Location found',
+                    description: 'Your location has been updated.',
+                });
             },
             () => {
                 toast({
@@ -56,9 +82,60 @@ export default function MapDisplay({ cameras }: { cameras: Camera[] }) {
         );
     }, [toast]);
     
+    const handleRouteSearch = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (!destination) {
+            toast({
+                variant: 'destructive',
+                title: 'No destination entered',
+                description: 'Please enter a destination to search for a route.',
+            });
+            return;
+        }
+        if (!userLocation) {
+            toast({
+                variant: 'destructive',
+                title: 'Location not available',
+                description: 'Please enable location services to calculate a route.',
+            });
+            return;
+        }
+        if (directionsService && directionsRenderer) {
+            directionsService.route({
+                origin: userLocation,
+                destination: destination,
+                travelMode: google.maps.TravelMode.DRIVING,
+            }, (result, status) => {
+                if (status === google.maps.DirectionsStatus.OK) {
+                    directionsRenderer.setDirections(result);
+                } else {
+                    toast({
+                        variant: 'destructive',
+                        title: 'Could not find a route',
+                        description: 'Please check your destination and try again.',
+                    });
+                }
+            });
+        }
+    };
+    
     return (
         <div className="w-full h-full bg-muted relative">
+            <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10 w-full max-w-sm px-4">
+                <form onSubmit={handleRouteSearch}>
+                    <div className="relative">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <Input 
+                            placeholder="Enter a destination..." 
+                            className="pl-10 shadow-lg"
+                            value={destination}
+                            onChange={(e) => setDestination(e.target.value)}
+                        />
+                    </div>
+                </form>
+            </div>
             <Map
+                ref={(ref) => setMap(ref?.map || null)}
                 center={center}
                 zoom={zoom}
                 gestureHandling={'greedy'}
@@ -81,7 +158,7 @@ export default function MapDisplay({ cameras }: { cameras: Camera[] }) {
 
                 {userLocation && (
                     <AdvancedMarker position={userLocation}>
-                        <div className="w-4 h-4 rounded-full bg-blue-500 border-2 border-white" />
+                        <div className="w-4 h-4 rounded-full bg-blue-500 border-2 border-white shadow-md" />
                     </AdvancedMarker>
                 )}
 
