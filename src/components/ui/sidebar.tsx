@@ -206,9 +206,9 @@ const Sidebar = React.forwardRef<
             }
             side={side}
           >
-            <SheetHeader className="sr-only">
+            <SheetHeader className="p-2 border-b">
               <SheetTitle>Camera List</SheetTitle>
-              <SheetDescription>A list of available traffic cameras.</SheetDescription>
+              <SheetDescription className="sr-only">A list of available traffic cameras.</SheetDescription>
             </SheetHeader>
             <div className="flex h-full w-full flex-col">{children}</div>
           </SheetContent>

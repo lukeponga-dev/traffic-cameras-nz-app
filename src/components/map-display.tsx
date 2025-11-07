@@ -2,11 +2,11 @@
 
 import { useState, useCallback, useEffect, useRef } from 'react';
 import type { Camera } from '@/lib/types';
-import { Map, AdvancedMarker, InfoWindow, Pin, useMap, useMapsLibrary } from '@vis.gl/react-google-maps';
+import { Map, AdvancedMarker, InfoWindow, Pin, useMapsLibrary } from '@vis.gl/react-google-maps';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from './ui/button';
-import { ExternalLink, Crosshair, MapPin, Search } from 'lucide-react';
+import { ExternalLink, Crosshair, Search } from 'lucide-react';
 import { Skeleton } from './ui/skeleton';
 import { useToast } from '@/hooks/use-toast';
 import { Input } from './ui/input';
@@ -39,12 +39,12 @@ function AutocompleteInput({ onPlaceChange }: { onPlaceChange: (place: google.ma
     }, [places, onPlaceChange]);
 
     return (
-        <div className="relative">
+        <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
                 ref={inputRef}
                 placeholder="Search for a destination..."
-                className="pl-10 shadow-lg bg-background"
+                className="pl-10 h-10 w-full"
             />
         </div>
     )
@@ -65,15 +65,13 @@ export default function MapDisplay({
     const [userLocation, setUserLocation] = useState<LatLng | null>(null);
     const { toast } = useToast();
 
-    const map = useMap();
     const [directionsService, setDirectionsService] = useState<google.maps.DirectionsService | null>(null);
     const [directionsRenderer, setDirectionsRenderer] = useState<google.maps.DirectionsRenderer | null>(null);
 
     useEffect(() => {
-        if (!map) return;
-        setDirectionsService(new google.maps.DirectionsService());
-        setDirectionsRenderer(new google.maps.DirectionsRenderer({
-            map,
+        if(!window.google) return;
+        setDirectionsService(new window.google.maps.DirectionsService());
+        setDirectionsRenderer(new window.google.maps.DirectionsRenderer({
             suppressMarkers: true,
             polylineOptions: {
                 strokeColor: 'hsl(var(--primary))',
@@ -81,7 +79,14 @@ export default function MapDisplay({
                 strokeWeight: 6
             }
         }));
-    }, [map]);
+    }, []);
+
+    useEffect(() => {
+        if(directionsRenderer && window.google) {
+            directionsRenderer.setMap(window.google.maps.Map as any);
+        }
+    }, [directionsRenderer]);
+
 
     const calculateRoute = useCallback((dest: google.maps.LatLng | LatLng) => {
         if (!userLocation) {
@@ -172,8 +177,11 @@ export default function MapDisplay({
     
     return (
         <div className="w-full h-full bg-muted relative">
-             <div className="absolute top-20 left-1/2 -translate-x-1/2 z-10 w-full max-w-sm px-4">
+             <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10 w-full max-w-md px-4 flex items-center gap-2">
                 <AutocompleteInput onPlaceChange={onPlaceSelect} />
+                 <Button size="icon" variant="outline" className="rounded-full shadow-lg bg-background flex-shrink-0" onClick={handleGeolocate}>
+                    <Crosshair />
+                </Button>
             </div>
             <Map
                 center={center}
@@ -237,11 +245,6 @@ export default function MapDisplay({
                     </InfoWindow>
                 )}
             </Map>
-            <div className="absolute top-20 right-4 z-10">
-                 <Button size="icon" variant="outline" className="rounded-full shadow-lg bg-background" onClick={handleGeolocate}>
-                    <Crosshair />
-                </Button>
-            </div>
         </div>
     );
 }

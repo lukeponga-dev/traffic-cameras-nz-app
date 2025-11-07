@@ -6,11 +6,14 @@ import { Skeleton } from '@/components/ui/skeleton';
 import {
   Sidebar,
   SidebarProvider,
+  SidebarTrigger,
 } from '@/components/ui/sidebar';
-import { Header } from '@/components/header';
 import CameraList from '@/components/camera-list';
 import type { Camera } from '@/lib/types';
 import { getAllCameras } from '@/lib/data';
+import { Button } from '@/components/ui/button';
+import { PanelLeft, Star } from 'lucide-react';
+import Link from 'next/link';
 
 export default function Home() {
     const [cameras, setCameras] = useState<Camera[]>([]);
@@ -35,7 +38,21 @@ export default function Home() {
   return (
     <SidebarProvider>
       <div className="relative h-screen w-screen">
-        <Sidebar>
+        <header className="absolute top-4 right-4 z-10 flex items-center gap-2">
+            <Button asChild variant="ghost" className="bg-background/80 backdrop-blur-sm rounded-lg shadow-lg">
+                <Link href="/favorites">
+                    <Star className="mr-2 h-4 w-4" />
+                    Favorites
+                </Link>
+            </Button>
+            <SidebarTrigger asChild>
+                <Button size="icon" variant="ghost" className="bg-background/80 backdrop-blur-sm rounded-lg shadow-lg">
+                    <PanelLeft />
+                </Button>
+            </SidebarTrigger>
+        </header>
+
+        <Sidebar side="right">
           <CameraList cameras={cameras} onCameraSelect={handleCameraSelect}/>
         </Sidebar>
 
@@ -49,7 +66,6 @@ export default function Home() {
           </Suspense>
         </div>
         
-        <Header />
       </div>
     </SidebarProvider>
   );
