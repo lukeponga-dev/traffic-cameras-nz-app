@@ -615,6 +615,10 @@ body {
   margin-top: 1rem;
 }
 
+.mr-auto {
+  margin-right: auto;
+}
+
 .block {
   display: block;
 }
@@ -842,6 +846,10 @@ body {
 
 .w-full {
   width: 100%;
+}
+
+.w-screen {
+  width: 100vw;
 }
 
 .min-w-0 {
@@ -1468,6 +1476,10 @@ body {
 
 .pt-4 {
   padding-top: 1rem;
+}
+
+.pl-2 {
+  padding-left: .5rem;
 }
 
 .text-left {
@@ -2483,6 +2495,14 @@ body {
   left: 0;
 }
 
+.group[data-state="collapsed"] .group-data-\[state\=collapsed\]\:-left-\[--sidebar-width\] {
+  left: calc(var(--sidebar-width) * -1);
+}
+
+.group[data-state="collapsed"] .group-data-\[state\=collapsed\]\:-right-\[--sidebar-width\] {
+  right: calc(var(--sidebar-width) * -1);
+}
+
 .group[data-collapsible="icon"] .group-data-\[collapsible\=icon\]\:-mt-8 {
   margin-top: -2rem;
 }
@@ -2508,7 +2528,7 @@ body {
   width: calc(var(--sidebar-width-icon)  + 1rem + 2px);
 }
 
-.group[data-collapsible="offcanvas"] .group-data-\[collapsible\=offcanvas\]\:w-0 {
+.group[data-collapsible="offcanvas"] .group-data-\[collapsible\=offcanvas\]\:w-0, .group[data-state="collapsed"] .group-data-\[state\=collapsed\]\:w-0 {
   width: 0;
 }
 

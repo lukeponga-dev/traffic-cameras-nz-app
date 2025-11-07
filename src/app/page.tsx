@@ -15,22 +15,18 @@ export default async function Home() {
 
   return (
     <SidebarProvider>
-      <div className="flex flex-col h-screen">
-        <Header />
-        <div className="flex flex-1 overflow-hidden">
-          <Sidebar>
-            <CameraList cameras={cameras} />
-          </Sidebar>
-          <SidebarInset>
-            <div className="flex-1 relative flex flex-col h-full">
-              <Suspense
-                fallback={<Skeleton className="h-full w-full bg-muted" />}
-              >
-                <MapDisplay cameras={cameras} />
-              </Suspense>
-            </div>
-          </SidebarInset>
+      <div className="relative h-screen w-screen">
+        <Sidebar>
+          <CameraList cameras={cameras} />
+        </Sidebar>
+
+        <div className="h-full w-full">
+          <Suspense fallback={<Skeleton className="h-full w-full bg-muted" />}>
+            <MapDisplay cameras={cameras} />
+          </Suspense>
         </div>
+        
+        <Header />
       </div>
     </SidebarProvider>
   );
