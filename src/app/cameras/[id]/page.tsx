@@ -41,7 +41,7 @@ export default async function CameraPage({ params }: Props) {
                     Back to all cameras
                 </Link>
             </Button>
-            <div className="grid lg:grid-cols-2 gap-8">
+            <div className="grid md:grid-cols-2 gap-8">
                 <div className="space-y-6">
                     <Card>
                         <CardHeader className="flex-row items-start justify-between">
@@ -81,14 +81,16 @@ export default async function CameraPage({ params }: Props) {
                             alt={`Live feed from ${camera.name}`} 
                             fill
                             className="object-cover transition-opacity duration-500"
-                            sizes="(max-width: 1024px) 100vw, 50vw"
+                            sizes="(max-width: 768px) 100vw, 50vw"
                             priority
                             unoptimized
                         />
                     </div>
                 </div>
 
-                <CameraMap camera={camera} />
+                <div className="min-h-[300px] md:min-h-full">
+                  <CameraMap camera={camera} />
+                </div>
             </div>
         </div>
     );
