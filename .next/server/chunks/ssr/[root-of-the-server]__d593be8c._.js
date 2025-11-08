@@ -688,16 +688,10 @@ __turbopack_context__.s({
     "getAllCameras": (()=>getAllCameras),
     "getCameraById": (()=>getCameraById)
 });
-(()=>{
-    const e = new Error("Cannot find module '../../../cameras.json'");
-    e.code = 'MODULE_NOT_FOUND';
-    throw e;
-})();
-;
 let cameraCache = null;
-function processLocalCameraData(localCameras) {
-    if (!localCameras || localCameras.length === 0) return [];
-    return localCameras.map((cam)=>{
+function processCameraData(apiCameras) {
+    if (!apiCameras || apiCameras.length === 0) return [];
+    return apiCameras.map((cam)=>{
         return {
             id: String(cam.id),
             name: cam.name,
@@ -718,17 +712,20 @@ async function getAllCameras() {
         return cameraCache;
     }
     try {
-        // Using local cameras.json as a stable data source
-        const data = camerasData;
+        const response = await fetch('https://trafficnz.info/service/traffic/rest/4/cameras/all');
+        if (!response.ok) {
+            throw new Error(`Failed to fetch data: ${response.status} ${response.statusText}`);
+        }
+        const data = await response.json();
         if (data && data.response && data.response.camera) {
-            cameraCache = processLocalCameraData(data.response.camera);
+            cameraCache = processCameraData(data.response.camera);
             return cameraCache;
         } else {
-            console.error("Invalid data structure from local cameras.json. Received:", JSON.stringify(data, null, 2));
-            throw new Error("Invalid data structure from local cameras.json.");
+            console.error("Invalid data structure from API. Received:", JSON.stringify(data, null, 2));
+            throw new Error("Invalid data structure from API.");
         }
     } catch (error) {
-        console.error("Failed to fetch camera data from local file, returning empty array:", error);
+        console.error("Failed to fetch camera data from API, returning empty array:", error);
         return [];
     }
 }
