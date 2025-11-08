@@ -729,6 +729,10 @@ async function getAllCameras() {
             throw new Error(`Failed to fetch data: ${response.status} ${response.statusText}`);
         }
         const data = await response.json();
+        if (data.error) {
+            console.error("ArcGIS API returned an error:", data.error);
+            return [];
+        }
         if (data && data.features) {
             cameraCache = processArcGisCameraData(data.features);
             return cameraCache;
