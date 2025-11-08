@@ -1,11 +1,11 @@
 
 import type { Camera } from './types';
-import fallbackData from '../../cameras.json';
 
-let cameraCache: Camera[] | null = null;
-const API_BASE_URL = 'https://www.waka.kotahi.govt.nz/arcgis/rest/services/Traffic_and_Travel/MapServer/6';
+const API_BASE_URL = 'https://services2.arcgis.com/CXtoV5cIIN0kCm3u/arcgis/rest/services/Public_Traffic_Cameras/FeatureServer/0';
 
 const NZTA_ARCGIS_URL = `${API_BASE_URL}/query?f=json&where=1=1&outFields=*&returnGeometry=true`;
+
+let cameraCache: Camera[] | null = null;
 
 function processApiCameraData(arcgisFeatures: any[]): Camera[] {
     if (!arcgisFeatures || arcgisFeatures.length === 0) return [];
@@ -36,27 +36,22 @@ export async function getAllCameras(): Promise<Camera[]> {
   }
 
   try {
-    // @ts-ignore
-    if (fallbackData?.response?.camera) {
-        const oldApiCameras = fallbackData.response.camera;
-        cameraCache = oldApiCameras.map((cam: any) => ({
-            id: String(cam.id),
-            name: cam.name,
-            region: cam.region.name,
-            latitude: cam.latitude,
-            longitude: cam.longitude,
-            status: cam.underMaintenance ? 'Under Maintenance' : 'Active',
-            direction: cam.direction,
-            imageUrl: `https://trafficnz.info${cam.imageUrl}`,
-            description: cam.description,
-            group: cam.group,
-            highway: cam.highway
-        }));
-        return cameraCache;
+    const response = await fetch(NZTA_ARCGIS_URL, { next: { revalidate: 300 } }); // Revalidate every 5 mins
+    if (!response.ok) {
+        throw new Error(`Failed to fetch from ArcGIS API: ${response.statusText}`);
     }
-    throw new Error("Fallback data is invalid.");
+    
+    const data = await response.json();
+
+    if (data && data.features) {
+        cameraCache = processApiCameraData(data.features);
+        return cameraCache;
+    } else {
+        console.error("Invalid data structure from ArcGIS API. Received:", JSON.stringify(data, null, 2));
+        throw new Error("Invalid data structure from ArcGIS API.");
+    }
   } catch (error) {
-    console.error("Could not load camera data, using empty array:", error);
+    console.error("Failed to fetch camera data from ArcGIS, returning empty array:", error);
     return [];
   }
 }

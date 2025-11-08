@@ -246,42 +246,14 @@ img, video {
 }
 
 :root {
-  --background: 210 40% 98%;
-  --foreground: 222.2 84% 4.9%;
-  --card: 210 40% 98%;
-  --card-foreground: 222.2 84% 4.9%;
-  --popover: 210 40% 98%;
-  --popover-foreground: 222.2 84% 4.9%;
-  --primary: 204 90% 45%;
-  --primary-foreground: 210 40% 98%;
-  --secondary: 210 40% 96.1%;
-  --secondary-foreground: 222.2 47.4% 11.2%;
-  --muted: 210 40% 96.1%;
-  --muted-foreground: 215.4 16.3% 46.9%;
-  --accent: 210 40% 96.1%;
-  --accent-foreground: 222.2 47.4% 11.2%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 210 40% 98%;
-  --border: 214.3 31.8% 91.4%;
-  --input: 214.3 31.8% 91.4%;
-  --ring: 222.2 84% 4.9%;
-  --radius: .5rem;
-  --chart-1: 204 90% 45%;
-  --chart-2: 160 60% 45%;
-  --chart-3: 30 80% 55%;
-  --chart-4: 280 65% 60%;
-  --chart-5: 340 75% 55%;
-}
-
-.dark {
   --background: 222.2 84% 4.9%;
   --foreground: 210 40% 98%;
   --card: 222.2 84% 4.9%;
   --card-foreground: 210 40% 98%;
   --popover: 222.2 84% 4.9%;
   --popover-foreground: 210 40% 98%;
-  --primary: 204 90% 45%;
-  --primary-foreground: 210 40% 98%;
+  --primary: 142.1 76.2% 36.3%;
+  --primary-foreground: 142.1 76.2% 96.3%;
   --secondary: 217.2 32.6% 17.5%;
   --secondary-foreground: 210 40% 98%;
   --muted: 217.2 32.6% 17.5%;
@@ -292,12 +264,30 @@ img, video {
   --destructive-foreground: 210 40% 98%;
   --border: 217.2 32.6% 17.5%;
   --input: 217.2 32.6% 17.5%;
-  --ring: 204 90% 45%;
-  --chart-1: 204 90% 45%;
-  --chart-2: 160 60% 45%;
-  --chart-3: 30 80% 55%;
-  --chart-4: 280 65% 60%;
-  --chart-5: 340 75% 55%;
+  --ring: 142.1 76.2% 36.3%;
+  --radius: .5rem;
+}
+
+.dark {
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+  --card: 222.2 84% 4.9%;
+  --card-foreground: 210 40% 98%;
+  --popover: 222.2 84% 4.9%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 142.1 76.2% 36.3%;
+  --primary-foreground: 142.1 76.2% 96.3%;
+  --secondary: 217.2 32.6% 17.5%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 217.2 32.6% 17.5%;
+  --muted-foreground: 215 20.2% 65.1%;
+  --accent: 217.2 32.6% 17.5%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 217.2 32.6% 17.5%;
+  --input: 217.2 32.6% 17.5%;
+  --ring: 142.1 76.2% 36.3%;
 }
 
 * {
@@ -469,6 +459,10 @@ body {
   z-index: 20;
 }
 
+.z-30 {
+  z-index: 30;
+}
+
 .z-50 {
   z-index: 50;
 }
@@ -601,6 +595,10 @@ body {
   height: 3rem;
 }
 
+.h-16 {
+  height: 4rem;
+}
+
 .h-2 {
   height: .5rem;
 }
@@ -611,10 +609,6 @@ body {
 
 .h-20 {
   height: 5rem;
-}
-
-.h-24 {
-  height: 6rem;
 }
 
 .h-3 {
@@ -669,6 +663,10 @@ body {
   height: 1px;
 }
 
+.h-screen {
+  height: 100vh;
+}
+
 .max-h-96 {
   max-height: 24rem;
 }
@@ -689,24 +687,12 @@ body {
   min-height: 80px;
 }
 
-.min-h-screen {
-  min-height: 100vh;
-}
-
 .w-0 {
   width: 0;
 }
 
 .w-1 {
   width: .25rem;
-}
-
-.w-1\/2 {
-  width: 50%;
-}
-
-.w-1\/4 {
-  width: 25%;
 }
 
 .w-10 {
@@ -729,6 +715,10 @@ body {
   width: .625rem;
 }
 
+.w-28 {
+  width: 7rem;
+}
+
 .w-3 {
   width: .75rem;
 }
@@ -745,12 +735,12 @@ body {
   width: 1rem;
 }
 
-.w-40 {
-  width: 10rem;
-}
-
 .w-5 {
   width: 1.25rem;
+}
+
+.w-6 {
+  width: 1.5rem;
 }
 
 .w-7 {
@@ -781,6 +771,10 @@ body {
   width: 100%;
 }
 
+.w-screen {
+  width: 100vw;
+}
+
 .min-w-0 {
   min-width: 0;
 }
@@ -795,10 +789,6 @@ body {
 
 .min-w-\[var\(--radix-select-trigger-width\)\] {
   min-width: var(--radix-select-trigger-width);
-}
-
-.max-w-2xl {
-  max-width: 42rem;
 }
 
 .max-w-5xl {
@@ -1117,6 +1107,10 @@ body {
   border-color: var(--color-border);
 }
 
+.border-border {
+  border-color: hsl(var(--border));
+}
+
 .border-border\/50 {
   border-color: hsl(var(--border) / .5);
 }
@@ -1235,6 +1229,10 @@ body {
 
 .p-1 {
   padding: .25rem;
+}
+
+.p-2 {
+  padding: .5rem;
 }
 
 .p-3 {
@@ -1572,12 +1570,6 @@ body {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-.shadow-sm {
-  --tw-shadow: 0 1px 2px 0 #0000000d;
-  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
 .shadow-xl {
   --tw-shadow: 0 20px 25px -5px #0000001a, 0 8px 10px -6px #0000001a;
   --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
@@ -1735,8 +1727,8 @@ body {
   z-index: 20;
 }
 
-.hover\:border-primary\/50:hover {
-  border-color: hsl(var(--primary) / .5);
+.hover\:border-primary\/60:hover {
+  border-color: hsl(var(--primary) / .6);
 }
 
 .hover\:bg-accent:hover {
@@ -1798,12 +1790,6 @@ body {
 
 .hover\:opacity-100:hover {
   opacity: 1;
-}
-
-.hover\:shadow-md:hover {
-  --tw-shadow: 0 4px 6px -1px #0000001a, 0 2px 4px -2px #0000001a;
-  --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 .focus\:bg-accent:focus {
@@ -2289,6 +2275,14 @@ body {
 @media (width >= 768px) {
   .md\:flex {
     display: flex;
+  }
+
+  .md\:inline-flex {
+    display: inline-flex;
+  }
+
+  .md\:hidden {
+    display: none;
   }
 
   .md\:min-h-full {
