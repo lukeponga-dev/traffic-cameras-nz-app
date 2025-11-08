@@ -1,3 +1,4 @@
+
 import { getCameraById } from "@/lib/data";
 import { notFound } from "next/navigation";
 import Image from "next/image";
@@ -88,7 +89,7 @@ export default async function CameraPage({ params }: Props) {
                 </div>
 
                 <div className="min-h-[300px] md:min-h-full">
-                  <CameraMap camera={camera} />
+                  
                 </div>
             </div>
         </div>

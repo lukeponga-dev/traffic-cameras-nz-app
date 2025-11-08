@@ -1,8 +1,9 @@
+
 import type { Camera } from './types';
 import fallbackData from '../../cameras.json';
 
 let cameraCache: Camera[] | null = null;
-const API_BASE_URL = 'https://services.arcgis.com/CXc2Ea2s6LHmJg1s/arcgis/rest/services/Live_Cameras_NZTA_Public/FeatureServer/0';
+const API_BASE_URL = 'https://www.waka.kotahi.govt.nz/arcgis/rest/services/Traffic_and_Travel/MapServer/6';
 
 const NZTA_ARCGIS_URL = `${API_BASE_URL}/query?f=json&where=1=1&outFields=*&returnGeometry=true`;
 
@@ -14,17 +15,17 @@ function processApiCameraData(arcgisFeatures: any[]): Camera[] {
         const geom = feature.geometry;
 
         return {
-            id: String(attr.id),
-            name: attr.name,
-            region: attr.region,
+            id: String(attr.Id),
+            name: attr.Name,
+            region: attr.Region,
             latitude: geom.y,
             longitude: geom.x,
-            status: attr.underMaintenance === 'false' ? 'Active' : 'Under Maintenance',
-            direction: attr.direction,
-            imageUrl: attr.imageUrl,
-            description: attr.description,
-            group: attr.group,
-            highway: attr.highway
+            status: attr.Under_Maintenance === 'false' ? 'Active' : 'Under Maintenance',
+            direction: attr.Direction,
+            imageUrl: attr.Image_URL,
+            description: attr.Description,
+            group: attr.Group,
+            highway: attr.Highway
         };
     });
 }
@@ -35,29 +36,6 @@ export async function getAllCameras(): Promise<Camera[]> {
   }
 
   try {
-    const response = await fetch(NZTA_ARCGIS_URL, {
-      headers: {
-        'Accept': 'application/json'
-      },
-      next: { revalidate: 300 } // Revalidate every 5 minutes
-    });
-    
-    if (!response.ok) {
-        throw new Error(`Failed to fetch camera data: ${response.statusText}`);
-    }
-
-    const data = await response.json();
-    
-    if (data && data.features) {
-        cameraCache = processApiCameraData(data.features);
-        return cameraCache;
-    }
-
-    console.error("Invalid data structure from ArcGIS API. Received:", JSON.stringify(data, null, 2));
-    throw new Error("Invalid data structure from ArcGIS API.");
-
-  } catch (error) {
-    console.warn("Error fetching live camera data from ArcGIS, using fallback:", error);
     // @ts-ignore
     if (fallbackData?.response?.camera) {
         const oldApiCameras = fallbackData.response.camera;
@@ -76,7 +54,9 @@ export async function getAllCameras(): Promise<Camera[]> {
         }));
         return cameraCache;
     }
-    console.error("Fallback data is also invalid.");
+    throw new Error("Fallback data is invalid.");
+  } catch (error) {
+    console.error("Could not load camera data, using empty array:", error);
     return [];
   }
 }

@@ -424,7 +424,7 @@ __turbopack_context__.s({
 var __TURBOPACK__imported__module__$5b$project$5d2f$cameras$2e$json__$28$json$29$__ = __turbopack_context__.i("[project]/cameras.json (json)");
 ;
 let cameraCache = null;
-const API_BASE_URL = 'https://services.arcgis.com/CXc2Ea2s6LHmJg1s/arcgis/rest/services/Live_Cameras_NZTA_Public/FeatureServer/0';
+const API_BASE_URL = 'https://www.waka.kotahi.govt.nz/arcgis/rest/services/Traffic_and_Travel/MapServer/6';
 const NZTA_ARCGIS_URL = `${API_BASE_URL}/query?f=json&where=1=1&outFields=*&returnGeometry=true`;
 function processApiCameraData(arcgisFeatures) {
     if (!arcgisFeatures || arcgisFeatures.length === 0) return [];
@@ -432,17 +432,17 @@ function processApiCameraData(arcgisFeatures) {
         const attr = feature.attributes;
         const geom = feature.geometry;
         return {
-            id: String(attr.id),
-            name: attr.name,
-            region: attr.region,
+            id: String(attr.Id),
+            name: attr.Name,
+            region: attr.Region,
             latitude: geom.y,
             longitude: geom.x,
-            status: attr.underMaintenance === 'false' ? 'Active' : 'Under Maintenance',
-            direction: attr.direction,
-            imageUrl: attr.imageUrl,
-            description: attr.description,
-            group: attr.group,
-            highway: attr.highway
+            status: attr.Under_Maintenance === 'false' ? 'Active' : 'Under Maintenance',
+            direction: attr.Direction,
+            imageUrl: attr.Image_URL,
+            description: attr.Description,
+            group: attr.Group,
+            highway: attr.Highway
         };
     });
 }
@@ -451,26 +451,6 @@ async function getAllCameras() {
         return cameraCache;
     }
     try {
-        const response = await fetch(NZTA_ARCGIS_URL, {
-            headers: {
-                'Accept': 'application/json'
-            },
-            next: {
-                revalidate: 300
-            } // Revalidate every 5 minutes
-        });
-        if (!response.ok) {
-            throw new Error(`Failed to fetch camera data: ${response.statusText}`);
-        }
-        const data = await response.json();
-        if (data && data.features) {
-            cameraCache = processApiCameraData(data.features);
-            return cameraCache;
-        }
-        console.error("Invalid data structure from ArcGIS API. Received:", JSON.stringify(data, null, 2));
-        throw new Error("Invalid data structure from ArcGIS API.");
-    } catch (error) {
-        console.warn("Error fetching live camera data from ArcGIS, using fallback:", error);
         // @ts-ignore
         if (__TURBOPACK__imported__module__$5b$project$5d2f$cameras$2e$json__$28$json$29$__["default"]?.response?.camera) {
             const oldApiCameras = __TURBOPACK__imported__module__$5b$project$5d2f$cameras$2e$json__$28$json$29$__["default"].response.camera;
@@ -489,7 +469,9 @@ async function getAllCameras() {
                 }));
             return cameraCache;
         }
-        console.error("Fallback data is also invalid.");
+        throw new Error("Fallback data is invalid.");
+    } catch (error) {
+        console.error("Could not load camera data, using empty array:", error);
         return [];
     }
 }
