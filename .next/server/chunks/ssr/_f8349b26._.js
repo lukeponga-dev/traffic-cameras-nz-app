@@ -36,7 +36,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$cameras$2e$json__$28$json$29
 let cameraCache = null;
 function processCameraData(data) {
     if (!data || !data.response || !Array.isArray(data.response.camera)) {
-        console.error("Invalid data structure in cameras.json");
+        console.error("Invalid data structure received:", data);
         return [];
     }
     return data.response.camera.map((cam)=>{
@@ -56,7 +56,7 @@ function processCameraData(data) {
         };
     });
 }
-async function getAllCameras() {
+function getAllCameras() {
     if (cameraCache) {
         return cameraCache;
     }
@@ -64,12 +64,12 @@ async function getAllCameras() {
         cameraCache = processCameraData(__TURBOPACK__imported__module__$5b$project$5d2f$cameras$2e$json__$28$json$29$__["default"]);
         return cameraCache;
     } catch (error) {
-        console.error("Failed to process local camera data, returning empty array:", error);
+        console.error("Failed to process local camera data:", error);
         return [];
     }
 }
-async function getCameraById(id) {
-    const cameras = await getAllCameras();
+function getCameraById(id) {
+    const cameras = getAllCameras();
     return cameras.find((camera)=>camera.id === id);
 }
 }}),
