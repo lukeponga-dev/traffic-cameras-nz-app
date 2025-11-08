@@ -19,12 +19,14 @@ export function Header({
     cameraCount,
     searchTerm,
     onSearchChange,
-    onMyLocationClick
+    onMyLocationClick,
+    isTracking
 }: { 
     cameraCount: number;
     searchTerm: string;
     onSearchChange: (term: string) => void;
     onMyLocationClick: () => void;
+    isTracking: boolean;
 }) {
 
   const { open, isMobile } = useSidebar();
@@ -69,12 +71,12 @@ export function Header({
                     <Tooltip>
                         <TooltipTrigger asChild>
                             <Button variant="ghost" size="icon" onClick={onMyLocationClick}>
-                                <LocateFixed />
-                                <span className="sr-only">My Location</span>
+                                <LocateFixed className={cn(isTracking && "text-primary")} />
+                                <span className="sr-only">{isTracking ? "Disable live location" : "Enable live location"}</span>
                             </Button>
                         </TooltipTrigger>
                         <TooltipContent>
-                            <p>My Location</p>
+                            <p>{isTracking ? "Disable live location" : "Enable live location"}</p>
                         </TooltipContent>
                     </Tooltip>
                   <Tooltip>

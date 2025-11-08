@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useRef } from 'react';
 import CameraList from '@/components/camera-list';
 import type { Camera } from '@/lib/types';
 import { getAllCameras } from '@/lib/data';
@@ -22,7 +22,9 @@ export default function Home() {
     const [selectedCamera, setSelectedCamera] = useState<Camera | null>(null);
     const [userLocation, setUserLocation] = useState<LatLng | null>(null);
     const [center, setCenter] = useState<LatLng | null>(null);
+    const [isTracking, setIsTracking] = useState(false);
 
+    const watchIdRef = useRef<number | null>(null);
     const { toast } = useToast();
 
     useEffect(() => {
@@ -34,6 +36,63 @@ export default function Home() {
         };
         fetchCameras();
     }, []);
+
+    useEffect(() => {
+        if (!isTracking) {
+            if (watchIdRef.current) {
+                navigator.geolocation.clearWatch(watchIdRef.current);
+                watchIdRef.current = null;
+            }
+            return;
+        }
+
+        if (!navigator.geolocation) {
+            toast({
+                variant: 'destructive',
+                title: 'Geolocation not supported',
+                description: "Your browser doesn't support geolocation.",
+            });
+            setIsTracking(false);
+            return;
+        }
+
+        watchIdRef.current = navigator.geolocation.watchPosition(
+            (position) => {
+                const newPos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                };
+                setUserLocation(newPos);
+                setCenter(newPos);
+                if (!isTracking) { // Initial toast
+                     toast({
+                        title: "Live location enabled",
+                        description: "Your position will be updated automatically."
+                    });
+                }
+            },
+            () => {
+                 toast({
+                    variant: 'destructive',
+                    title: 'Geolocation failed',
+                    description: 'Could not get your location. Please ensure you have granted permission.',
+                });
+                setIsTracking(false);
+            },
+            {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 0,
+            }
+        );
+
+        return () => {
+            if (watchIdRef.current) {
+                navigator.geolocation.clearWatch(watchIdRef.current);
+            }
+        };
+    }, [isTracking, toast]);
+
 
     const regions = useMemo(() => {
         if (!cameras.length) return [];
@@ -70,36 +129,17 @@ export default function Home() {
     };
     
     const handleMyLocationClick = () => {
-        if (!navigator.geolocation) {
-             toast({
-                variant: 'destructive',
-                title: 'Geolocation not supported',
-                description: "Your browser doesn't support geolocation.",
-            });
-            return;
-        }
-
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const newPos = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude,
-                };
-                setUserLocation(newPos);
-                setCenter(newPos);
+        setIsTracking(prev => {
+            const newIsTracking = !prev;
+            if (!newIsTracking && watchIdRef.current) {
+                navigator.geolocation.clearWatch(watchIdRef.current);
+                watchIdRef.current = null;
                 toast({
-                    title: "Location Found",
-                    description: "Map centered on your current location."
-                });
-            },
-            () => {
-                 toast({
-                    variant: 'destructive',
-                    title: 'Geolocation failed',
-                    description: 'Could not get your location. Please ensure you have granted permission.',
+                    title: "Live location disabled",
                 });
             }
-        );
+            return newIsTracking;
+        });
     };
 
     return (
@@ -110,6 +150,7 @@ export default function Home() {
                     searchTerm={searchTerm}
                     onSearchChange={setSearchTerm}
                     onMyLocationClick={handleMyLocationClick}
+                    isTracking={isTracking}
                 />
                 <div className="flex-1 relative">
                     <Sidebar>
