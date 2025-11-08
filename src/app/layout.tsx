@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
-import { MapProvider } from './map-provider';
 import { Analytics } from '@vercel/analytics/react';
 
 export const metadata: Metadata = {
@@ -15,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -23,10 +22,8 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
       <body className="font-body antialiased bg-background text-foreground">
-        <MapProvider>
-            {children}
-            <Toaster />
-        </MapProvider>
+        {children}
+        <Toaster />
         <Analytics />
       </body>
     </html>
