@@ -89,7 +89,7 @@ export default async function CameraPage({ params }: Props) {
                 </div>
 
                 <div className="min-h-[300px] md:min-h-full">
-                  
+                   <CameraMap camera={camera} />
                 </div>
             </div>
         </div>
