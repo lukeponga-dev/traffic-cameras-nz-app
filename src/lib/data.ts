@@ -17,7 +17,7 @@ function processLocalCameraData(data: any): Camera[] {
       latitude: cam.latitude,
       longitude: cam.longitude,
       direction: cam.direction,
-      status: cam.offline === 'true' || cam.underMaintenance === 'true' ? 'Under Maintenance' : 'Active',
+      status: cam.offline === 'true' || cam.underMaintenance === 'true' || cam.offline === true || cam.underMaintenance === true ? 'Under Maintenance' : 'Active',
       imageUrl: `https://trafficnz.info${cam.imageUrl}`,
       description: cam.description,
       highway: cam.highway,
@@ -31,6 +31,7 @@ export async function getAllCameras(): Promise<Camera[]> {
   }
   
   try {
+    // Using the local cameras.json file as the data source
     cameraCache = processLocalCameraData(camerasData);
     return cameraCache;
   } catch (error) {
