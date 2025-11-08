@@ -698,9 +698,12 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$cameras$2e$json__$28$json$29
 let cameraCache = null;
 function processLocalCameraData(data) {
     if (!data || !data.response || !Array.isArray(data.response.camera)) {
+        console.error("Invalid data structure in cameras.json");
         return [];
     }
     return data.response.camera.map((cam)=>{
+        const isOffline = cam.offline === 'true' || cam.offline === true;
+        const isUnderMaintenance = cam.underMaintenance === 'true' || cam.underMaintenance === true;
         return {
             id: cam.id,
             name: cam.name,
@@ -708,7 +711,7 @@ function processLocalCameraData(data) {
             latitude: cam.latitude,
             longitude: cam.longitude,
             direction: cam.direction,
-            status: cam.offline === 'true' || cam.underMaintenance === 'true' || cam.offline === true || cam.underMaintenance === true ? 'Under Maintenance' : 'Active',
+            status: isOffline || isUnderMaintenance ? 'Under Maintenance' : 'Active',
             imageUrl: `https://trafficnz.info${cam.imageUrl}`,
             description: cam.description,
             highway: cam.highway
@@ -720,7 +723,6 @@ async function getAllCameras() {
         return cameraCache;
     }
     try {
-        // Using the local cameras.json file as the data source
         cameraCache = processLocalCameraData(__TURBOPACK__imported__module__$5b$project$5d2f$cameras$2e$json__$28$json$29$__["default"]);
         return cameraCache;
     } catch (error) {
