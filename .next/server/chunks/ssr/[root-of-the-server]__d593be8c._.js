@@ -689,50 +689,53 @@ __turbopack_context__.s({
     "getCameraById": (()=>getCameraById)
 });
 let cameraCache = null;
-const API_BASE_URL = 'https://trafficnz.info';
-function processCameraData(data) {
-    if (!data || !Array.isArray(data.response.camera)) {
+const ARCGIS_URL = 'https://services2.arcgis.com/CXto30y3o056yP4g/ArcGIS/rest/services/wz_traffic_camera_poc_v3/FeatureServer/0/query?f=json&where=1%3D1&returnGeometry=true&spatialRel=esriSpatialRelIntersects&outFields=*&outSR=102100&resultOffset=0&resultRecordCount=2000';
+function processArcGisData(data) {
+    if (!data || !Array.isArray(data.features)) {
         return [];
     }
-    return data.response.camera.map((cam)=>({
-            id: cam.id,
-            name: cam.name,
-            region: cam.region.name,
-            latitude: cam.latitude,
-            longitude: cam.longitude,
-            direction: cam.direction,
-            status: cam.underMaintenance ? 'Under Maintenance' : 'Active',
-            imageUrl: `${API_BASE_URL}${cam.imageUrl}`,
-            description: cam.description,
-            highway: cam.highway
-        }));
+    return data.features.map((feature)=>{
+        const attrs = feature.attributes;
+        const geom = feature.geometry;
+        return {
+            id: String(attrs.CameraID) || String(attrs.OBJECTID),
+            name: attrs.Name || 'Unknown Camera',
+            region: attrs.Region || 'Unknown Region',
+            latitude: geom?.y,
+            longitude: geom?.x,
+            direction: attrs.Direction || 'N/A',
+            status: attrs.Operational === 'Yes' ? 'Active' : 'Under Maintenance',
+            imageUrl: attrs.ImageURL,
+            description: attrs.Description || '',
+            highway: attrs.RoadName || ''
+        };
+    });
 }
 async function getAllCameras() {
     if (cameraCache) {
         return cameraCache;
     }
-    const url = `${API_BASE_URL}/service/traffic/rest/4/cameras/all`;
     try {
-        const response = await fetch(url, {
+        const response = await fetch(ARCGIS_URL, {
             cache: 'no-store'
         });
         if (!response.ok) {
-            throw new Error(`trafficnz.info API request failed with status ${response.status}`);
+            throw new Error(`ArcGIS API request failed with status ${response.status}`);
         }
         const data = await response.json();
         if (data.error) {
-            console.error("trafficnz.info API returned an error:", data.error);
+            console.error("ArcGIS API returned an error:", data.error);
             return [];
         }
-        if (data && data.response && data.response.camera) {
-            cameraCache = processCameraData(data);
+        if (data && data.features) {
+            cameraCache = processArcGisData(data);
             return cameraCache;
         } else {
-            console.error("Invalid data structure from trafficnz.info API. Received:", JSON.stringify(data, null, 2));
-            throw new Error("Invalid data structure from trafficnz.info API.");
+            console.error("Invalid data structure from ArcGIS API. Received:", JSON.stringify(data, null, 2));
+            throw new Error("Invalid data structure from ArcGIS API.");
         }
     } catch (error) {
-        console.error("Failed to fetch camera data from trafficnz.info API, returning empty array:", error);
+        console.error("Failed to fetch camera data from ArcGIS API, returning empty array:", error);
         return []; // Return empty array on fetch error
     }
 }
