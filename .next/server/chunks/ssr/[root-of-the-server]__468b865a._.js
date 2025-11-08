@@ -697,37 +697,33 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$cameras$2e$json__$28$json$29
 ;
 let cameraCache = null;
 function processLocalCameraData(data) {
-    const cameras = data?.response?.camera;
-    if (!cameras || !Array.isArray(cameras)) {
+    if (!data || !data.response || !Array.isArray(data.response.camera)) {
         return [];
     }
-    return cameras.map((cam)=>({
+    return data.response.camera.map((cam)=>{
+        return {
             id: cam.id,
             name: cam.name,
             region: cam.region.name,
             latitude: cam.latitude,
             longitude: cam.longitude,
             direction: cam.direction,
-            status: cam.underMaintenance === 'false' || cam.underMaintenance === false ? 'Active' : 'Under Maintenance',
+            status: cam.offline === 'true' || cam.underMaintenance === 'true' ? 'Under Maintenance' : 'Active',
             imageUrl: `https://trafficnz.info${cam.imageUrl}`,
             description: cam.description,
-            highway: cam.highway,
-            group: cam.group
-        }));
+            highway: cam.highway
+        };
+    });
 }
 async function getAllCameras() {
     if (cameraCache) {
         return cameraCache;
     }
     try {
-        if (__TURBOPACK__imported__module__$5b$project$5d2f$cameras$2e$json__$28$json$29$__["default"]) {
-            cameraCache = processLocalCameraData(__TURBOPACK__imported__module__$5b$project$5d2f$cameras$2e$json__$28$json$29$__["default"]);
-            return cameraCache;
-        } else {
-            throw new Error("Local camera data could not be loaded.");
-        }
+        cameraCache = processLocalCameraData(__TURBOPACK__imported__module__$5b$project$5d2f$cameras$2e$json__$28$json$29$__["default"]);
+        return cameraCache;
     } catch (error) {
-        console.error("Failed to process local camera data:", error);
+        console.error("Failed to process local camera data, returning empty array:", error);
         return [];
     }
 }
