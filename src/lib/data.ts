@@ -1,12 +1,11 @@
 
 import type { Camera } from './types';
-import camerasData from '../../cameras.json';
 
 let cameraCache: Camera[] | null = null;
 
 function processCameraData(data: any): Camera[] {
   if (!data || !data.response || !Array.isArray(data.response.camera)) {
-    console.error("Invalid data structure in cameras.json");
+    console.error("Invalid data structure received:", data);
     return [];
   }
 
@@ -35,10 +34,15 @@ export async function getAllCameras(): Promise<Camera[]> {
   }
   
   try {
-    cameraCache = processCameraData(camerasData);
+    const response = await fetch('https://trafficnz.info/service/traffic/rest/4/cameras/all');
+    if (!response.ok) {
+      throw new Error(`Failed to fetch: ${response.status} ${response.statusText}`);
+    }
+    const data = await response.json();
+    cameraCache = processCameraData(data);
     return cameraCache;
   } catch (error) {
-    console.error("Failed to process local camera data, returning empty array:", error);
+    console.error("Failed to fetch live camera data, returning empty array:", error);
     return [];
   }
 }
