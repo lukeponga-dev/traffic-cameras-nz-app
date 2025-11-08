@@ -3,16 +3,17 @@
 
 import { useState, useCallback, useEffect, useMemo } from 'react';
 import type { Camera } from '@/lib/types';
-import { Map, AdvancedMarker, InfoWindow, Pin, useMapsLibrary, useMap } from '@vis.gl/react-google-maps';
+import { Map, AdvancedMarker, InfoWindow, useMapsLibrary, useMap } from '@vis.gl/react-google-maps';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from './ui/button';
-import { ExternalLink, Milestone, Zap, User } from 'lucide-react';
+import { ExternalLink, Milestone, Zap, User, Camera as CameraIcon } from 'lucide-react';
 import { Skeleton } from './ui/skeleton';
 import { useToast } from '@/hooks/use-toast';
 import { darkMapStyle } from '@/lib/map-styles';
 import FavoriteButton from './favorite-button';
 import { useSidebar } from './ui/sidebar';
+import { cn } from '@/lib/utils';
 
 const NZ_CENTER = { lat: -41.28664, lng: 174.77557 };
 const INITIAL_ZOOM = 5;
@@ -195,19 +196,28 @@ export default function MapDisplay({
                 onDragstart={handleCloseInfoWindow}
                 padding={mapPadding}
             >
-                {cameras.map((camera) => (
-                    <AdvancedMarker
-                        key={camera.id}
-                        position={{ lat: camera.latitude, lng: camera.longitude }}
-                        onClick={() => handleMarkerClick(camera)}
-                    >
-                         <Pin 
-                            borderColor={selectedCamera?.id === camera.id ? 'hsl(var(--primary))' : 'white'}
-                            background={selectedCamera?.id === camera.id ? 'hsl(var(--primary))' : 'hsl(var(--muted))'}
-                            glyphColor={selectedCamera?.id === camera.id ? 'hsl(var(--primary-foreground))' : 'white'}
-                         />
-                    </AdvancedMarker>
-                ))}
+                {cameras.map((camera) => {
+                    const isSelected = selectedCamera?.id === camera.id;
+                    return (
+                        <AdvancedMarker
+                            key={camera.id}
+                            position={{ lat: camera.latitude, lng: camera.longitude }}
+                            onClick={() => handleMarkerClick(camera)}
+                        >
+                            <div className={cn(
+                                "p-1.5 rounded-full border-2 shadow-lg transition-colors",
+                                isSelected 
+                                ? "bg-primary border-primary-foreground/80" 
+                                : "bg-background border-border"
+                            )}>
+                                <CameraIcon className={cn(
+                                    "h-4 w-4",
+                                    isSelected ? "text-primary-foreground" : "text-foreground"
+                                )} />
+                            </div>
+                        </AdvancedMarker>
+                    )
+                })}
                 
                 {userLocation && (
                     <AdvancedMarker position={userLocation}>
@@ -226,7 +236,7 @@ export default function MapDisplay({
                         onCloseClick={handleCloseInfoWindow}
                         minWidth={320}
                         headerDisabled
-                        pixelOffset={[0, -40]}
+                        pixelOffset={[0, -50]}
                     >
                         <div className="p-1 bg-background text-foreground rounded-lg font-body">
                              <div className="aspect-video relative mb-2 rounded-md overflow-hidden bg-muted">

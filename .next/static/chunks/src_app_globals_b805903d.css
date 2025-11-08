@@ -1148,6 +1148,10 @@ body {
   border-color: rgb(255 255 255 / var(--tw-border-opacity, 1));
 }
 
+.border-primary-foreground\/80 {
+  border-color: hsl(var(--primary-foreground) / .8);
+}
+
 .border-l-transparent {
   border-left-color: #0000;
 }
@@ -1254,6 +1258,10 @@ body {
 
 .p-\[1px\] {
   padding: 1px;
+}
+
+.p-1\.5 {
+  padding: .375rem;
 }
 
 .px-1 {
