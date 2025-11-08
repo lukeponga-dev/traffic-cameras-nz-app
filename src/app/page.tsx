@@ -28,13 +28,10 @@ export default function Home() {
     const { toast } = useToast();
 
     useEffect(() => {
-        const fetchCameras = async () => {
-            setLoading(true);
-            const cams = await getAllCameras();
-            setCameras(cams);
-            setLoading(false);
-        };
-        fetchCameras();
+        setLoading(true);
+        const cams = getAllCameras();
+        setCameras(cams);
+        setLoading(false);
     }, []);
 
     useEffect(() => {

@@ -1,5 +1,6 @@
 
 import type { Camera } from './types';
+import camerasData from '../../cameras.json';
 
 let cameraCache: Camera[] | null = null;
 
@@ -28,26 +29,21 @@ function processCameraData(data: any): Camera[] {
   });
 }
 
-export async function getAllCameras(): Promise<Camera[]> {
+export function getAllCameras(): Camera[] {
   if (cameraCache) {
     return cameraCache;
   }
   
   try {
-    const response = await fetch('https://trafficnz.info/service/traffic/rest/4/cameras/all');
-    if (!response.ok) {
-      throw new Error(`Failed to fetch: ${response.status} ${response.statusText}`);
-    }
-    const data = await response.json();
-    cameraCache = processCameraData(data);
+    cameraCache = processCameraData(camerasData);
     return cameraCache;
   } catch (error) {
-    console.error("Failed to fetch live camera data, returning empty array:", error);
+    console.error("Failed to process local camera data:", error);
     return [];
   }
 }
 
-export async function getCameraById(id: string): Promise<Camera | undefined> {
-    const cameras = await getAllCameras();
+export function getCameraById(id: string): Camera | undefined {
+    const cameras = getAllCameras();
     return cameras.find(camera => camera.id === id);
 }
