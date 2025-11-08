@@ -796,40 +796,38 @@ __turbopack_context__.s({
 var __TURBOPACK__imported__module__$5b$project$5d2f$cameras$2e$json__$28$json$29$__ = __turbopack_context__.i("[project]/cameras.json (json)");
 ;
 let cameraCache = null;
-function processLocalCameraData(localCameras) {
-    if (!localCameras || localCameras.length === 0) return [];
-    return localCameras.map((cam)=>{
-        return {
-            id: String(cam.id),
+function processLocalCameraData(data) {
+    const cameras = data?.response?.camera;
+    if (!cameras || !Array.isArray(cameras)) {
+        return [];
+    }
+    return cameras.map((cam)=>({
+            id: cam.id,
             name: cam.name,
             region: cam.region.name,
             latitude: cam.latitude,
             longitude: cam.longitude,
-            status: cam.underMaintenance ? 'Under Maintenance' : 'Active',
             direction: cam.direction,
+            status: cam.underMaintenance === 'false' || cam.underMaintenance === false ? 'Active' : 'Under Maintenance',
             imageUrl: `https://trafficnz.info${cam.imageUrl}`,
             description: cam.description,
-            group: cam.group,
-            highway: cam.highway
-        };
-    });
+            highway: cam.highway,
+            group: cam.group
+        }));
 }
 async function getAllCameras() {
     if (cameraCache) {
         return cameraCache;
     }
     try {
-        // Using local cameras.json as a stable data source
-        const data = __TURBOPACK__imported__module__$5b$project$5d2f$cameras$2e$json__$28$json$29$__["default"];
-        if (data && data.response && data.response.camera) {
-            cameraCache = processLocalCameraData(data.response.camera);
+        if (__TURBOPACK__imported__module__$5b$project$5d2f$cameras$2e$json__$28$json$29$__["default"]) {
+            cameraCache = processLocalCameraData(__TURBOPACK__imported__module__$5b$project$5d2f$cameras$2e$json__$28$json$29$__["default"]);
             return cameraCache;
         } else {
-            console.error("Invalid data structure from local cameras.json. Received:", JSON.stringify(data, null, 2));
-            throw new Error("Invalid data structure from local cameras.json.");
+            throw new Error("Local camera data could not be loaded.");
         }
     } catch (error) {
-        console.error("Failed to fetch camera data from local file, returning empty array:", error);
+        console.error("Failed to process local camera data:", error);
         return [];
     }
 }

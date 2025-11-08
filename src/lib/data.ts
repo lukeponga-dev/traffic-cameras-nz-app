@@ -1,31 +1,27 @@
-
 import type { Camera } from './types';
+import camerasData from '../../cameras.json';
 
 let cameraCache: Camera[] | null = null;
 
-const API_BASE_URL = 'https://services2.arcgis.com/CXbL202i351v1Y8I/arcgis/rest/services/Camera/FeatureServer/0';
+function processLocalCameraData(data: any): Camera[] {
+    const cameras = data?.response?.camera;
+    if (!cameras || !Array.isArray(cameras)) {
+        return [];
+    }
 
-function processArcGisCameraData(features: any[]): Camera[] {
-    if (!features || features.length === 0) return [];
-    
-    return features.map(feature => {
-        const attrs = feature.attributes;
-        const geom = feature.geometry;
-
-        return {
-            id: String(attrs.Id),
-            name: attrs.Name,
-            region: attrs.Region,
-            latitude: geom.y,
-            longitude: geom.x,
-            status: attrs.UnderMaintenance === 'false' ? 'Active' : 'Under Maintenance',
-            direction: attrs.Direction,
-            imageUrl: attrs.ImageURL,
-            description: attrs.Description,
-            group: attrs.Group,
-            highway: attrs.Highway
-        };
-    });
+    return cameras.map((cam: any) => ({
+        id: cam.id,
+        name: cam.name,
+        region: cam.region.name,
+        latitude: cam.latitude,
+        longitude: cam.longitude,
+        direction: cam.direction,
+        status: cam.underMaintenance === 'false' || cam.underMaintenance === false ? 'Active' : 'Under Maintenance',
+        imageUrl: `https://trafficnz.info${cam.imageUrl}`,
+        description: cam.description,
+        highway: cam.highway,
+        group: cam.group
+    }));
 }
 
 
@@ -34,37 +30,15 @@ export async function getAllCameras(): Promise<Camera[]> {
     return cameraCache;
   }
   
-  const queryParams = new URLSearchParams({
-      f: 'json',
-      where: '1=1',
-      outFields: '*',
-      returnGeometry: 'true'
-  }).toString();
-  
-  const fullUrl = `${API_BASE_URL}/query?${queryParams}`;
-
   try {
-    const response = await fetch(fullUrl, { cache: 'no-store' });
-
-    if (!response.ok) {
-        throw new Error(`Failed to fetch data: ${response.status} ${response.statusText}`);
-    }
-    const data = await response.json();
-
-    if (data.error) {
-        console.error("ArcGIS API returned an error:", data.error);
-        return [];
-    }
-
-    if (data && data.features) {
-        cameraCache = processArcGisCameraData(data.features);
+    if (camerasData) {
+        cameraCache = processLocalCameraData(camerasData);
         return cameraCache;
     } else {
-        console.error("Invalid data structure from ArcGIS API. Received:", JSON.stringify(data, null, 2));
-        throw new Error("Invalid data structure from ArcGIS API.");
+        throw new Error("Local camera data could not be loaded.");
     }
   } catch (error) {
-    console.error("Failed to fetch camera data from ArcGIS API, returning empty array:", error);
+    console.error("Failed to process local camera data:", error);
     return [];
   }
 }
