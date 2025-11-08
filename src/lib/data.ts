@@ -4,7 +4,7 @@ import camerasData from '../../cameras.json';
 
 let cameraCache: Camera[] | null = null;
 
-function processLocalCameraData(data: any): Camera[] {
+function processCameraData(data: any): Camera[] {
   if (!data || !data.response || !Array.isArray(data.response.camera)) {
     console.error("Invalid data structure in cameras.json");
     return [];
@@ -18,8 +18,8 @@ function processLocalCameraData(data: any): Camera[] {
       id: cam.id,
       name: cam.name,
       region: cam.region.name,
-      latitude: cam.latitude,
-      longitude: cam.longitude,
+      latitude: parseFloat(cam.latitude),
+      longitude: parseFloat(cam.longitude),
       direction: cam.direction,
       status: isOffline || isUnderMaintenance ? 'Under Maintenance' : 'Active',
       imageUrl: `https://trafficnz.info${cam.imageUrl}`,
@@ -35,7 +35,7 @@ export async function getAllCameras(): Promise<Camera[]> {
   }
   
   try {
-    cameraCache = processLocalCameraData(camerasData);
+    cameraCache = processCameraData(camerasData);
     return cameraCache;
   } catch (error) {
     console.error("Failed to process local camera data, returning empty array:", error);
