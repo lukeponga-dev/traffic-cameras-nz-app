@@ -45,7 +45,7 @@ export default function CameraList({
     isLoading: boolean;
 }) {
     const [searchTerm, setSearchTerm] = useState('');
-    const [selectedRegion, setSelectedRegion] = useState('all');
+    const [selectedRegion, setSelectedRegion] = useState('Waikato');
     const { favoriteIds, isLoaded: favoritesLoaded } = useFavorites();
 
     const regions = useMemo(() => {
