@@ -10,7 +10,9 @@ import MapDisplay from '@/components/map-display';
 import { SidebarProvider, Sidebar, SidebarContent, SidebarHeader } from '@/components/ui/sidebar';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
+import { useToast } from '@/hooks/use-toast';
 
+type LatLng = { lat: number; lng: number };
 
 export default function Home() {
     const [cameras, setCameras] = useState<Camera[]>([]);
@@ -18,6 +20,10 @@ export default function Home() {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedRegion, setSelectedRegion] = useState<string>('All');
     const [selectedCamera, setSelectedCamera] = useState<Camera | null>(null);
+    const [userLocation, setUserLocation] = useState<LatLng | null>(null);
+    const [center, setCenter] = useState<LatLng | null>(null);
+
+    const { toast } = useToast();
 
     useEffect(() => {
         const fetchCameras = async () => {
@@ -58,7 +64,43 @@ export default function Home() {
 
     const handleCameraSelect = (camera: Camera | null) => {
         setSelectedCamera(camera);
-    }
+        if (camera) {
+            setCenter({ lat: camera.latitude, lng: camera.longitude });
+        }
+    };
+    
+    const handleMyLocationClick = () => {
+        if (!navigator.geolocation) {
+             toast({
+                variant: 'destructive',
+                title: 'Geolocation not supported',
+                description: "Your browser doesn't support geolocation.",
+            });
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const newPos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                };
+                setUserLocation(newPos);
+                setCenter(newPos);
+                toast({
+                    title: "Location Found",
+                    description: "Map centered on your current location."
+                });
+            },
+            () => {
+                 toast({
+                    variant: 'destructive',
+                    title: 'Geolocation failed',
+                    description: 'Could not get your location. Please ensure you have granted permission.',
+                });
+            }
+        );
+    };
 
     return (
         <SidebarProvider>
@@ -67,6 +109,7 @@ export default function Home() {
                     cameraCount={filteredCameras.length}
                     searchTerm={searchTerm}
                     onSearchChange={setSearchTerm}
+                    onMyLocationClick={handleMyLocationClick}
                 />
                 <div className="flex-1 relative">
                     <Sidebar>
@@ -100,6 +143,8 @@ export default function Home() {
                         destination={null}
                         onCameraSelect={handleCameraSelect}
                         selectedCamera={selectedCamera}
+                        userLocation={userLocation}
+                        center={center}
                     />
                 </div>
             </div>

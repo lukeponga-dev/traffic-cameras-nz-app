@@ -7,7 +7,7 @@ import { Map, AdvancedMarker, InfoWindow, Pin, useMapsLibrary, useMap } from '@v
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from './ui/button';
-import { ExternalLink, Milestone, Zap } from 'lucide-react';
+import { ExternalLink, Milestone, Zap, User } from 'lucide-react';
 import { Skeleton } from './ui/skeleton';
 import { useToast } from '@/hooks/use-toast';
 import { darkMapStyle } from '@/lib/map-styles';
@@ -138,12 +138,16 @@ export default function MapDisplay({
     cameras, 
     destination,
     selectedCamera,
-    onCameraSelect
+    onCameraSelect,
+    userLocation,
+    center
 }: { 
     cameras: Camera[]; 
     destination: google.maps.places.PlaceResult | Camera | null;
     selectedCamera: Camera | null;
     onCameraSelect: (camera: Camera | null) => void;
+    userLocation: LatLng | null;
+    center: LatLng | null;
 }) {
     const map = useMap();
     const { isMobile, open: sidebarOpen } = useSidebar();
@@ -155,6 +159,15 @@ export default function MapDisplay({
     const handleCloseInfoWindow = useCallback(() => {
         onCameraSelect(null);
     }, [onCameraSelect]);
+
+    useEffect(() => {
+        if (center && map) {
+            map.panTo(center);
+            if(userLocation && center.lat === userLocation.lat && center.lng === userLocation.lng) {
+                map.setZoom(14);
+            }
+        }
+    }, [center, map, userLocation]);
 
     useEffect(() => {
         if (selectedCamera && map) {
@@ -189,12 +202,21 @@ export default function MapDisplay({
                         onClick={() => handleMarkerClick(camera)}
                     >
                          <Pin 
-                            borderColor={selectedCamera?.id === camera.id ? 'hsl(var(--primary))' : 'hsl(var(--foreground))'}
-                            background={selectedCamera?.id === camera.id ? 'hsl(var(--primary))' : 'hsl(var(--background))'}
-                            glyphColor={selectedCamera?.id === camera.id ? 'hsl(var(--primary-foreground))' : 'hsl(var(--foreground))'}
+                            borderColor={selectedCamera?.id === camera.id ? 'hsl(var(--primary))' : 'white'}
+                            background={selectedCamera?.id === camera.id ? 'hsl(var(--primary))' : 'hsl(var(--muted))'}
+                            glyphColor={selectedCamera?.id === camera.id ? 'hsl(var(--primary-foreground))' : 'white'}
                          />
                     </AdvancedMarker>
                 ))}
+                
+                {userLocation && (
+                    <AdvancedMarker position={userLocation}>
+                         <div className="h-6 w-6 rounded-full bg-primary border-2 border-white flex items-center justify-center shadow-lg">
+                            <User className="h-3 w-3 text-primary-foreground" />
+                        </div>
+                    </AdvancedMarker>
+                )}
+
 
                 <Directions destination={destination} />
 

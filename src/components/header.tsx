@@ -2,7 +2,7 @@
 "use client";
 
 import { Input } from "./ui/input";
-import { TrafficCone, Search, Loader2, Menu, Heart, X } from "lucide-react";
+import { TrafficCone, Search, Loader2, Menu, Heart, X, LocateFixed } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { SidebarTrigger, useSidebar } from "./ui/sidebar";
@@ -19,10 +19,12 @@ export function Header({
     cameraCount,
     searchTerm,
     onSearchChange,
+    onMyLocationClick
 }: { 
     cameraCount: number;
     searchTerm: string;
     onSearchChange: (term: string) => void;
+    onMyLocationClick: () => void;
 }) {
 
   const { open, isMobile } = useSidebar();
@@ -64,6 +66,17 @@ export function Header({
                     <span className="text-muted-foreground hidden sm:inline-block">Cameras</span>
                 </div>
                  <TooltipProvider>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <Button variant="ghost" size="icon" onClick={onMyLocationClick}>
+                                <LocateFixed />
+                                <span className="sr-only">My Location</span>
+                            </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            <p>My Location</p>
+                        </TooltipContent>
+                    </Tooltip>
                   <Tooltip>
                     <TooltipTrigger asChild>
                        <Button asChild variant="ghost" size="icon">
