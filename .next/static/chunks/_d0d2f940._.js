@@ -2537,7 +2537,7 @@ __turbopack_context__.s({
 var __TURBOPACK__imported__module__$5b$project$5d2f$cameras$2e$json__$28$json$29$__ = __turbopack_context__.i("[project]/cameras.json (json)");
 ;
 let cameraCache = null;
-const API_BASE_URL = 'https://services.arcgis.com/CXc2Ea2s6LHmJg1s/arcgis/rest/services/LiveCamerasNZTA_Public_View/FeatureServer/0';
+const API_BASE_URL = 'https://services.arcgis.com/CXc2Ea2s6LHmJg1s/arcgis/rest/services/Live_Cameras_NZTA_Public/FeatureServer/0';
 const NZTA_ARCGIS_URL = `${API_BASE_URL}/query?f=json&where=1=1&outFields=*&returnGeometry=true`;
 function processApiCameraData(arcgisFeatures) {
     if (!arcgisFeatures || arcgisFeatures.length === 0) return [];

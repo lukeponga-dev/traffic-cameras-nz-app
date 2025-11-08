@@ -2,7 +2,7 @@ import type { Camera } from './types';
 import fallbackData from '../../cameras.json';
 
 let cameraCache: Camera[] | null = null;
-const API_BASE_URL = 'https://services.arcgis.com/CXc2Ea2s6LHmJg1s/arcgis/rest/services/LiveCamerasNZTA_Public_View/FeatureServer/0';
+const API_BASE_URL = 'https://services.arcgis.com/CXc2Ea2s6LHmJg1s/arcgis/rest/services/Live_Cameras_NZTA_Public/FeatureServer/0';
 
 const NZTA_ARCGIS_URL = `${API_BASE_URL}/query?f=json&where=1=1&outFields=*&returnGeometry=true`;
 
