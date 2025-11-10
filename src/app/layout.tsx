@@ -7,6 +7,7 @@ import { MapProvider } from './map-provider';
 export const metadata: Metadata = {
   title: 'Kiwi Traffic Watch',
   description: 'Real-time traffic and speed camera monitoring for New Zealand.',
+  manifest: '/manifest.json',
 };
 
 export default function RootLayout({
