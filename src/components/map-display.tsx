@@ -173,11 +173,12 @@ export default function MapDisplay({
     useEffect(() => {
         if (selectedCamera && map) {
             map.panTo({ lat: selectedCamera.latitude, lng: selectedCamera.longitude });
+            map.setZoom(15);
         }
     }, [selectedCamera, map]);
     
     const mapPadding = useMemo(() => {
-        const basePadding = { top: 80, right: 20, bottom: 20, left: 20 };
+        const basePadding = { top: 20, right: 20, bottom: 20, left: 20 };
         if (isMobile) return basePadding;
         if (sidebarOpen) return { ...basePadding, left: 420 };
         return basePadding;
@@ -205,10 +206,10 @@ export default function MapDisplay({
                             onClick={() => handleMarkerClick(camera)}
                         >
                             <div className={cn(
-                                "p-1.5 rounded-full border-2 shadow-lg transition-colors",
+                                "w-7 h-7 rounded-full border-2 shadow-lg transition-all flex items-center justify-center",
                                 isSelected 
-                                ? "bg-primary border-primary-foreground/80" 
-                                : "bg-background border-border"
+                                ? "bg-primary border-white" 
+                                : "bg-background border-muted-foreground/50 hover:bg-primary/20"
                             )}>
                                 <CameraIcon className={cn(
                                     "h-4 w-4",
@@ -221,8 +222,7 @@ export default function MapDisplay({
                 
                 {userLocation && (
                     <AdvancedMarker position={userLocation}>
-                         <div className="h-6 w-6 rounded-full bg-primary border-2 border-white flex items-center justify-center shadow-lg">
-                            <User className="h-3 w-3 text-primary-foreground" />
+                         <div className="w-5 h-5 rounded-full bg-blue-500 border-2 border-white ring-4 ring-blue-500/50 flex items-center justify-center shadow-lg">
                         </div>
                     </AdvancedMarker>
                 )}
@@ -236,7 +236,7 @@ export default function MapDisplay({
                         onCloseClick={handleCloseInfoWindow}
                         minWidth={320}
                         headerDisabled
-                        pixelOffset={[0, -50]}
+                        pixelOffset={[0, -45]}
                     >
                         <div className="p-1 bg-background text-foreground rounded-lg font-body">
                              <div className="aspect-video relative mb-2 rounded-md overflow-hidden bg-muted">

@@ -61,12 +61,6 @@ export default function Home() {
                 };
                 setUserLocation(newPos);
                 setCenter(newPos);
-                if (!isTracking) { // Initial toast
-                     toast({
-                        title: "Live location enabled",
-                        description: "Your position will be updated automatically."
-                    });
-                }
             },
             () => {
                  toast({
@@ -128,9 +122,16 @@ export default function Home() {
     const handleMyLocationClick = () => {
         setIsTracking(prev => {
             const newIsTracking = !prev;
-            if (!newIsTracking && watchIdRef.current) {
-                navigator.geolocation.clearWatch(watchIdRef.current);
-                watchIdRef.current = null;
+            if (newIsTracking) {
+                toast({
+                    title: "Live location enabled",
+                    description: "Your position will be updated automatically."
+                });
+            } else {
+                 if (watchIdRef.current) {
+                    navigator.geolocation.clearWatch(watchIdRef.current);
+                    watchIdRef.current = null;
+                }
                 toast({
                     title: "Live location disabled",
                 });
