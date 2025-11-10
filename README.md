@@ -4,12 +4,12 @@ A modern, responsive web application for monitoring live traffic and speed camer
 
 ## ✨ Features
 
-- **🗺️ Interactive Map:** A full-screen map displaying all camera locations across New Zealand.
-- **📷 Live Camera Feeds:** View real-time images from traffic cameras in an interactive list and on the map.
-- **📍 Geolocation:** Find your current location on the map to see nearby cameras.
-- **🔍 Destination Search:** Search for any destination and get driving directions routed on the map.
-- **❤️ Favorites:** Save your most-viewed cameras for quick and easy access.
-- **📱 Responsive Design:** A clean, user-friendly interface that works beautifully on desktop and mobile devices.
+- **🗺️ Interactive Map:** Display camera locations across New Zealand on an interactive map.
+- **📷 Live Camera Feeds:** Provide live images from traffic cameras via interactive list and map.
+- **📍 Geolocation:** Allow users to find their location and identify nearby cameras using the Google Maps Platform.
+- **🔍 Destination Search:** Enable destination search with driving directions using the Google Maps Platform.
+- **❤️ Favorites:** Let users save their most-viewed cameras for quick access.
+- **📊 Data Fetch and display:** Unified schema data fetching from trafficnz.info for camera information.
 
 ## 🛠️ Tech Stack
 
