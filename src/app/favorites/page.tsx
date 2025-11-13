@@ -1,3 +1,4 @@
+
 import { getAllCameras } from '@/lib/data';
 import FavoritesList from '@/components/favorites-list';
 import { Separator } from '@/components/ui/separator';
