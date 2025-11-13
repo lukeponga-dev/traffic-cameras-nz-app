@@ -11,12 +11,11 @@ import { Skeleton } from "@/components/ui/skeleton";
 import CameraMap from "@/components/camera-map";
 
 type Props = {
-    params: Promise<{ id: string }>;
+    params: { id: string };
 };
 
 export async function generateMetadata({ params }: Props) {
-    const { id } = await params;
-    const camera = getCameraById(id);
+    const camera = getCameraById(params.id);
     if (!camera) {
         return { title: 'Camera Not Found' };
     }
@@ -26,8 +25,8 @@ export async function generateMetadata({ params }: Props) {
     };
 }
 
-export default async function CameraPage({ params }: Props) {
-    const { id } = await params;
+export default function CameraPage({ params }: Props) {
+    const { id } = params;
     const camera = getCameraById(id);
 
     if (!camera) {
@@ -39,7 +38,7 @@ export default async function CameraPage({ params }: Props) {
     return (
         <div className="container mx-auto max-w-5xl py-8 px-4">
             <Button asChild variant="ghost" className="mb-6">
-                <Link href="/">
+                <Link href="/list">
                     <ArrowLeft className="mr-2 h-4 w-4" />
                     Back to all cameras
                 </Link>

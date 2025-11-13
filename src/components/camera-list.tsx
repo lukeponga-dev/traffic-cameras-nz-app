@@ -27,16 +27,18 @@ export default function CameraList({
     cameras,
     isLoading,
     onCameraSelect,
+    onCameraClick,
     selectedCameraId,
 }: { 
     cameras: Camera[];
     isLoading: boolean;
-    onCameraSelect: (camera: Camera | null) => void;
+    onCameraSelect?: (camera: Camera | null) => void;
+    onCameraClick?: (camera: Camera) => void;
     selectedCameraId?: string | null;
 }) {
     return (
          <ScrollArea className="h-full">
-            <div className="space-y-2 p-2">
+            <div className="space-y-3 p-4">
             {isLoading ? <CameraListSkeleton /> : 
                 <>
                     {cameras.map(camera => (
@@ -45,6 +47,7 @@ export default function CameraList({
                             camera={camera}
                             isSelected={selectedCameraId === camera.id}
                             onSelect={onCameraSelect}
+                            onClick={onCameraClick}
                          />
                     ))}
                     {cameras.length === 0 && (

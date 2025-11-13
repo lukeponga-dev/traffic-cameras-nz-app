@@ -3,16 +3,14 @@
 
 import { useState, useCallback, useEffect, useMemo } from 'react';
 import type { Camera } from '@/lib/types';
-import { Map, AdvancedMarker, InfoWindow, useMapsLibrary, useMap } from '@vis.gl/react-google-maps';
+import { Map, AdvancedMarker, InfoWindow, useMap } from '@vis.gl/react-google-maps';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from './ui/button';
-import { ExternalLink, Milestone, Zap, User, Camera as CameraIcon } from 'lucide-react';
+import { ExternalLink, Milestone, Zap, Camera as CameraIcon } from 'lucide-react';
 import { Skeleton } from './ui/skeleton';
-import { useToast } from '@/hooks/use-toast';
 import { darkMapStyle } from '@/lib/map-styles';
 import FavoriteButton from './favorite-button';
-import { useSidebar } from './ui/sidebar';
 import { cn } from '@/lib/utils';
 
 const NZ_CENTER = { lat: -41.28664, lng: 174.77557 };
@@ -20,138 +18,20 @@ const INITIAL_ZOOM = 5;
 
 type LatLng = { lat: number; lng: number; };
 
-function Directions({ destination }: { destination: google.maps.places.PlaceResult | Camera | null }) {
-    const map = useMap();
-    const routesLibrary = useMapsLibrary('routes');
-    const { toast } = useToast();
-    
-    const [directionsService, setDirectionsService] = useState<google.maps.DirectionsService | null>(null);
-    const [directionsRenderer, setDirectionsRenderer] = useState<google.maps.DirectionsRenderer | null>(null);
-    const [routes, setRoutes] = useState<google.maps.DirectionsRoute[]>([]);
-    
-    // Init directions service and renderer
-    useEffect(() => {
-        if (!routesLibrary || !map) return;
-        setDirectionsService(new routesLibrary.DirectionsService());
-        const renderer = new routesLibrary.DirectionsRenderer({
-            map,
-            suppressMarkers: true,
-            polylineOptions: {
-                strokeColor: 'hsl(var(--primary))',
-                strokeOpacity: 0.8,
-                strokeWeight: 6
-            }
-        });
-        setDirectionsRenderer(renderer);
-
-        return () => {
-            renderer.setMap(null);
-        }
-    }, [routesLibrary, map]);
-    
-    // Render routes
-    useEffect(() => {
-        if (!directionsRenderer) return;
-        directionsRenderer.setDirections({ routes });
-    }, [routes, directionsRenderer]);
-
-
-    const calculateRoute = useCallback((origin: LatLng, dest: google.maps.LatLng | LatLng) => {
-        if (directionsService && directionsRenderer) {
-            directionsRenderer.setMap(map);
-            const request: google.maps.DirectionsRequest = {
-                origin: origin,
-                destination: dest,
-                travelMode: google.maps.TravelMode.DRIVING,
-            };
-            directionsService.route(request, (result, status) => {
-                if (status === google.maps.DirectionsStatus.OK && result) {
-                    setRoutes(result.routes);
-                } else {
-                    setRoutes([]);
-                    toast({
-                        variant: 'destructive',
-                        title: 'Could not find a route',
-                        description: 'Please check your destination and try again.',
-                    });
-                }
-            });
-        }
-    }, [directionsService, directionsRenderer, toast, map]);
-
-    useEffect(() => {
-        if (!destination) {
-            setRoutes([]);
-            if (directionsRenderer) {
-                directionsRenderer.setMap(null);
-            }
-            return;
-        };
-
-        let destLocation: google.maps.LatLng | LatLng;
-
-        if ('geometry' in destination && destination.geometry?.location) { // It's a PlaceResult
-            destLocation = destination.geometry.location;
-        } else if ('latitude' in destination) { // It's a Camera
-            destLocation = { lat: destination.latitude, lng: destination.longitude };
-        } else {
-            return;
-        }
-        
-        if (!navigator.geolocation) {
-             toast({
-                variant: 'destructive',
-                title: 'Geolocation not supported',
-                description: "Your browser doesn't support geolocation.",
-            });
-            return;
-        }
-
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const newPos = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude,
-                };
-                calculateRoute(newPos, destLocation);
-            },
-            () => {
-                 toast({
-                    variant: 'destructive',
-                    title: 'Geolocation failed',
-                    description: 'Could not get your location. Please ensure you have granted permission.',
-                });
-            }
-        );
-        
-        return () => {
-            if (directionsRenderer) {
-                directionsRenderer.setMap(null);
-            }
-        }
-
-    }, [destination, calculateRoute, toast, directionsRenderer]);
-
-    return null;
-}
-
 export default function MapDisplay({ 
     cameras, 
-    destination,
     selectedCamera,
     onCameraSelect,
     userLocation,
     center
 }: { 
     cameras: Camera[]; 
-    destination: google.maps.places.PlaceResult | Camera | null;
     selectedCamera: Camera | null;
     onCameraSelect: (camera: Camera | null) => void;
     userLocation: LatLng | null;
     center: LatLng | null;
 }) {
     const map = useMap();
-    const { isMobile, open: sidebarOpen } = useSidebar();
     
     const handleMarkerClick = useCallback((camera: Camera) => {
         onCameraSelect(camera);
@@ -176,14 +56,6 @@ export default function MapDisplay({
             map.setZoom(15);
         }
     }, [selectedCamera, map]);
-    
-    const mapPadding = useMemo(() => {
-        const basePadding = { top: 20, right: 20, bottom: 20, left: 20 };
-        if (isMobile) return basePadding;
-        if (sidebarOpen) return { ...basePadding, left: 420 };
-        return basePadding;
-    }, [isMobile, sidebarOpen])
-
 
     return (
         <div className="w-full h-full bg-muted relative">
@@ -195,7 +67,6 @@ export default function MapDisplay({
                 mapId="kiwi-traffic-map-dark"
                 styles={darkMapStyle}
                 onDragstart={handleCloseInfoWindow}
-                padding={mapPadding}
             >
                 {cameras.map((camera) => {
                     const isSelected = selectedCamera?.id === camera.id;
@@ -208,7 +79,7 @@ export default function MapDisplay({
                             <div className={cn(
                                 "w-7 h-7 rounded-full border-2 shadow-lg transition-all flex items-center justify-center",
                                 isSelected 
-                                ? "bg-primary border-white" 
+                                ? "bg-primary border-white scale-125" 
                                 : "bg-background border-muted-foreground/50 hover:bg-primary/20"
                             )}>
                                 <CameraIcon className={cn(
@@ -227,9 +98,6 @@ export default function MapDisplay({
                     </AdvancedMarker>
                 )}
 
-
-                <Directions destination={destination} />
-
                 {selectedCamera && (
                     <InfoWindow
                         position={{ lat: selectedCamera.latitude, lng: selectedCamera.longitude }}
@@ -238,7 +106,7 @@ export default function MapDisplay({
                         headerDisabled
                         pixelOffset={[0, -45]}
                     >
-                        <div className="p-1 bg-background text-foreground rounded-lg font-body">
+                        <div className="p-1 bg-background text-foreground rounded-lg font-sans">
                              <div className="aspect-video relative mb-2 rounded-md overflow-hidden bg-muted">
                                 <Skeleton className="absolute inset-0" />
                                 <Image

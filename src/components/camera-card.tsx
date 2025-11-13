@@ -10,8 +10,26 @@ import { cn } from '@/lib/utils';
 import { Milestone, Zap } from 'lucide-react';
 import FavoriteButton from './favorite-button';
 
-export function CameraCard({ camera, isSelected, onSelect }: { camera: Camera, isSelected?: boolean, onSelect: (camera: Camera) => void }) {
+export function CameraCard({ 
+    camera, 
+    isSelected, 
+    onSelect, 
+    onClick
+}: { 
+    camera: Camera, 
+    isSelected?: boolean, 
+    onSelect?: (camera: Camera | null) => void,
+    onClick?: (camera: Camera) => void
+}) {
     const [isImageLoading, setIsImageLoading] = useState(true);
+
+    const handleInteraction = () => {
+        if (onClick) {
+            onClick(camera);
+        } else if (onSelect) {
+            onSelect(camera);
+        }
+    };
 
     return (
         <Card 
@@ -19,7 +37,7 @@ export function CameraCard({ camera, isSelected, onSelect }: { camera: Camera, i
                 "overflow-hidden transition-all duration-200 cursor-pointer hover:border-primary/60",
                 isSelected ? "border-primary shadow-md ring-2 ring-primary" : "border-border"
             )}
-            onClick={() => onSelect(camera)}
+            onClick={handleInteraction}
         >
              <CardContent className="p-3">
                 <div className="flex items-start gap-4">

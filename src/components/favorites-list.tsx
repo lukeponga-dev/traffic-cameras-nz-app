@@ -1,15 +1,18 @@
+
 "use client";
 
 import { useFavorites } from '@/hooks/use-favorites';
 import type { Camera } from '@/lib/types';
 import { useEffect, useState } from 'react';
 import { CameraCard } from './camera-card';
-import { Heart, Loader2 } from 'lucide-react';
+import { Heart } from 'lucide-react';
 import { Skeleton } from './ui/skeleton';
+import { useRouter } from 'next/navigation';
 
 export default function FavoritesList({ allCameras }: { allCameras: Camera[] }) {
     const { favoriteIds, isLoaded } = useFavorites();
     const [favoriteCameras, setFavoriteCameras] = useState<Camera[]>([]);
+    const router = useRouter();
 
     useEffect(() => {
         if (isLoaded) {
@@ -17,11 +20,15 @@ export default function FavoritesList({ allCameras }: { allCameras: Camera[] }) 
         }
     }, [favoriteIds, allCameras, isLoaded]);
 
+    const handleCameraClick = (camera: Camera) => {
+        router.push(`/cameras/${camera.id}`);
+    };
+
     if (!isLoaded) {
         return (
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {[...Array(4)].map((_, i) => (
-                    <Skeleton key={i} className="h-64" />
+                    <Skeleton key={i} className="h-32" />
                 ))}
             </div>
         );
@@ -38,9 +45,9 @@ export default function FavoritesList({ allCameras }: { allCameras: Camera[] }) 
     }
     
     return (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {favoriteCameras.map(camera => (
-                <CameraCard key={camera.id} camera={camera} />
+                <CameraCard key={camera.id} camera={camera} onClick={handleCameraClick} />
             ))}
         </div>
     );
