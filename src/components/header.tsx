@@ -1,4 +1,3 @@
-
 "use client";
 
 import { TrafficCone, LocateFixed, PanelLeftOpen, PanelLeftClose, Map, Star } from "lucide-react";
@@ -30,24 +29,7 @@ export function Header({
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between gap-4 h-16">
             <div className="flex items-center gap-4">
-                <Link href="/map" className="flex items-center gap-2">
-                    <TrafficCone className="h-6 w-6 text-primary" />
-                    <h1 className="text-xl font-bold tracking-tight hidden sm:block">
-                        Kiwi Traffic Watch
-                    </h1>
-                </Link>
-                <nav className="hidden md:flex items-center gap-2">
-                   <Button variant={pathname === '/map' ? 'secondary' : 'ghost'} asChild size="sm">
-                       <Link href="/map"><Map className="mr-2"/>Map</Link>
-                   </Button>
-                   <Button variant={pathname === '/favorites' ? 'secondary' : 'ghost'} asChild size="sm">
-                       <Link href="/favorites"><Star className="mr-2"/>Favorites</Link>
-                   </Button>
-                </nav>
-            </div>
-            
-            <div className="flex items-center gap-1.5">
-                 {showSidebarToggle && (
+                {showSidebarToggle && (
                   <>
                   <SidebarTrigger asChild>
                       <Button variant="ghost" size="icon" className="hidden md:inline-flex">
@@ -62,7 +44,26 @@ export function Header({
                           <span className="sr-only">Open camera list</span>
                        </Button>
                   </SidebarTrigger>
-
+                  </>
+                )}
+                <Link href="/map" className="flex items-center gap-2">
+                    <TrafficCone className="h-6 w-6 text-primary-foreground bg-primary rounded-sm p-0.5" />
+                    <h1 className="text-xl font-bold tracking-tight hidden sm:block">
+                        Kiwi Traffic Watch
+                    </h1>
+                </Link>
+            </div>
+            
+            <div className="flex items-center gap-1.5">
+                 <nav className="hidden md:flex items-center gap-2">
+                   <Button variant={pathname === '/map' ? 'secondary' : 'ghost'} asChild size="sm">
+                       <Link href="/map"><Map className="mr-2"/>Map</Link>
+                   </Button>
+                   <Button variant={pathname === '/favorites' ? 'secondary' : 'ghost'} asChild size="sm">
+                       <Link href="/favorites"><Star className="mr-2"/>Favorites</Link>
+                   </Button>
+                </nav>
+                 {showSidebarToggle && (
                   <Tooltip>
                       <TooltipTrigger asChild>
                           <Button variant="ghost" size="icon" onClick={onMyLocationClick}>
@@ -74,16 +75,7 @@ export function Header({
                           <p>{isTracking ? "Disable live location" : "Enable live location"}</p>
                       </TooltipContent>
                   </Tooltip>
-                  </>
                 )}
-                 <nav className="flex md:hidden items-center">
-                   <Button variant="ghost" asChild size="icon">
-                       <Link href="/map" aria-label="Map"><Map /></Link>
-                   </Button>
-                   <Button variant="ghost" asChild size="icon">
-                       <Link href="/favorites" aria-label="Favorites"><Star /></Link>
-                   </Button>
-                </nav>
             </div>
         </div>
       </div>

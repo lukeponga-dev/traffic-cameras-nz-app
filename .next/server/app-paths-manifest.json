@@ -4,6 +4,7 @@
   "/_not-found/page": "app/_not-found/page.js",
   "/cameras/[id]/page": "app/cameras/[id]/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/favorites/page": "app/favorites/page.js",
   "/map/page": "app/map/page.js",
   "/page": "app/page.js"
 }

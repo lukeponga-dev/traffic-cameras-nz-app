@@ -6,6 +6,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { MapProvider } from './map-provider';
 import { cn } from '@/lib/utils';
 import { TooltipProvider } from '@/components/ui/tooltip';
+import MobileNavBar from '@/components/mobile-nav-bar';
 
 const fontSans = Inter({
   subsets: ['latin'],
@@ -53,7 +54,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0f172a",
+  themeColor: "#1c1f26",
 };
 
 
@@ -71,7 +72,12 @@ export default function RootLayout({
         )}
       >
         <TooltipProvider>
-          <MapProvider>{children}</MapProvider>
+          <MapProvider>
+            <div className="relative flex flex-col h-screen">
+              <main className="flex-1 pb-16 md:pb-0">{children}</main>
+              <MobileNavBar />
+            </div>
+          </MapProvider>
         </TooltipProvider>
         <Toaster />
         <Analytics />
