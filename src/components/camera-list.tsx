@@ -6,6 +6,7 @@ import { CameraCard } from '@/components/camera-card';
 import { Skeleton } from './ui/skeleton';
 import { ScrollArea } from './ui/scroll-area';
 import { useRouter } from 'next/navigation';
+import { useSidebar } from './ui/sidebar';
 
 function CameraListSkeleton() {
     return (
@@ -38,6 +39,7 @@ export default function CameraList({
     onCameraClick?: (camera: Camera) => void;
 }) {
     const router = useRouter();
+    const { isMobile, setOpen } = useSidebar();
 
     const handleCardClick = (camera: Camera) => {
         if (onCameraClick) {
@@ -46,6 +48,10 @@ export default function CameraList({
             onCameraSelect(camera);
         } else {
             router.push(`/cameras/${camera.id}`);
+        }
+
+        if (isMobile) {
+            setOpen(false);
         }
     }
 

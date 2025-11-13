@@ -12,8 +12,8 @@ export default function FavoritesPage() {
     const cameras = getAllCameras();
     return (
         <div className="h-screen w-screen flex flex-col bg-background">
-             <Header showSearch={false} cameraCount={cameras.length} />
-            <main className="flex-1 overflow-y-auto p-4 md:p-8 pt-20 md:pt-24 mb-20">
+             <Header />
+            <main className="flex-1 overflow-y-auto p-4 md:p-8 pt-20 md:pt-24">
                 <div className="space-y-2 mb-8">
                     <h1 className="text-3xl font-bold tracking-tight">Favorite Cameras</h1>
                     <p className="text-muted-foreground">Your saved cameras for quick access.</p>

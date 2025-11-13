@@ -11,7 +11,6 @@ import {
   Sidebar,
   SidebarHeader,
   SidebarContent,
-  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -31,10 +30,9 @@ export default function HomePageClient({ cameras: initialCameras }: { cameras: C
     
     const watchIdRef = useRef<number | null>(null);
     const { toast } = useToast();
-    
     const isInitialMount = useRef(true);
 
-     useEffect(() => {
+    useEffect(() => {
         if (isInitialMount.current) {
             isInitialMount.current = false;
             return;
@@ -50,6 +48,7 @@ export default function HomePageClient({ cameras: initialCameras }: { cameras: C
             });
         }
     }, [isTracking, toast]);
+
 
     useEffect(() => {
         if (!isTracking) {
@@ -146,6 +145,7 @@ export default function HomePageClient({ cameras: initialCameras }: { cameras: C
             <Header 
                 onMyLocationClick={handleMyLocationClick}
                 isTracking={isTracking}
+                showSidebarToggle={true}
             />
             <main className="flex-1 relative pt-16">
                  <Sidebar>
@@ -154,7 +154,7 @@ export default function HomePageClient({ cameras: initialCameras }: { cameras: C
                             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                             <Input
                                 type="search"
-                                placeholder="Search cameras..."
+                                placeholder={`Search ${filteredCameras.length} cameras...`}
                                 className="pl-9 text-base w-full bg-background/50"
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}

@@ -1,7 +1,7 @@
 
 "use client";
 
-import { TrafficCone, LocateFixed, PanelLeftOpen, PanelLeftClose, Search, List, Star, Map } from "lucide-react";
+import { TrafficCone, LocateFixed, PanelLeftOpen, PanelLeftClose, Map, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 import Link from "next/link";
@@ -12,22 +12,15 @@ import {
 } from "@/components/ui/tooltip"
 import { SidebarTrigger, useSidebar } from "./ui/sidebar";
 import { usePathname } from "next/navigation";
-import { Input } from "./ui/input";
 
 export function Header({ 
     onMyLocationClick,
     isTracking,
-    cameraCount,
-    searchTerm,
-    onSearchChange,
-    showSearch = true,
+    showSidebarToggle = false,
 }: { 
     onMyLocationClick?: () => void;
     isTracking?: boolean;
-    cameraCount?: number;
-    searchTerm?: string;
-    onSearchChange?: (term: string) => void;
-    showSearch?: boolean;
+    showSidebarToggle?: boolean;
 }) {
   const { open } = useSidebar();
   const pathname = usePathname();
@@ -36,36 +29,38 @@ export function Header({
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between gap-4 h-16">
-            <div className="flex items-center gap-2">
-                <Link href="/" className="flex items-center gap-2">
+            <div className="flex items-center gap-4">
+                <Link href="/map" className="flex items-center gap-2">
                     <TrafficCone className="h-6 w-6 text-primary" />
                     <h1 className="text-xl font-bold tracking-tight hidden sm:block">
                         Kiwi Traffic Watch
                     </h1>
                 </Link>
+                <nav className="hidden md:flex items-center gap-2">
+                   <Button variant={pathname === '/map' ? 'secondary' : 'ghost'} asChild size="sm">
+                       <Link href="/map"><Map className="mr-2"/>Map</Link>
+                   </Button>
+                   <Button variant={pathname === '/favorites' ? 'secondary' : 'ghost'} asChild size="sm">
+                       <Link href="/favorites"><Star className="mr-2"/>Favorites</Link>
+                   </Button>
+                </nav>
             </div>
-
-            {showSearch && (
-              <div className="relative w-full max-w-md hidden md:block">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input
-                      type="search"
-                      placeholder={`Search ${cameraCount || ''} cameras...`}
-                      className="pl-9 w-full bg-background/50"
-                      value={searchTerm}
-                      onChange={(e) => onSearchChange?.(e.target.value)}
-                  />
-              </div>
-            )}
             
             <div className="flex items-center gap-1.5">
-                 {pathname === '/map' && (
+                 {showSidebarToggle && (
                   <>
                   <SidebarTrigger asChild>
                       <Button variant="ghost" size="icon" className="hidden md:inline-flex">
                           {open ? <PanelLeftClose /> : <PanelLeftOpen />}
                           <span className="sr-only">Toggle Sidebar</span>
                       </Button>
+                  </SidebarTrigger>
+                  
+                  <SidebarTrigger asChild>
+                       <Button variant="ghost" size="icon" className="md:hidden">
+                          <PanelLeftOpen />
+                          <span className="sr-only">Open camera list</span>
+                       </Button>
                   </SidebarTrigger>
 
                   <Tooltip>
@@ -81,6 +76,14 @@ export function Header({
                   </Tooltip>
                   </>
                 )}
+                 <nav className="flex md:hidden items-center">
+                   <Button variant="ghost" asChild size="icon">
+                       <Link href="/map" aria-label="Map"><Map /></Link>
+                   </Button>
+                   <Button variant="ghost" asChild size="icon">
+                       <Link href="/favorites" aria-label="Favorites"><Star /></Link>
+                   </Button>
+                </nav>
             </div>
         </div>
       </div>

@@ -448,6 +448,10 @@ body {
   top: 50%;
 }
 
+.top-16 {
+  top: 4rem;
+}
+
 .z-10 {
   z-index: 10;
 }
@@ -1250,6 +1254,10 @@ body {
   background-color: hsl(var(--background) / .5);
 }
 
+.bg-destructive\/10 {
+  background-color: hsl(var(--destructive) / .1);
+}
+
 .fill-current {
   fill: currentColor;
 }
@@ -1288,6 +1296,10 @@ body {
 
 .p-\[1px\] {
   padding: 1px;
+}
+
+.p-8 {
+  padding: 2rem;
 }
 
 .px-1 {
@@ -1564,6 +1576,10 @@ body {
 .text-yellow-400 {
   --tw-text-opacity: 1;
   color: rgb(250 204 21 / var(--tw-text-opacity, 1));
+}
+
+.text-destructive-foreground\/80 {
+  color: hsl(var(--destructive-foreground) / .8);
 }
 
 .underline-offset-4 {

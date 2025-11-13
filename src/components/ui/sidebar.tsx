@@ -3,11 +3,9 @@
 
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
-import { VariantProps, cva } from "class-variance-authority"
 
 import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
-import { Separator } from "@/components/ui/separator"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet"
 
 type SidebarContext = {
@@ -47,30 +45,18 @@ const SidebarProvider = React.forwardRef<
     ref
   ) => {
     const isMobile = useIsMobile()
-    const [_open, _setOpen] = React.useState(defaultOpen)
-    
-    // On mobile, default to closed
-    const open = openProp ?? (isMobile ? _open && defaultOpen : _open);
-    
-    const setOpen = React.useCallback(
-      (value: boolean) => {
-        if (setOpenProp) {
-          setOpenProp(value)
-        } else {
-          _setOpen(value)
-        }
-      },
-      [setOpenProp]
-    )
+    const [openState, setOpenState] = React.useState(defaultOpen);
 
-    // Close sidebar on mobile when resizing from desktop
+    const open = openProp ?? openState;
+    const setOpen = setOpenProp ?? setOpenState;
+
     React.useEffect(() => {
-        if (!isMobile) {
-            setOpen(true);
-        } else {
+        if (isMobile) {
             setOpen(false);
+        } else {
+            setOpen(true);
         }
-    }, [isMobile, setOpen])
+    }, [isMobile, setOpen]);
 
 
     const contextValue = React.useMemo<SidebarContext>(
@@ -135,8 +121,8 @@ const Sidebar = React.forwardRef<
       <aside
         ref={ref}
         className={cn(
-          "group peer z-20 hidden md:flex absolute top-0 h-full transition-transform duration-300 ease-in-out",
-          "w-[400px] flex-col",
+          "group peer z-20 hidden md:flex absolute top-16 bottom-0 transition-transform duration-300 ease-in-out",
+          "w-[400px] flex-col bg-background/80 backdrop-blur-sm border-r",
           side === "left" ? "left-0" : "right-0",
           open ? 'translate-x-0' : (side === 'left' ? '-translate-x-[400px]' : 'translate-x-[400px]'),
           className
