@@ -2,14 +2,12 @@
 "use client";
 
 import type { Camera } from '@/lib/types';
-import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
-import { Skeleton } from './ui/skeleton';
-import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Milestone, Zap, ExternalLink } from 'lucide-react';
 import FavoriteButton from './favorite-button';
 import Link from 'next/link';
+import LiveImage from './live-image';
 
 export function CameraCard({ 
     camera, 
@@ -20,8 +18,6 @@ export function CameraCard({
     isSelected?: boolean, 
     onSelect?: (camera: Camera | null) => void
 }) {
-    const [isImageLoading, setIsImageLoading] = useState(true);
-
     const handleInteraction = () => {
         if (onSelect) {
             onSelect(camera);
@@ -38,15 +34,10 @@ export function CameraCard({
         >
              <CardContent className="p-0">
                  <div className="aspect-video relative bg-muted overflow-hidden">
-                    {isImageLoading && <Skeleton className="absolute inset-0" />}
-                     <Image
+                    <LiveImage
                         src={camera.imageUrl}
                         alt={`Live feed from ${camera.name}`}
-                        fill
-                        className={cn('object-cover transition-opacity duration-300', isImageLoading ? 'opacity-0' : 'opacity-100')}
                         sizes="400px"
-                        onLoad={() => setIsImageLoading(false)}
-                        unoptimized
                     />
                 </div>
                 <div className='p-3'>

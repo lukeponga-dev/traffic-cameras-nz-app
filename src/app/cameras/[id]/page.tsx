@@ -1,14 +1,13 @@
 
 import { getCameraById } from "@/lib/data";
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import FavoriteButton from "@/components/favorite-button";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Zap, CheckCircle2, Waypoints, Milestone } from "lucide-react";
-import { Skeleton } from "@/components/ui/skeleton";
 import CameraMap from "@/components/camera-map";
+import LiveImage from "@/components/live-image";
 
 type Props = {
     params: { id: string };
@@ -38,7 +37,7 @@ export default function CameraPage({ params }: Props) {
     return (
         <div className="container mx-auto max-w-5xl py-8 px-4">
             <Button asChild variant="ghost" className="mb-6">
-                <Link href="/list">
+                <Link href="/">
                     <ArrowLeft className="mr-2 h-4 w-4" />
                     Back to all cameras
                 </Link>
@@ -46,15 +45,10 @@ export default function CameraPage({ params }: Props) {
             <div className="grid md:grid-cols-2 gap-8">
                 <div className="space-y-6">
                     <div className="aspect-video w-full relative overflow-hidden rounded-lg shadow-lg">
-                         <Skeleton className="absolute inset-0" />
-                        <Image 
-                            src={camera.imageUrl} 
+                        <LiveImage 
+                            src={camera.imageUrl}
                             alt={`Live feed from ${camera.name}`} 
-                            fill
-                            className="object-cover transition-opacity duration-500"
-                            sizes="(max-width: 768px) 100vw, 50vw"
                             priority
-                            unoptimized
                         />
                     </div>
                     <Card>

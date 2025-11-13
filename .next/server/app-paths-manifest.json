@@ -1,6 +1,8 @@
 {
+  "/(tabs)/list/page": "app/(tabs)/list/page.js",
   "/(tabs)/map/page": "app/(tabs)/map/page.js",
   "/_not-found/page": "app/_not-found/page.js",
+  "/cameras/[id]/page": "app/cameras/[id]/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
   "/page": "app/page.js"
 }

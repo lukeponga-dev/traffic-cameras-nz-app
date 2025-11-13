@@ -4,15 +4,14 @@
 import { useState, useCallback, useEffect, useMemo } from 'react';
 import type { Camera } from '@/lib/types';
 import { Map, AdvancedMarker, InfoWindow, useMap } from '@vis.gl/react-google-maps';
-import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from './ui/button';
 import { ExternalLink, Milestone, Zap, Camera as CameraIcon } from 'lucide-react';
-import { Skeleton } from './ui/skeleton';
 import { darkMapStyle } from '@/lib/map-styles';
 import FavoriteButton from './favorite-button';
 import { cn } from '@/lib/utils';
 import { useSidebar } from './ui/sidebar';
+import LiveImage from './live-image';
 
 const NZ_CENTER = { lat: -41.28664, lng: 174.77557 };
 const INITIAL_ZOOM = 5;
@@ -112,14 +111,10 @@ export default function MapDisplay({
                     >
                         <div className="p-1 bg-background text-foreground rounded-lg font-sans">
                              <div className="aspect-video relative mb-2 rounded-md overflow-hidden bg-muted">
-                                <Skeleton className="absolute inset-0" />
-                                <Image
+                                <LiveImage
                                     src={selectedCamera.imageUrl}
                                     alt={`Live feed from ${selectedCamera.name}`}
-                                    fill
-                                    className="object-cover"
                                     sizes="320px"
-                                    unoptimized
                                 />
                                 <div className="absolute top-1 right-1 z-10">
                                     <FavoriteButton id={selectedCamera.id} />
