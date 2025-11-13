@@ -15,8 +15,8 @@ import { useToast } from '@/hooks/use-toast';
 type LatLng = { lat: number; lng: number };
 
 export default function Home() {
-    const [cameras, setCameras] = useState<Camera[]>([]);
-    const [loading, setLoading] = useState(true);
+    const [cameras] = useState<Camera[]>(getAllCameras());
+    const [loading, setLoading] = useState(false); // No longer loading from network
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedRegion, setSelectedRegion] = useState<string>('All');
     const [selectedCamera, setSelectedCamera] = useState<Camera | null>(null);
@@ -26,13 +26,6 @@ export default function Home() {
 
     const watchIdRef = useRef<number | null>(null);
     const { toast } = useToast();
-
-    useEffect(() => {
-        setLoading(true);
-        const cams = getAllCameras();
-        setCameras(cams);
-        setLoading(false);
-    }, []);
 
     useEffect(() => {
         if (!isTracking) {
