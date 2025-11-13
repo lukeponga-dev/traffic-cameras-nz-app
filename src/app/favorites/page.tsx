@@ -10,8 +10,8 @@ export const metadata = {
   title: 'My Favorite Cameras',
 };
 
-export default async function FavoritesPage() {
-    const cameras = await getAllCameras();
+export default function FavoritesPage() {
+    const cameras = getAllCameras();
     return (
         <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
             <Button asChild variant="ghost" className="mb-4">

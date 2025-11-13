@@ -15,7 +15,7 @@ type Props = {
 };
 
 export async function generateMetadata({ params }: Props) {
-    const camera = await getCameraById(params.id);
+    const camera = getCameraById(params.id);
     if (!camera) {
         return { title: 'Camera Not Found' };
     }
@@ -25,8 +25,8 @@ export async function generateMetadata({ params }: Props) {
     };
 }
 
-export default async function CameraPage({ params }: Props) {
-    const camera = await getCameraById(params.id);
+export default function CameraPage({ params }: Props) {
+    const camera = getCameraById(params.id);
 
     if (!camera) {
         notFound();
