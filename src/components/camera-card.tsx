@@ -74,4 +74,8 @@ export function CameraCard({
                      <Link href={`/cameras/${camera.id}`} className="text-xs text-primary hover:underline mt-2 inline-flex items-center gap-1">
                         More Details <ExternalLink className="h-3 w-3" />
                     </Link>
-                
+                </div>
+             </CardContent>
+        </Card>
+    );
+}

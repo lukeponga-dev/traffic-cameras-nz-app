@@ -1,3 +1,4 @@
+
 "use client";
 
 import { TrafficCone, LocateFixed, PanelLeftOpen, PanelLeftClose } from "lucide-react";
@@ -57,3 +58,9 @@ export function Header({
                       </TooltipContent>
                   </Tooltip>
                 )}
+            </div>
+        </div>
+      </div>
+    </header>
+  );
+}

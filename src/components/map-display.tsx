@@ -143,4 +143,11 @@ export default function MapDisplay({
                                     View Full Details
                                     <ExternalLink className="ml-2 h-4 w-4" />
                                 </Link>
-                            
+                            </Button>
+                        </div>
+                    </InfoWindow>
+                )}
+            </Map>
+        </div>
+    );
+}

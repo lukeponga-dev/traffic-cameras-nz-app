@@ -5,4 +5,7 @@ export const metadata = {
   title: 'Map View | Kiwi Traffic Watch',
 };
 
-export default function Home()
+export default function Home() {
+    const cameras = getAllCameras();
+    return <HomePageClient cameras={cameras} />;
+}
