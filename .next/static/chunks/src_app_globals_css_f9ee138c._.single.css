@@ -350,10 +350,6 @@ body {
   position: relative;
 }
 
-.sticky {
-  position: sticky;
-}
-
 .inset-0 {
   inset: 0;
 }
@@ -472,10 +468,6 @@ body {
   z-index: 100;
 }
 
-.z-40 {
-  z-index: 40;
-}
-
 .-mx-1 {
   margin-left: -.25rem;
   margin-right: -.25rem;
@@ -510,6 +502,10 @@ body {
 
 .mb-2 {
   margin-bottom: .5rem;
+}
+
+.mb-20 {
+  margin-bottom: 5rem;
 }
 
 .mb-3 {
@@ -554,10 +550,6 @@ body {
 
 .mt-4 {
   margin-top: 1rem;
-}
-
-.mb-20 {
-  margin-bottom: 5rem;
 }
 
 .block {
@@ -624,6 +616,10 @@ body {
   height: .875rem;
 }
 
+.h-32 {
+  height: 8rem;
+}
+
 .h-4 {
   height: 1rem;
 }
@@ -634,10 +630,6 @@ body {
 
 .h-6 {
   height: 1.5rem;
-}
-
-.h-64 {
-  height: 16rem;
 }
 
 .h-7 {
@@ -672,8 +664,8 @@ body {
   height: 100vh;
 }
 
-.h-32 {
-  height: 8rem;
+.h-3 {
+  height: .75rem;
 }
 
 .max-h-96 {
@@ -788,6 +780,10 @@ body {
   width: 100vw;
 }
 
+.w-3 {
+  width: .75rem;
+}
+
 .min-w-0 {
   min-width: 0;
 }
@@ -806,10 +802,6 @@ body {
 
 .max-w-5xl {
   max-width: 64rem;
-}
-
-.max-w-7xl {
-  max-width: 80rem;
 }
 
 .max-w-lg {
@@ -982,10 +974,6 @@ body {
   justify-content: space-between;
 }
 
-.justify-around {
-  justify-content: space-around;
-}
-
 .gap-1 {
   gap: .25rem;
 }
@@ -998,20 +986,12 @@ body {
   gap: .5rem;
 }
 
-.gap-2\.5 {
-  gap: .625rem;
-}
-
 .gap-3 {
   gap: .75rem;
 }
 
 .gap-4 {
   gap: 1rem;
-}
-
-.gap-6 {
-  gap: 1.5rem;
 }
 
 .gap-8 {
@@ -1266,6 +1246,10 @@ body {
   background-color: #0000;
 }
 
+.bg-background\/50 {
+  background-color: hsl(var(--background) / .5);
+}
+
 .fill-current {
   fill: currentColor;
 }
@@ -1412,6 +1396,10 @@ body {
   padding-top: .25rem;
 }
 
+.pt-20 {
+  padding-top: 5rem;
+}
+
 .pt-3 {
   padding-top: .75rem;
 }
@@ -1420,8 +1408,8 @@ body {
   padding-top: 1rem;
 }
 
-.pt-20 {
-  padding-top: 5rem;
+.pt-16 {
+  padding-top: 4rem;
 }
 
 .text-left {
@@ -1668,6 +1656,10 @@ body {
 
 .ring-primary {
   --tw-ring-color: hsl(var(--primary));
+}
+
+.ring-offset-2 {
+  --tw-ring-offset-width: 2px;
 }
 
 .ring-offset-background {
@@ -2308,10 +2300,6 @@ body {
     display: block;
   }
 
-  .sm\:flex {
-    display: flex;
-  }
-
   .sm\:max-w-sm {
     max-width: 24rem;
   }
@@ -2352,11 +2340,6 @@ body {
 
   .sm\:rounded-lg {
     border-radius: var(--radius);
-  }
-
-  .sm\:px-6 {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
   }
 
   .sm\:text-left {
@@ -2410,6 +2393,14 @@ body {
     padding-top: 6rem;
   }
 
+  .md\:pl-0 {
+    padding-left: 0;
+  }
+
+  .md\:pl-\[400px\] {
+    padding-left: 400px;
+  }
+
   .md\:text-sm {
     font-size: .875rem;
     line-height: 1.25rem;
@@ -2423,11 +2414,6 @@ body {
 
   .lg\:grid-cols-4 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
-  .lg\:px-8 {
-    padding-left: 2rem;
-    padding-right: 2rem;
   }
 }
 

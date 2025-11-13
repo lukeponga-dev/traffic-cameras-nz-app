@@ -1,5 +1,8 @@
-import { redirect } from 'next/navigation';
+import { getAllCameras } from '@/lib/data';
+import HomePageClient from '@/app/home-page-client';
 
-export default function RootPage() {
-  redirect('/map');
-}
+export const metadata = {
+  title: 'Map View | Kiwi Traffic Watch',
+};
+
+export default function Home()

@@ -12,6 +12,7 @@ import { Skeleton } from './ui/skeleton';
 import { darkMapStyle } from '@/lib/map-styles';
 import FavoriteButton from './favorite-button';
 import { cn } from '@/lib/utils';
+import { useSidebar } from './ui/sidebar';
 
 const NZ_CENTER = { lat: -41.28664, lng: 174.77557 };
 const INITIAL_ZOOM = 5;
@@ -32,6 +33,7 @@ export default function MapDisplay({
     center: LatLng | null;
 }) {
     const map = useMap();
+    const { open: isSidebarOpen } = useSidebar();
     
     const handleMarkerClick = useCallback((camera: Camera) => {
         onCameraSelect(camera);
@@ -58,7 +60,9 @@ export default function MapDisplay({
     }, [selectedCamera, map]);
 
     return (
-        <div className="w-full h-full bg-muted relative">
+        <div className={cn("w-full h-full bg-muted relative transition-all duration-300 ease-in-out", 
+            isSidebarOpen ? "md:pl-[400px]" : "md:pl-0"
+        )}>
             <Map
                 defaultCenter={NZ_CENTER}
                 defaultZoom={INITIAL_ZOOM}
@@ -139,11 +143,4 @@ export default function MapDisplay({
                                     View Full Details
                                     <ExternalLink className="ml-2 h-4 w-4" />
                                 </Link>
-                            </Button>
-                        </div>
-                    </InfoWindow>
-                )}
-            </Map>
-        </div>
-    );
-}
+                            
