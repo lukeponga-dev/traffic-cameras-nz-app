@@ -2604,7 +2604,29 @@ function HomePageClient({ cameras: initialCameras }) {
     const [center, setCenter] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
     const [isTracking, setIsTracking] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const watchIdRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const isInitialMount = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(true);
     const { toast } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$hooks$2f$use$2d$toast$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useToast"])();
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "HomePageClient.useEffect": ()=>{
+            if (isInitialMount.current) {
+                isInitialMount.current = false;
+                return;
+            }
+            if (isTracking) {
+                toast({
+                    title: "Live location enabled",
+                    description: "Your position will be updated automatically."
+                });
+            } else {
+                toast({
+                    title: "Live location disabled"
+                });
+            }
+        }
+    }["HomePageClient.useEffect"], [
+        isTracking,
+        toast
+    ]);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "HomePageClient.useEffect": ()=>{
             if (!isTracking) {
@@ -2706,24 +2728,7 @@ function HomePageClient({ cameras: initialCameras }) {
         }
     };
     const handleMyLocationClick = ()=>{
-        setIsTracking((prev)=>{
-            const newIsTracking = !prev;
-            if (newIsTracking) {
-                toast({
-                    title: "Live location enabled",
-                    description: "Your position will be updated automatically."
-                });
-            } else {
-                if (watchIdRef.current) {
-                    navigator.geolocation.clearWatch(watchIdRef.current);
-                    watchIdRef.current = null;
-                }
-                toast({
-                    title: "Live location disabled"
-                });
-            }
-            return newIsTracking;
-        });
+        setIsTracking((prev)=>!prev);
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$sidebar$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SidebarProvider"], {
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2737,7 +2742,7 @@ function HomePageClient({ cameras: initialCameras }) {
                     isTracking: isTracking
                 }, void 0, false, {
                     fileName: "[project]/src/app/home-page-client.tsx",
-                    lineNumber: 138,
+                    lineNumber: 140,
                     columnNumber: 17
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2752,7 +2757,7 @@ function HomePageClient({ cameras: initialCameras }) {
                                             children: "Cameras"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/home-page-client.tsx",
-                                            lineNumber: 148,
+                                            lineNumber: 150,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2763,7 +2768,7 @@ function HomePageClient({ cameras: initialCameras }) {
                                                     children: "Region"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/home-page-client.tsx",
-                                                    lineNumber: 150,
+                                                    lineNumber: 152,
                                                     columnNumber: 33
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Select"], {
@@ -2777,12 +2782,12 @@ function HomePageClient({ cameras: initialCameras }) {
                                                                 placeholder: "Select a region"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/home-page-client.tsx",
-                                                                lineNumber: 153,
+                                                                lineNumber: 155,
                                                                 columnNumber: 41
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/home-page-client.tsx",
-                                                            lineNumber: 152,
+                                                            lineNumber: 154,
                                                             columnNumber: 37
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectContent"], {
@@ -2791,30 +2796,30 @@ function HomePageClient({ cameras: initialCameras }) {
                                                                     children: r
                                                                 }, r, false, {
                                                                     fileName: "[project]/src/app/home-page-client.tsx",
-                                                                    lineNumber: 157,
+                                                                    lineNumber: 159,
                                                                     columnNumber: 45
                                                                 }, this))
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/home-page-client.tsx",
-                                                            lineNumber: 155,
+                                                            lineNumber: 157,
                                                             columnNumber: 37
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/home-page-client.tsx",
-                                                    lineNumber: 151,
+                                                    lineNumber: 153,
                                                     columnNumber: 33
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/home-page-client.tsx",
-                                            lineNumber: 149,
+                                            lineNumber: 151,
                                             columnNumber: 30
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/home-page-client.tsx",
-                                    lineNumber: 147,
+                                    lineNumber: 149,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$sidebar$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SidebarContent"], {
@@ -2825,18 +2830,18 @@ function HomePageClient({ cameras: initialCameras }) {
                                         selectedCameraId: selectedCamera?.id
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/home-page-client.tsx",
-                                        lineNumber: 164,
+                                        lineNumber: 166,
                                         columnNumber: 28
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/home-page-client.tsx",
-                                    lineNumber: 163,
+                                    lineNumber: 165,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/home-page-client.tsx",
-                            lineNumber: 146,
+                            lineNumber: 148,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$map$2d$display$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -2848,28 +2853,28 @@ function HomePageClient({ cameras: initialCameras }) {
                             center: center
                         }, void 0, false, {
                             fileName: "[project]/src/app/home-page-client.tsx",
-                            lineNumber: 172,
+                            lineNumber: 174,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/home-page-client.tsx",
-                    lineNumber: 145,
+                    lineNumber: 147,
                     columnNumber: 17
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/app/home-page-client.tsx",
-            lineNumber: 137,
+            lineNumber: 139,
             columnNumber: 13
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/app/home-page-client.tsx",
-        lineNumber: 136,
+        lineNumber: 138,
         columnNumber: 9
     }, this);
 }
-_s(HomePageClient, "5NsNn64HE78YmQRD4BtmZckrH0Y=", false, function() {
+_s(HomePageClient, "IUpC5+fhbFUmi/+Og6SIkHvw5Sg=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$hooks$2f$use$2d$toast$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useToast"]
     ];
