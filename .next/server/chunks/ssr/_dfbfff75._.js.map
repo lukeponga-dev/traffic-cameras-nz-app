@@ -3,5 +3,5 @@
   "sources": [],
   "sections": [
     {"offset": {"line": 6, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"","debugId":null}},
-    {"offset": {"line": 24, "column": 0}, "map": {"version":3,"sources":["file:///home/user/studio/traffic-cameras-nz-app/src/app/page.tsx"],"sourcesContent":["import { redirect } from 'next/navigation';\n\nexport default function RootPage() {\n  redirect('/map');\n}\n"],"names":[],"mappings":";;;AAAA;AAAA;;AAEe,SAAS;IACtB,CAAA,GAAA,qLAAA,CAAA,WAAQ,AAAD,EAAE;AACX","debugId":null}}]
+    {"offset": {"line": 24, "column": 0}, "map": {"version":3,"sources":["file:///home/user/studio/traffic-cameras-nz-app/src/app/page.tsx"],"sourcesContent":["\nimport { redirect } from 'next/navigation';\n\nexport default function Home() {\n    redirect('/map');\n}\n"],"names":[],"mappings":";;;AACA;AAAA;;AAEe,SAAS;IACpB,CAAA,GAAA,qLAAA,CAAA,WAAQ,AAAD,EAAE;AACb","debugId":null}}]
 }

@@ -12,17 +12,20 @@ import LiveImage from './live-image';
 export function CameraCard({ 
     camera, 
     isSelected, 
-    onSelect
+    onClick
 }: { 
     camera: Camera, 
     isSelected?: boolean, 
-    onSelect?: (camera: Camera | null) => void
+    onClick?: (camera: Camera) => void
 }) {
     const handleInteraction = () => {
-        if (onSelect) {
-            onSelect(camera);
+        if (onClick) {
+            onClick(camera);
         }
     };
+
+    const CardWrapper = onClick ? 'div' : Link;
+    const wrapperProps = onClick ? {} : { href: `/cameras/${camera.id}`};
 
     return (
         <Card 

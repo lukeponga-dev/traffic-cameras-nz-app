@@ -59,7 +59,7 @@ export default function CameraList({
                             key={camera.id}
                             camera={camera}
                             isSelected={selectedCameraId === camera.id}
-                            onSelect={() => handleCardClick(camera)}
+                            onClick={() => handleCardClick(camera)}
                          />
                     ))}
                     {cameras.length === 0 && (
