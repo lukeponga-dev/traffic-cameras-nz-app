@@ -1,0 +1,1032 @@
+
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [171.721055, -43.919632] },
+      "properties": {
+        "description": "South along Hinds Highway from Lagmhor Rd",
+        "direction": "Southbound",
+        "group": "NA",
+        "highway": "SH1",
+        "id": "714",
+        "imageUrl": "/camera/714.jpg",
+        "name": "SH1 Tinwald ",
+        "offline": false,
+        "region": { "id": "11", "name": "Canterbury" },
+        "sortOrder": 0,
+        "thumbUrl": "/camera/thumb/714.jpg",
+        "underMaintenance": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [171.721221, -43.919508] },
+      "properties": {
+        "description": "North along Hinds Highway from Lagmhor Rd",
+        "direction": "Northbound",
+        "group": "SH1",
+        "highway": "SH1",
+        "id": "831",
+        "imageUrl": "/camera/831.jpg",
+        "name": "SH1 Tinwald North",
+        "offline": false,
+        "region": { "id": "11", "name": "Canterbury" },
+        "sortOrder": 2147483647,
+        "thumbUrl": "/camera/thumb/831.jpg",
+        "underMaintenance": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [174.73442, -36.90943] },
+      "properties": {
+        "description": "North along Sth Wstn Mwy from May Rd",
+        "direction": "Northbound",
+        "group": "NA",
+        "highway": "SH20",
+        "id": "653",
+        "imageUrl": "/camera/653.jpg",
+        "name": "SH20 May Rd Overbridge",
+        "offline": false,
+        "region": { "id": "2", "name": "Auckland" },
+        "sortOrder": 20,
+        "thumbUrl": "/camera/thumb/653.jpg",
+        "underMaintenance": false
+      }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.71018, -36.87173] },
+        "properties": {
+            "description": "East along Nth Wstn Mwy from Carrington Rd",
+            "direction": "Eastbound",
+            "group": "NA",
+            "highway": "SH16",
+            "id": "654",
+            "imageUrl": "/camera/654.jpg",
+            "name": "SH16 Carrington Rd Overbridge",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 0,
+            "thumbUrl": "/camera/thumb/654.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.704836, -36.871997] },
+        "properties": {
+            "description": "South from Nth Wstn Mwy to Waterview Tunnel ",
+            "direction": "Southbound",
+            "group": "NA",
+            "highway": "SH16",
+            "id": "655",
+            "imageUrl": "/camera/655.jpg",
+            "name": "SH16/20 Interchange South",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 3,
+            "thumbUrl": "/camera/thumb/655.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.713939, -36.724252] },
+        "properties": {
+            "description": "North along Nthn Mwy from McClymonts Rd",
+            "direction": "Northbound",
+            "group": "SH1",
+            "highway": "SH1",
+            "id": "818",
+            "imageUrl": "/camera/818.jpg",
+            "name": "SH1 McClymonts Rd Overbridge",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 0,
+            "thumbUrl": "/camera/thumb/818.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.7143, -36.728623] },
+        "properties": {
+            "description": "North along Nthn Mwy towards Tirohanga Whanui Bridge",
+            "direction": "Northbound",
+            "group": "SH1",
+            "highway": "SH1",
+            "id": "819",
+            "imageUrl": "/camera/819.jpg",
+            "name": "SH1 Tirohanga Whanui Bridge",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 0,
+            "thumbUrl": "/camera/thumb/819.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.720401, -36.743377] },
+        "properties": {
+            "description": "South along Nthn Mwy in Rosedale area",
+            "direction": "Southbound",
+            "group": "SH1",
+            "highway": "SH1",
+            "id": "820",
+            "imageUrl": "/camera/820.jpg",
+            "name": "SH1 Rosedale",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 0,
+            "thumbUrl": "/camera/thumb/820.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.726254, -36.750564] },
+        "properties": {
+            "description": "South along Nthn Mwy from Constellation Dr",
+            "direction": "Southbound",
+            "group": "SH1",
+            "highway": "SH1",
+            "id": "821",
+            "imageUrl": "/camera/821.jpg",
+            "name": "SH1 Constellation Dr",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 0,
+            "thumbUrl": "/camera/thumb/821.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.728353, -36.753905] },
+        "properties": {
+            "description": "South along Nthn Mwy from Sunset Rd",
+            "direction": "Southbound",
+            "group": "SH1",
+            "highway": "SH1",
+            "id": "822",
+            "imageUrl": "/camera/822.jpg",
+            "name": "SH1 Sunset Rd Overbridge",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 0,
+            "thumbUrl": "/camera/thumb/822.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.67121, -36.51967] },
+        "properties": {
+            "description": "North along SH1 towards Puhoi Viaduct",
+            "direction": "Northbound",
+            "group": "SH1",
+            "highway": "SH1",
+            "id": "824",
+            "imageUrl": "/camera/824.jpg",
+            "name": "SH1 Puhoi Viaduct",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 0,
+            "thumbUrl": "/camera/thumb/824.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.676896, -36.530387] },
+        "properties": {
+            "description": "South along SH1 towards Tunnels",
+            "direction": "Southbound",
+            "group": "SH1",
+            "highway": "SH1",
+            "id": "825",
+            "imageUrl": "/camera/825.jpg",
+            "name": "SH1 Johnstones Hill Tunnels",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 0,
+            "thumbUrl": "/camera/thumb/825.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.671, -36.5187] },
+        "properties": {
+            "description": "South along Puhoi on-ramp to SH1",
+            "direction": "Southbound",
+            "group": "SH1",
+            "highway": "SH1",
+            "id": "826",
+            "imageUrl": "/camera/826.jpg",
+            "name": "SH1 Puhoi On-ramp",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 0,
+            "thumbUrl": "/camera/thumb/826.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.641729, -36.389353] },
+        "properties": {
+            "description": "North along SH1 towards Pukerito Rbt",
+            "direction": "Northbound",
+            "group": "SH1",
+            "highway": "SH1",
+            "id": "827",
+            "imageUrl": "/camera/827.jpg",
+            "name": "SH1 Pukerito Roundabout",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 0,
+            "thumbUrl": "/camera/thumb/827.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.673614, -36.870049] },
+        "properties": {
+            "description": "South along Nth Wstn Mwy from Rosebank Rd",
+            "direction": "Southbound",
+            "group": "SH16",
+            "highway": "SH16",
+            "id": "697",
+            "imageUrl": "/camera/697.jpg",
+            "name": "SH16 Rosebank Rd",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 6,
+            "thumbUrl": "/camera/thumb/697.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.699344, -36.871594] },
+        "properties": {
+            "description": "North along the Nth Wstn Mwy Causeway ",
+            "direction": "Northbound",
+            "group": "SH16",
+            "highway": "SH16",
+            "id": "686",
+            "imageUrl": "/camera/686.jpg",
+            "name": "SH16/20 Interchange North",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 4,
+            "thumbUrl": "/camera/thumb/686.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.666243, -36.865869] },
+        "properties": {
+            "description": "North along Nth Wstn Mwy from Patiki Rd",
+            "direction": "Northbound",
+            "group": "SH16",
+            "highway": "SH16",
+            "id": "687",
+            "imageUrl": "/camera/687.jpg",
+            "name": "SH16 Patiki Rd",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 7,
+            "thumbUrl": "/camera/thumb/687.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.689738, -36.872107] },
+        "properties": {
+            "description": "North along the Nth Wstn Mwy Causeway",
+            "direction": "Northbound",
+            "group": "SH16",
+            "highway": "SH16",
+            "id": "688",
+            "imageUrl": "/camera/688.jpg",
+            "name": "SH16 Causeway",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 5,
+            "thumbUrl": "/camera/thumb/688.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.6609, -36.860564] },
+        "properties": {
+            "description": "South along Nth Wstn Mwy towards Patiki Rd ",
+            "direction": "Southbound",
+            "group": "SH16",
+            "highway": "SH16",
+            "id": "689",
+            "imageUrl": "/camera/689.jpg",
+            "name": "SH16 Whau River",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 8,
+            "thumbUrl": "/camera/thumb/689.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.614, -36.819] },
+        "properties": {
+            "description": "South along Nth Wstn Mwy from Hobsonville Rd",
+            "direction": "Southbound",
+            "group": "SH16-North-Western",
+            "highway": "SH16",
+            "id": "270",
+            "imageUrl": "/camera/270.jpg",
+            "name": "SH16/SH18 Interchange South",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 12,
+            "thumbUrl": "/camera/thumb/270.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.612, -36.813] },
+        "properties": {
+            "description": "North along Nth Wstn Mwy towards Kumeu",
+            "direction": "Northbound",
+            "group": "SH16-North-Western",
+            "highway": "SH16",
+            "id": "271",
+            "imageUrl": "/camera/271.jpg",
+            "name": "SH16/SH18 Interchange North",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 13,
+            "thumbUrl": "/camera/thumb/271.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.746, -36.869] },
+        "properties": {
+            "description": "West along Nth Wstn Mwy from Bond St",
+            "direction": "Westbound",
+            "group": "SH16-North-Western",
+            "highway": "SH16",
+            "id": "130",
+            "imageUrl": "/camera/130.jpg",
+            "name": "SH16 Bond St Overbridge",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 1,
+            "thumbUrl": "/camera/thumb/130.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.706, -36.872] },
+        "properties": {
+            "description": "East along Nth Wstn Mwy from Gt North Rd",
+            "direction": "Eastbound",
+            "group": "SH16-North-Western",
+            "highway": "SH16",
+            "id": "140",
+            "imageUrl": "/camera/140.jpg",
+            "name": "SH16/20 Interchange East ",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 2,
+            "thumbUrl": "/camera/thumb/140.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.653, -36.858] },
+        "properties": {
+            "description": "South along Nth Wstn Mwy from Te Atatu Rd",
+            "direction": "Southbound",
+            "group": "SH16-North-Western",
+            "highway": "SH16",
+            "id": "150",
+            "imageUrl": "/camera/150.jpg",
+            "name": "SH16 Te Atatu Rd",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 9,
+            "thumbUrl": "/camera/thumb/150.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.632, -36.849] },
+        "properties": {
+            "description": "South along Nth Wstn Mwy from Lincoln Rd",
+            "direction": "Southbound",
+            "group": "SH16-North-Western",
+            "highway": "SH16",
+            "id": "160",
+            "imageUrl": "/camera/160.jpg",
+            "name": "SH16 Lincoln Rd South",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 10,
+            "thumbUrl": "/camera/thumb/160.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.63, -36.847] },
+        "properties": {
+            "description": "North along Nth Wstn Mwy from Lincoln Rd",
+            "direction": "Northbound",
+            "group": "SH16-North-Western",
+            "highway": "SH16",
+            "id": "170",
+            "imageUrl": "/camera/170.jpg",
+            "name": "SH16 Lincoln Rd North",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 11,
+            "thumbUrl": "/camera/thumb/170.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.709771, -36.753768] },
+        "properties": {
+            "description": "East along Upper Hbr Mwy from Unsworth Heights",
+            "direction": "Eastbound",
+            "group": "SH18",
+            "highway": "SH18",
+            "id": "823",
+            "imageUrl": "/camera/823.jpg",
+            "name": "SH18 Unsworth Heights",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 0,
+            "thumbUrl": "/camera/thumb/823.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.722521, -36.750359] },
+        "properties": {
+            "description": "West along SH18 towards Paul Matthews Rd",
+            "direction": "Westbound",
+            "group": "SH18",
+            "highway": "SH18",
+            "id": "815",
+            "imageUrl": "/camera/815.jpg",
+            "name": "SH1/SH18 Interchange",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 0,
+            "thumbUrl": "/camera/thumb/815.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.678, -36.782] },
+        "properties": {
+            "description": "West along Upper Hbr Mwy from Tauhinu Rd",
+            "direction": "Westbound",
+            "group": "SH18-Upper-Harbour",
+            "highway": "SH18",
+            "id": "171",
+            "imageUrl": "/camera/171.jpg",
+            "name": "SH18 Tauhinu Rd Overbridge",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 6,
+            "thumbUrl": "/camera/thumb/171.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.703, -36.757] },
+        "properties": {
+            "description": "East along Upper Hbr Mwy from Albany Hwy",
+            "direction": "Eastbound",
+            "group": "SH18-Upper-Harbour",
+            "highway": "SH18",
+            "id": "172",
+            "imageUrl": "/camera/172.jpg",
+            "name": "SH18 Albany Hwy",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 1,
+            "thumbUrl": "/camera/thumb/172.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.681, -36.778] },
+        "properties": {
+            "description": "West along Upper Hbr Mwy towards Tauhinu Rd Overbridge",
+            "direction": "Westbound",
+            "group": "SH18-Upper-Harbour",
+            "highway": "SH18",
+            "id": "173",
+            "imageUrl": "/camera/173.jpg",
+            "name": "SH18 Greenhithe West",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 5,
+            "thumbUrl": "/camera/thumb/173.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.714, -36.753] },
+        "properties": {
+            "description": "East along Upper Hbr Mwy towards Paul Matthews Rd",
+            "direction": "Eastbound",
+            "group": "SH18-Upper-Harbour",
+            "highway": "SH18",
+            "id": "174",
+            "imageUrl": "/camera/174.jpg",
+            "name": "SH18 Paul Matthews Rd",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 0,
+            "thumbUrl": "/camera/thumb/174.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.686, -36.771] },
+        "properties": {
+            "description": "East along Upper Hbr Mwy from Greenhithe Rd",
+            "direction": "Eastbound",
+            "group": "SH18-Upper-Harbour",
+            "highway": "SH18",
+            "id": "175",
+            "imageUrl": "/camera/175.jpg",
+            "name": "SH18 Greenhithe Rd",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 4,
+            "thumbUrl": "/camera/thumb/175.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.691, -36.765] },
+        "properties": {
+            "description": "East along Upper Hbr Mwy from Schnapper Rock",
+            "direction": "Eastbound",
+            "group": "SH18-Upper-Harbour",
+            "highway": "SH18",
+            "id": "176",
+            "imageUrl": "/camera/176.jpg",
+            "name": "SH18 Schnapper Rock",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 3,
+            "thumbUrl": "/camera/thumb/176.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.662, -36.786] },
+        "properties": {
+            "description": "East along Upper Hbr Mwy towards Upper Hbr Bridge",
+            "direction": "Eastbound",
+            "group": "SH18-Upper-Harbour",
+            "highway": "SH18",
+            "id": "177",
+            "imageUrl": "/camera/177.jpg",
+            "name": "SH18 Upper Harbour Bridge",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 7,
+            "thumbUrl": "/camera/thumb/177.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.7, -36.763] },
+        "properties": {
+            "description": "West along Upper Hbr Mwy from Cuthill",
+            "direction": "Westbound",
+            "group": "SH18-Upper-Harbour",
+            "highway": "SH18",
+            "id": "178",
+            "imageUrl": "/camera/178.jpg",
+            "name": "SH18 Cuthill",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 2,
+            "thumbUrl": "/camera/thumb/178.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.655, -36.791] },
+        "properties": {
+            "description": "East along Upper Hbr Mwy from Squadron Dr",
+            "direction": "Eastbound",
+            "group": "SH18-Upper-Harbour",
+            "highway": "SH18",
+            "id": "70",
+            "imageUrl": "/camera/70.jpg",
+            "name": "SH18 Squadron Dr",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 8,
+            "thumbUrl": "/camera/thumb/70.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.621, -36.808] },
+        "properties": {
+            "description": "West along Upper Hbr Mwy from Trig Rd",
+            "direction": "Westbound",
+            "group": "SH18-Upper-Harbour",
+            "highway": "SH18",
+            "id": "221",
+            "imageUrl": "/camera/221.jpg",
+            "name": "SH18 Trig Rd",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 12,
+            "thumbUrl": "/camera/thumb/221.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.628, -36.805] },
+        "properties": {
+            "description": "West along Upper Hbr Mwy towards Trig Rd",
+            "direction": "Westbound",
+            "group": "SH18-Upper-Harbour",
+            "highway": "SH18",
+            "id": "222",
+            "imageUrl": "/camera/222.jpg",
+            "name": "SH18 Waiahora Creek",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 11,
+            "thumbUrl": "/camera/thumb/222.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.638, -36.8] },
+        "properties": {
+            "description": "West along Brigham Creek Rd towards Whenuapai",
+            "direction": "Westbound",
+            "group": "SH18-Upper-Harbour",
+            "highway": "SH18",
+            "id": "223",
+            "imageUrl": "/camera/223.jpg",
+            "name": "SH18 Brigham Creek Interchange",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 10,
+            "thumbUrl": "/camera/thumb/223.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.645, -36.796] },
+        "properties": {
+            "description": "West along Upper Hbr Mwy towards Brigham Creek Rd",
+            "direction": "Westbound",
+            "group": "SH18-Upper-Harbour",
+            "highway": "SH18",
+            "id": "224",
+            "imageUrl": "/camera/224.jpg",
+            "name": "SH18 Hobsonville",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 9,
+            "thumbUrl": "/camera/thumb/224.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.717, -36.735] },
+        "properties": {
+            "description": "South along Nthn Mwy from Greville Rd",
+            "direction": "Southbound",
+            "group": "SH1-Northern",
+            "highway": "SH1",
+            "id": "10",
+            "imageUrl": "/camera/10.jpg",
+            "name": "SH1 Greville Rd",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 4,
+            "thumbUrl": "/camera/thumb/10.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.742792, -36.771763] },
+        "properties": {
+            "description": "South along Nthn Mwy from Tristram Ave",
+            "direction": "Southbound",
+            "group": "SH1-Northern",
+            "highway": "SH1",
+            "id": "20",
+            "imageUrl": "/camera/20.jpg",
+            "name": "SH1 Tristram Ave",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 5,
+            "thumbUrl": "/camera/thumb/20.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.753, -36.789] },
+        "properties": {
+            "description": "North along Nthn Mwy from Northcote Rd",
+            "direction": "Northbound",
+            "group": "SH1-Northern",
+            "highway": "SH1",
+            "id": "30",
+            "imageUrl": "/camera/30.jpg",
+            "name": "SH1 Northcote Rd",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 6,
+            "thumbUrl": "/camera/thumb/30.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.762, -36.799] },
+        "properties": {
+            "description": "South along Nthn Mwy from Esmonde Rd",
+            "direction": "Southbound",
+            "group": "SH1-Northern",
+            "highway": "SH1",
+            "id": "40",
+            "imageUrl": "/camera/40.jpg",
+            "name": "SH1 Esmonde Rd",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 7,
+            "thumbUrl": "/camera/thumb/40.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.754, -36.812] },
+        "properties": {
+            "description": "South along Nthn Mwy from Onewa Rd",
+            "direction": "Southbound",
+            "group": "SH1-Northern",
+            "highway": "SH1",
+            "id": "50",
+            "imageUrl": "/camera/50.jpg",
+            "name": "SH1 Onewa Rd",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 8,
+            "thumbUrl": "/camera/thumb/50.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.666336, -36.658354] },
+        "properties": {
+            "description": "South along Nthn Mwy from Dairy Flat Service Centre",
+            "direction": "Southbound",
+            "group": "SH1-Northern",
+            "highway": "SH1",
+            "id": "598",
+            "imageUrl": "/camera/598.jpg",
+            "name": "SH1 Dairy Flat",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 1,
+            "thumbUrl": "/camera/thumb/598.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.68074, -36.669183] },
+        "properties": {
+            "description": "South along Nthn Mwy in Okura area",
+            "direction": "Southbound",
+            "group": "SH1-Northern",
+            "highway": "SH1",
+            "id": "769",
+            "imageUrl": "/camera/769.jpg",
+            "name": "SH1 Okura",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 2,
+            "thumbUrl": "/camera/thumb/769.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [174.661741, -36.603273] },
+        "properties": {
+            "description": "South along Nthn Mwy from Wainui Rd",
+            "direction": "Southbound",
+            "group": "SH1-Northern",
+            "highway": "SH1",
+            "id": "651",
+            "imageUrl": "/camera/651.jpg",
+            "name": "SH1 Millwater",
+            "offline": false,
+            "region": { "id": "2", "name": "Auckland" },
+            "sortOrder": 0,
+            "thumbUrl": "/camera/thumb/651.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [175.123291, -37.426338] },
+        "properties": {
+            "description": "SH1 at Rangiriri - South of the interchange looking north",
+            "direction": "Northbound",
+            "group": "Waikato",
+            "highway": "SH1",
+            "id": "901",
+            "imageUrl": "/camera/901.jpg",
+            "name": "SH1 Rangiriri",
+            "offline": false,
+            "region": { "id": "3", "name": "Waikato" },
+            "sortOrder": 0,
+            "thumbUrl": "/camera/thumb/901.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [175.09403, -37.36214] },
+        "properties": {
+            "description": "SH1 at Hampton Downs looking north",
+            "direction": "Northbound",
+            "group": "Waikato",
+            "highway": "SH1",
+            "id": "902",
+            "imageUrl": "/camera/902.jpg",
+            "name": "SH1 Hampton Downs",
+            "offline": false,
+            "region": { "id": "3", "name": "Waikato" },
+            "sortOrder": 0,
+            "thumbUrl": "/camera/thumb/902.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [175.01167, -37.19839] },
+        "properties": {
+            "description": "SH1 south of the Bombay Hills looking south",
+            "direction": "Southbound",
+            "group": "Waikato",
+            "highway": "SH1",
+            "id": "903",
+            "imageUrl": "/camera/903.jpg",
+            "name": "SH1 Bombay Hills",
+            "offline": false,
+            "region": { "id": "3", "name": "Waikato" },
+            "sortOrder": 0,
+            "thumbUrl": "/camera/thumb/903.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [175.187, -37.2625] },
+        "properties": {
+            "description": "SH2 at Maramarua, looking east",
+            "direction": "Eastbound",
+            "group": "Waikato",
+            "highway": "SH2",
+            "id": "904",
+            "imageUrl": "/camera/904.jpg",
+            "name": "SH2 Maramarua",
+            "offline": false,
+            "region": { "id": "3", "name": "Waikato" },
+            "sortOrder": 0,
+            "thumbUrl": "/camera/thumb/904.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [175.8503, -37.0016] },
+        "properties": {
+            "description": "SH25 at Tairua, looking south",
+            "direction": "Southbound",
+            "group": "Waikato",
+            "highway": "SH25",
+            "id": "905",
+            "imageUrl": "/camera/905.jpg",
+            "name": "SH25 Tairua",
+            "offline": false,
+            "region": { "id": "3", "name": "Waikato" },
+            "sortOrder": 0,
+            "thumbUrl": "/camera/thumb/905.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [175.006, -37.2185] },
+        "properties": {
+            "description": "SH2 south of the SH1 interchange, looking south",
+            "direction": "Southbound",
+            "group": "Waikato",
+            "highway": "SH2",
+            "id": "906",
+            "imageUrl": "/camera/906.jpg",
+            "name": "SH2 Pokeno",
+            "offline": false,
+            "region": { "id": "3", "name": "Waikato" },
+            "sortOrder": 0,
+            "thumbUrl": "/camera/thumb/906.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [175.1821, -37.6259] },
+        "properties": {
+            "description": "SH1 at Taupiri, looking south",
+            "direction": "Southbound",
+            "group": "Waikato",
+            "highway": "SH1",
+            "id": "907",
+            "imageUrl": "/camera/907.jpg",
+            "name": "SH1 Taupiri",
+            "offline": false,
+            "region": { "id": "3", "name": "Waikato" },
+            "sortOrder": 0,
+            "thumbUrl": "/camera/thumb/907.jpg",
+            "underMaintenance": false
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": { "type": "Point", "coordinates": [175.561, -37.892] },
+        "properties": {
+            "description": "SH1 at Karapiro, looking south",
+            "direction": "Southbound",
+            "group": "Waikato",
+            "highway": "SH1",
+            "id": "908",
+            "imageUrl": "/camera/908.jpg",
+            "name": "SH1 Karapiro",
+            "offline": false,
+            "region": { "id": "3", "name": "Waikato" },
+            "sortOrder": 0,
+            "thumbUrl": "/camera/thumb/908.jpg",
+            "underMaintenance": false
+        }
+    }
+  ]
+}

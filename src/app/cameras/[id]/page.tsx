@@ -11,11 +11,12 @@ import { Skeleton } from "@/components/ui/skeleton";
 import CameraMap from "@/components/camera-map";
 
 type Props = {
-    params: { id: string };
+    params: Promise<{ id: string }>;
 };
 
 export async function generateMetadata({ params }: Props) {
-    const camera = getCameraById(params.id);
+    const { id } = await params;
+    const camera = getCameraById(id);
     if (!camera) {
         return { title: 'Camera Not Found' };
     }
@@ -25,8 +26,9 @@ export async function generateMetadata({ params }: Props) {
     };
 }
 
-export default function CameraPage({ params }: Props) {
-    const camera = getCameraById(params.id);
+export default async function CameraPage({ params }: Props) {
+    const { id } = await params;
+    const camera = getCameraById(id);
 
     if (!camera) {
         notFound();
