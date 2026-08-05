@@ -7,6 +7,7 @@ import { MapProvider } from './map-provider';
 import { cn } from '@/lib/utils';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import MobileNavBar from '@/components/mobile-nav-bar';
+import { SidebarProvider } from '@/components/ui/sidebar';
 
 const fontSans = Inter({
   subsets: ['latin'],
@@ -72,12 +73,14 @@ export default function RootLayout({
         )}
       >
         <TooltipProvider>
-          <MapProvider>
-            <div className="relative flex flex-col h-screen">
-              <main className="flex-1 pb-16 md:pb-0">{children}</main>
-              <MobileNavBar />
-            </div>
-          </MapProvider>
+          <SidebarProvider>
+            <MapProvider>
+              <div className="relative flex flex-col h-screen">
+                <main className="flex-1 pb-16 md:pb-0">{children}</main>
+                <MobileNavBar />
+              </div>
+            </MapProvider>
+          </SidebarProvider>
         </TooltipProvider>
         <Toaster />
         <Analytics />
